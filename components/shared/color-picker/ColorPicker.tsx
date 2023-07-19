@@ -53,6 +53,7 @@ const BaseColorPicker = ({
 
     const handleSelectPickerMethod = (val: PickerMethod) => {
         setPickerMethod(val)
+        setVisibleMethodMenu(false)
     }
 
     const handleColorChange = (val: Color) => {
@@ -67,7 +68,7 @@ const BaseColorPicker = ({
         <div className={cn('relative w-full h-[calc(100%-46px)]')}>
             {visibleMethodMenu &&
                 <div
-                    className={cn('relative z-10 p-[10px] bg-white w-full h-full space-y-1 overflow-auto no-scrollbar')}>
+                    className={cn('absolute z-[10] p-[10px] bg-white w-full h-full space-y-1 overflow-auto no-scrollbar')}>
                     {pickerMethodList.map(item => <div
                         key={item}
                         className={cn('py-[8px] px-[10px] text-sm text-slate-900 rounded-md cursor-pointer hover:bg-gray-100', {
@@ -80,14 +81,16 @@ const BaseColorPicker = ({
                 </div>
             }
             <div className={'w-full h-full p-4'}>
-                <PickerPanel value={color} onChange={handleColorChange}></PickerPanel>
+                <PickerPanel value={color} onChange={handleColorChange}/>
             </div>
         </div>
         <div
-            className={cn('h-[46px] px-4 flex items-center justify-between relative z-[1] shadow-[0_-1px_rgba(0,0,0,0.075)]')}
+            className={cn('h-[46px] px-4 flex items-center justify-between relative z-[11] shadow-[0_-1px_rgba(0,0,0,0.075)]')}
         >
-            <div className={cn('flex items-center space-x-1 cursor-pointer text-sm px-1')}
-                 onClick={handleToggleMethodPickerMenu}>
+            <div
+                className={cn('flex items-center space-x-1 cursor-pointer text-sm px-1')}
+                onClick={handleToggleMethodPickerMenu}
+            >
                 <span>{pickerMethod}</span>
                 {visibleMethodMenu ? <ChevronDown/> : <ChevronUp/>}
             </div>

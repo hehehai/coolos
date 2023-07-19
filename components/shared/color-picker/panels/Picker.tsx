@@ -6,9 +6,14 @@ import Alpha from "@/components/shared/color-picker/components/Alpha";
 import {cn} from "@/lib/utils";
 import {BasePickerPanelProps} from "@/components/shared/color-picker/interface";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
-import {Color, defaultColor} from "@/components/shared/color-picker";
+import {Color, defaultColor, generateColor} from "@/components/shared/color-picker";
+import {Input} from "@/components/ui/input";
+import HexInput from "@/components/shared/color-picker/components/HexInput";
 
-interface PickerPanelProps extends BasePickerPanelProps {
+export type PickerType = 'saturation' | 'hue' | 'alpha' | 'hex';
+
+interface PickerPanelProps extends Omit<BasePickerPanelProps, 'onChange'> {
+    onChange?: (color: Color, type: PickerType) => void
 }
 
 const PickerPanel = ({
@@ -22,9 +27,9 @@ const PickerPanel = ({
         defaultValue,
     });
 
-    const handleChange = (color: Color, type: 'saturation' | 'hue' | 'alpha') => {
+    const handleChange = (color: Color, type: PickerType) => {
         setColor(color)
-        onChange?.(color)
+        onChange?.(color, type)
     }
 
     return <div className={'w-full h-full'}>
@@ -35,14 +40,10 @@ const PickerPanel = ({
         />
         <Hue
             value={color}
-            className={cn('w-full h-[10px] rounded-full mb-5')}
+            className={cn('w-full h-[10px] rounded-full mb-4')}
             onChange={(val) => handleChange(val, 'hue')}
         />
-        <Alpha
-            value={color}
-            className={cn('w-full h-[10px] rounded-full')}
-            onChange={(val) => handleChange(val, 'alpha')}
-        />
+        <HexInput value={color} onChange={(val) => handleChange(val, 'hex')}></HexInput>
     </div>
 }
 
