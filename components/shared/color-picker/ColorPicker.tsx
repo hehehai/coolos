@@ -1,13 +1,14 @@
 'use client'
 
 import {cn} from "@/lib/utils";
-import {forwardRef, Ref, useState} from "react";
+import {forwardRef, Ref, useMemo, useState} from "react";
 import {ChevronDown, ChevronUp} from "@/components/icons";
 import PickerPanel from "@/components/shared/color-picker/panels/Picker";
 import {Color} from "@/components/shared/color-picker/color";
-import {ColorGenInput} from "@/components/shared/color-picker/interface";
+import {ColorGenInput, CommonPickerPanelProps} from "@/components/shared/color-picker/interface";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import {defaultColor} from "@/components/shared/color-picker/util";
+import HSB from "@/components/shared/color-picker/panels/HSB";
 
 export enum PickerMethod {
     Picker = 'Picker',
@@ -29,6 +30,16 @@ const pickerMethodList = [
     PickerMethod.Name
 ]
 
+const pickerMethodPanel: Record<PickerMethod, React.ComponentType<CommonPickerPanelProps>> = {
+    [PickerMethod.Picker]: PickerPanel,
+    [PickerMethod.HSB]: HSB,
+    [PickerMethod.HSL]: PickerPanel,
+    [PickerMethod.RGB]: PickerPanel,
+    [PickerMethod.CMYK]: PickerPanel,
+    [PickerMethod.LAB]: PickerPanel,
+    [PickerMethod.Name]: PickerPanel,
+}
+
 interface ColorPickerProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'defaultValue'> {
     value?: ColorGenInput;
     defaultValue?: ColorGenInput;
@@ -46,6 +57,10 @@ const BaseColorPicker = ({
     });
     const [visibleMethodMenu, setVisibleMethodMenu] = useState<boolean>(false)
     const [pickerMethod, setPickerMethod] = useState<PickerMethod>(PickerMethod.Picker)
+
+    const PickerPanelComponent = useMemo(() => {
+        return pickerMethodPanel[pickerMethod]
+    }, [pickerMethod])
 
     const handleToggleMethodPickerMenu = () => {
         setVisibleMethodMenu(val => !val)
@@ -81,7 +96,7 @@ const BaseColorPicker = ({
                 </div>
             }
             <div className={'w-full h-full p-4'}>
-                <PickerPanel value={color} onChange={handleColorChange}/>
+                <PickerPanelComponent value={color} onChange={handleColorChange}/>
             </div>
         </div>
         <div
