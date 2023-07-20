@@ -29,8 +29,6 @@ export type ColorGenInput<T = Color> =
     | HSBA
     | T;
 
-export type HsbaColorType = 'hue' | 'alpha';
-
 export type TransformOffset = {
     x: number;
     y: number;
@@ -46,9 +44,11 @@ export interface BaseColorAtomProps {
     onChange?: (color: Color) => void
 }
 
-export interface BasePickerPanelProps {
+export type CommonPickerColorType = 'hue' | 'saturation' | 'brightness' | 'alpha' | 'hex'
+
+export interface CommonPickerPanelProps {
     value?: ColorGenInput;
     defaultValue?: ColorGenInput;
     layerPoints?: Color[];
-    onChange?: (color: Color) => void
+    onChange?: (color: Color, type: CommonPickerColorType) => void
 }
