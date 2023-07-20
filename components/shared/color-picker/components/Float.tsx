@@ -1,4 +1,5 @@
 import {cn} from "@/lib/utils";
+import {memo} from "react";
 
 export interface FloatProps extends React.ComponentPropsWithoutRef<'div'> {
     color: string;
@@ -6,15 +7,15 @@ export interface FloatProps extends React.ComponentPropsWithoutRef<'div'> {
     alphaBackground?: boolean
 }
 
-const Float = ({
-                   color,
-                   className,
-                   style,
-                   innerClass,
-                   alphaBackground = false,
+const Float = memo(({
+                        color,
+                        className,
+                        style,
+                        innerClass,
+                        alphaBackground = false,
 
-                   ...rest
-               }: FloatProps) => {
+                        ...rest
+                    }: FloatProps) => {
 
     return <div
         className={cn(
@@ -33,7 +34,7 @@ const Float = ({
             style={{backgroundColor: color}}
         />
     </div>
-}
+})
 
 Float.displayName = 'Float'
 

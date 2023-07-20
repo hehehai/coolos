@@ -8,7 +8,7 @@ import {Color} from "@/components/shared/color-picker";
 
 // box [track [transform [float]], interlayer]
 
-interface BoxFloatProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+export interface BoxFloatProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
     // 初始位置
     initOffset?: TransformOffset;
     // 移动方向 (目前不支持 y)
@@ -23,7 +23,7 @@ interface BoxFloatProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onC
     disabled?: boolean;
 
     // 拖动元素
-    float?: JSX.Element;
+    float?: React.ReactChild;
     // 点位层
     layerPoints?: Color[];
     layerPointClassName?: string;
@@ -69,6 +69,7 @@ const BoxFloat = forwardRef<HTMLDivElement, BoxFloatProps>(({
         return layerPoints.map((color, idx: number) => {
             const baseData = getBaseData({width: 6, height: 6})
             if (!baseData) return null
+            if ((baseData.transformWidth === 0 && baseData.transformHeight === 0)) return
             const pointOffset = offsetCalculate(baseData, color)
             if (!pointOffset) return null
             return <div key={idx}
