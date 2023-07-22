@@ -1,9 +1,9 @@
-import {CommonPickerColorType, CommonPickerPanelProps} from "@/components/shared/color-picker/interface";
-import {Color, defaultColor, generateColor} from "@/components/shared/color-picker";
+import {ColorAtomType, CommonPickerPanelProps} from "@/components/shared/color-picker/interface";
+import {Color, defaultColor, generateColor, getRoundNumber} from "@/components/shared/color-picker";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import FieldInput from "@/components/shared/color-picker/components/FieldInput";
-import Hue from "@/components/shared/color-picker/components/Hue";
-import {cn} from "@/lib/utils";
+import {ColorAtomSchemaType, getColorAtomPropsSchema} from "@/components/shared/color-picker/schema";
+import ColorBoxFloat from "@/components/shared/color-picker/components/ColorBoxFloat";
 
 const HSB = ({
                  value,
@@ -15,12 +15,12 @@ const HSB = ({
         defaultValue,
     });
 
-    const handleChange = (color: Color, type: CommonPickerColorType) => {
+    const handleChange = (color: Color, type: ColorAtomType) => {
         setColor(color)
         onChange?.(color, type)
     }
 
-    const handleChangeAtomNum = (val: number, type: CommonPickerColorType) => {
+    const handleChangeAtomNum = (val: number, type: ColorAtomType) => {
         const newColor = color.toHsb()
         switch (type) {
             case 'hue':
@@ -37,11 +37,40 @@ const HSB = ({
     }
 
     return <>
-        <FieldInput title={'Hue'} value={color.toHsb().h} max={360} onChange={(val) => handleChangeAtomNum(val, 'hue')}>
-            <Hue
+        <FieldInput
+            title={'Hue'}
+            value={color.toHsb().h}
+            max={360}
+            onChange={(val) => handleChangeAtomNum(val, ColorAtomType.Hue)}
+        >
+            <ColorBoxFloat
+                {...getColorAtomPropsSchema(ColorAtomSchemaType.HueSlider)}
                 value={color}
-                className={cn('w-full h-[10px] rounded-full mb-4')}
-                onChange={(val) => handleChange(val, 'hue')}
+                onChange={(val) => handleChange(val, ColorAtomType.Hue)}
+            />
+        </FieldInput>
+        <FieldInput
+            title={'Saturation'}
+            value={getRoundNumber(color.toHsb().s * 100)}
+            max={100}
+            onChange={(val) => handleChangeAtomNum(val / 100, ColorAtomType.Saturation)}
+        >
+            <ColorBoxFloat
+                {...getColorAtomPropsSchema(ColorAtomSchemaType.SaturationSlider)}
+                value={color}
+                onChange={(val) => handleChange(val, ColorAtomType.Saturation)}
+            />
+        </FieldInput>
+        <FieldInput
+            title={'Brightness'}
+            value={getRoundNumber(color.toHsb().b * 100)}
+            max={100}
+            onChange={(val) => handleChangeAtomNum(val / 100, ColorAtomType.Brightness)}
+        >
+            <ColorBoxFloat
+                {...getColorAtomPropsSchema(ColorAtomSchemaType.BrightnessSlider)}
+                value={color}
+                onChange={(val) => handleChange(val, ColorAtomType.Brightness)}
             />
         </FieldInput>
     </>

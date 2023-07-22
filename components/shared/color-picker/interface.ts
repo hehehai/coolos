@@ -44,11 +44,27 @@ export interface BaseColorAtomProps {
     onChange?: (color: Color) => void
 }
 
-export type CommonPickerColorType = 'hue' | 'saturation' | 'brightness' | 'alpha' | 'hex'
+export enum ColorAtomType {
+    Hex = 'HEX',
+    Hue = 'hue',
+    Saturation = 'saturation',
+    Brightness = 'brightness',
+    Alpha = 'alpha',
+    Luminance = 'luminance',
+    Red = 'red',
+    Green = 'green',
+    Blue = 'blue',
+    Cyan = 'cyan',
+    Magenta = 'magenta',
+    Yellow = 'yellow',
+    Key = 'key',
+    GreenRed = 'green-red',
+    BlueYellow = 'blue-yellow',
+}
 
 export interface CommonPickerPanelProps {
     value?: ColorGenInput;
     defaultValue?: ColorGenInput;
     layerPoints?: Color[];
-    onChange?: (color: Color, type: CommonPickerColorType) => void
+    onChange?: (color: Color, type: ColorAtomType) => void
 }

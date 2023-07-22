@@ -7,7 +7,7 @@ import {Color, defaultColor} from "@/components/shared/color-picker";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import {CalculateEvent, DragChangeEvent} from "@/components/shared/color-picker/hooks/useColorDrag";
 
-export interface ColorBoxFloat extends Pick<BoxFloatProps, 'initOffset' | 'direction' | 'inside' | 'disabled' | 'layerPoints' | 'layerPointClassName' | 'layerGradientClassName'>, Omit<React.ComponentPropsWithoutRef<'div'>, 'defaultValue' | 'onChange'> {
+export interface ColorBoxFloatProps extends Pick<BoxFloatProps, 'initOffset' | 'direction' | 'inside' | 'disabled' | 'layerPoints' | 'layerPointClassName' | 'layerGradientClassName'>, Omit<React.ComponentPropsWithoutRef<'div'>, 'defaultValue' | 'onChange'> {
     value?: ColorGenInput;
     defaultValue?: ColorGenInput;
     colorToOffset: (event: CalculateEvent, color: Color) => TransformOffset | undefined;
@@ -27,7 +27,7 @@ const ColorBoxFloat = ({
                            layerGradientStyle,
 
                            ...rest
-                       }: ColorBoxFloat) => {
+                       }: ColorBoxFloatProps) => {
     const [color, setColor] = useColorState(defaultColor, {
         value,
         defaultValue,

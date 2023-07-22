@@ -1,15 +1,11 @@
 'use client'
 
-import Saturation from "@/components/shared/color-picker/components/Saturation";
-import Hue from "@/components/shared/color-picker/components/Hue";
-import {cn} from "@/lib/utils";
-import {
-    CommonPickerColorType,
-    CommonPickerPanelProps
-} from "@/components/shared/color-picker/interface";
+import {ColorAtomType, CommonPickerPanelProps} from "@/components/shared/color-picker/interface";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import {Color, defaultColor} from "@/components/shared/color-picker";
 import HexInput from "@/components/shared/color-picker/components/HexInput";
+import ColorBoxFloat from "@/components/shared/color-picker/components/ColorBoxFloat";
+import {ColorAtomSchemaType, getColorAtomPropsSchema} from "@/components/shared/color-picker/schema";
 
 const PickerPanel = ({
                          value,
@@ -22,23 +18,23 @@ const PickerPanel = ({
         defaultValue,
     });
 
-    const handleChange = (color: Color, type: CommonPickerColorType) => {
+    const handleChange = (color: Color, type: ColorAtomType) => {
         setColor(color)
         onChange?.(color, type)
     }
 
     return <>
-        <Saturation
+        <ColorBoxFloat
+            {...getColorAtomPropsSchema(ColorAtomSchemaType.SaturationBox)}
             value={color}
-            className={cn('w-full h-[calc(100%-83px)] rounded-md mb-4')}
-            onChange={(val) => handleChange(val, 'saturation')}
+            onChange={(val) => handleChange(val, ColorAtomType.Saturation)}
         />
-        <Hue
+        <ColorBoxFloat
+            {...getColorAtomPropsSchema(ColorAtomSchemaType.HueSlider)}
             value={color}
-            className={cn('w-full h-[10px] rounded-full mb-4')}
-            onChange={(val) => handleChange(val, 'hue')}
+            onChange={(val) => handleChange(val, ColorAtomType.Hue)}
         />
-        <HexInput value={color} onChange={(val) => handleChange(val, 'hex')}></HexInput>
+        <HexInput value={color} onChange={(val) => handleChange(val, ColorAtomType.Hex)}></HexInput>
     </>
 }
 

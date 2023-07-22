@@ -25,6 +25,7 @@ const FieldInput = ({
         setTmpVal(Math.trunc(value))
     }, [value])
 
+    // TODO: 即时修改，需要验证有效性质，否则不修改
     const handleChange = (e: React.SyntheticEvent) => {
         const val = (e.target as HTMLInputElement).value
         setTmpVal(val)

@@ -95,7 +95,7 @@ const BaseColorPicker = ({
                     </div>)}
                 </div>
             }
-            <div className={'w-full h-full p-4'}>
+            <div className={'w-full h-full p-4 space-y-4'}>
                 <PickerPanelComponent value={color} onChange={handleColorChange}/>
             </div>
         </div>
