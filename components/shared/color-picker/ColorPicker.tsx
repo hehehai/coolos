@@ -9,6 +9,8 @@ import {ColorGenInput, CommonPickerPanelProps} from "@/components/shared/color-p
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import {defaultColor} from "@/components/shared/color-picker/util";
 import HSB from "@/components/shared/color-picker/panels/HSB";
+import HSL from "@/components/shared/color-picker/panels/HSL";
+import RGB from "@/components/shared/color-picker/panels/RGB";
 
 export enum PickerMethod {
     Picker = 'Picker',
@@ -33,8 +35,8 @@ const pickerMethodList = [
 const pickerMethodPanel: Record<PickerMethod, React.ComponentType<CommonPickerPanelProps>> = {
     [PickerMethod.Picker]: PickerPanel,
     [PickerMethod.HSB]: HSB,
-    [PickerMethod.HSL]: PickerPanel,
-    [PickerMethod.RGB]: PickerPanel,
+    [PickerMethod.HSL]: HSL,
+    [PickerMethod.RGB]: RGB,
     [PickerMethod.CMYK]: PickerPanel,
     [PickerMethod.LAB]: PickerPanel,
     [PickerMethod.Name]: PickerPanel,

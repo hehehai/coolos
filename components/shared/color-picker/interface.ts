@@ -1,4 +1,5 @@
 import type {Color} from './color';
+import {HSL, HSLA, HSV, HSVA} from "@ctrl/tinycolor/dist/interfaces";
 
 export interface HSB {
     h: number | string;
@@ -27,6 +28,7 @@ export type ColorGenInput<T = Color> =
     | RGBA
     | HSB
     | HSBA
+    | HSL | HSLA | HSV | HSVA
     | T;
 
 export type TransformOffset = {
