@@ -2,7 +2,7 @@
 
 import {cn} from "@/lib/utils";
 import {forwardRef, Ref, useMemo, useState} from "react";
-import {ChevronDown, ChevronUp} from "@/components/icons";
+import {IconChevronDown, IconChevronUp} from "@/components/icons";
 import PickerPanel from "@/components/shared/color-picker/panels/Picker";
 import {Color} from "@/components/shared/color-picker/color";
 import {ColorGenInput, CommonPickerPanelProps} from "@/components/shared/color-picker/interface";
@@ -109,7 +109,7 @@ const BaseColorPicker = ({
                 onClick={handleToggleMethodPickerMenu}
             >
                 <span>{pickerMethod}</span>
-                {visibleMethodMenu ? <ChevronDown/> : <ChevronUp/>}
+                {visibleMethodMenu ? <IconChevronDown/> : <IconChevronUp/>}
             </div>
         </div>
     </div>
