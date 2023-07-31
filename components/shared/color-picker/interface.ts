@@ -1,5 +1,5 @@
 import type { Color } from './color';
-import { HSL, HSLA, HSV, HSVA } from "@ctrl/tinycolor/dist/interfaces";
+import { HSL, HSV } from "@ctrl/tinycolor/dist/interfaces";
 
 export interface HSB {
   h: number | string;
@@ -13,7 +13,24 @@ export interface RGB {
   b: number | string;
 }
 
-export interface HSBA extends HSB {
+export interface CMYK {
+  c: number;
+  m: number;
+  y: number;
+  k: number;
+}
+
+export interface LAB {
+  l: number;
+  a: number;
+  b: number;
+}
+
+export interface HSVA extends HSV {
+  a: number;
+}
+
+export interface HSLA extends HSL {
   a: number;
 }
 
@@ -21,14 +38,17 @@ export interface RGBA extends RGB {
   a: number;
 }
 
+export interface HSBA extends HSB {
+  a: number;
+}
+
 export type ColorGenInput<T = Color> =
   | string
   | number
-  | RGB
-  | RGBA
-  | HSB
-  | HSBA
-  | HSL | HSLA | HSV | HSVA
+  | RGB | RGBA
+  | HSB | HSBA
+  | HSL | HSLA
+  | HSV | HSVA
   | T;
 
 export type TransformOffset = {
@@ -59,7 +79,7 @@ export enum ColorAtomType {
   Cyan = 'cyan',
   Magenta = 'magenta',
   Yellow = 'yellow',
-  Key = 'key',
+  Black = 'black',
   GreenRed = 'green-red',
   BlueYellow = 'blue-yellow',
 }

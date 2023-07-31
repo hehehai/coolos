@@ -1,9 +1,10 @@
 import { ColorAtomType, CommonPickerPanelProps } from "@/components/shared/color-picker/interface";
-import { Color, defaultColor, generateColor, getRoundNumber } from "@/components/shared/color-picker";
+import { Color, defaultColor, generateColor } from "@/components/shared/color-picker";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import FieldInput from "@/components/shared/color-picker/components/FieldInput";
 import { ColorAtomSchemaType, getColorAtomPropsSchema } from "@/components/shared/color-picker/schema";
 import ColorBoxFloat from "@/components/shared/color-picker/components/ColorBoxFloat";
+import { round } from '../util'
 
 const HSB = ({
   value,
@@ -51,7 +52,7 @@ const HSB = ({
     </FieldInput>
     <FieldInput
       title={'Saturation'}
-      value={getRoundNumber(color.toHsb().s * 100)}
+      value={round(color.toHsb().s * 100)}
       max={100}
       onChange={(val) => handleChangeAtomNum(val / 100, ColorAtomType.Saturation)}
     >
@@ -63,7 +64,7 @@ const HSB = ({
     </FieldInput>
     <FieldInput
       title={'Brightness'}
-      value={getRoundNumber(color.toHsb().b * 100)}
+      value={round(color.toHsb().b * 100)}
       max={100}
       onChange={(val) => handleChangeAtomNum(val / 100, ColorAtomType.Brightness)}
     >

@@ -1,8 +1,7 @@
 import type { ColorInput, HSVA, Numberify } from '@ctrl/tinycolor';
 import { TinyColor } from '@ctrl/tinycolor';
-import type { ColorGenInput, HSB, HSBA } from './interface';
-
-export const getRoundNumber = (value: number) => Math.round(Number(value || 0));
+import type { CMYK, ColorGenInput, HSB, HSBA, RGB } from './interface';
+import { round } from './util';
 
 const convertHsb2Hsv = (color: ColorGenInput): ColorInput => {
   if (color && typeof color === 'object' && 'h' in color && 'b' in color) {
@@ -25,9 +24,9 @@ export class Color extends TinyColor {
 
   toHsbString() {
     const hsb = this.toHsb();
-    const saturation = getRoundNumber(hsb.s * 100);
-    const lightness = getRoundNumber(hsb.b * 100);
-    const hue = getRoundNumber(hsb.h);
+    const saturation = round(hsb.s * 100);
+    const lightness = round(hsb.b * 100);
+    const hue = round(hsb.h);
     const alpha = hsb.a;
     const hsbString = `hsb(${hue}, ${saturation}%, ${lightness}%)`;
     const hsbaString = `hsba(${hue}, ${saturation}%, ${lightness}%, ${alpha.toFixed(
@@ -49,5 +48,36 @@ export class Color extends TinyColor {
       ...resets,
       b: hsv.v,
     };
+  }
+
+  toCmyk(): CMYK {
+    return Color.rgbToCmyk(this.toRgb());
+  }
+
+  public static rgbToCmyk(rgb: Numberify<RGB>): CMYK {
+    const k = 1 - Math.max(rgb.r / 255, rgb.g / 255, rgb.b / 255);
+    const c = (1 - rgb.r / 255 - k) / (1 - k);
+    const m = (1 - rgb.g / 255 - k) / (1 - k);
+    const y = (1 - rgb.b / 255 - k) / (1 - k);
+
+    return {
+      c: isNaN(c) ? 0 : round(c * 100),
+      m: isNaN(m) ? 0 : round(m * 100),
+      y: isNaN(y) ? 0 : round(y * 100),
+      k: round(k * 100),
+    };
+  }
+
+  public static cmykToRgb(cmyk: CMYK): Numberify<RGB> {
+    return {
+      r: round(255 * (1 - cmyk.c / 100) * (1 - cmyk.k / 100)),
+      g: round(255 * (1 - cmyk.m / 100) * (1 - cmyk.k / 100)),
+      b: round(255 * (1 - cmyk.y / 100) * (1 - cmyk.k / 100)),
+    }
+  }
+
+  public static cmykToRgbString(cmyk: CMYK): string {
+    const rgb = Color.cmykToRgb(cmyk)
+    return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
   }
 }

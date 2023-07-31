@@ -1,5 +1,5 @@
 import { ColorAtomType, CommonPickerPanelProps } from "@/components/shared/color-picker/interface";
-import { Color, defaultColor, generateColor, getRoundNumber } from "@/components/shared/color-picker";
+import { Color, defaultColor, generateColor, round } from "@/components/shared/color-picker";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import FieldInput from "@/components/shared/color-picker/components/FieldInput";
 import { ColorAtomSchemaType, getColorAtomPropsSchema } from "@/components/shared/color-picker/schema";
@@ -44,31 +44,31 @@ const RGB = ({
       onChange={(val) => handleChangeAtomNum(val, ColorAtomType.Red)}
     >
       <ColorBoxFloat
-        {...getColorAtomPropsSchema(ColorAtomSchemaType.RGBRed)}
+        {...getColorAtomPropsSchema(ColorAtomSchemaType.RGB_Red)}
         value={color}
         onChange={(val) => handleChange(val, ColorAtomType.Red)}
       />
     </FieldInput>
     <FieldInput
       title={'Green'}
-      value={getRoundNumber(color.toRgb().g)}
+      value={round(color.toRgb().g)}
       max={255}
       onChange={(val) => handleChangeAtomNum(val, ColorAtomType.Green)}
     >
       <ColorBoxFloat
-        {...getColorAtomPropsSchema(ColorAtomSchemaType.RGBGreen)}
+        {...getColorAtomPropsSchema(ColorAtomSchemaType.RGB_Green)}
         value={color}
         onChange={(val) => handleChange(val, ColorAtomType.Green)}
       />
     </FieldInput>
     <FieldInput
       title={'Blue'}
-      value={getRoundNumber(color.toRgb().b)}
+      value={round(color.toRgb().b)}
       max={255}
       onChange={(val) => handleChangeAtomNum(val, ColorAtomType.Blue)}
     >
       <ColorBoxFloat
-        {...getColorAtomPropsSchema(ColorAtomSchemaType.RGBBlue)}
+        {...getColorAtomPropsSchema(ColorAtomSchemaType.RGB_Blue)}
         value={color}
         onChange={(val) => handleChange(val, ColorAtomType.Blue)}
       />

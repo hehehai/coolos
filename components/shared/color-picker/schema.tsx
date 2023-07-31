@@ -11,11 +11,15 @@ export enum ColorAtomSchemaType {
   SaturationBox,
   AlphaSlider,
   BrightnessSlider,
-  HSLSaturationSlider,
-  HSLLuminanceSlider,
-  RGBRed,
-  RGBGreen,
-  RGBBlue
+  HSL_SaturationSlider,
+  HSL_LuminanceSlider,
+  RGB_Red,
+  RGB_Green,
+  RGB_Blue,
+  CMYK_Cyan,
+  CMYK_Magenta,
+  CMYK_Yellow,
+  CMYK_Black,
 }
 
 const commonPropsSchema: Partial<ColorBoxFloatProps> = {
@@ -192,7 +196,7 @@ const colorAtomPropsSchema: Record<ColorAtomSchemaType, ColorBoxFloatProps> = {
     layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
     float: (color) => <Float color={color.toRgbString()} />,
   },
-  [ColorAtomSchemaType.HSLSaturationSlider]: {
+  [ColorAtomSchemaType.HSL_SaturationSlider]: {
     colorToOffset: ({
       trackWidth,
       centerOffsetX,
@@ -230,7 +234,7 @@ const colorAtomPropsSchema: Record<ColorAtomSchemaType, ColorBoxFloatProps> = {
     layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
     float: (color) => <Float color={color.toRgbString()} />,
   },
-  [ColorAtomSchemaType.HSLLuminanceSlider]: {
+  [ColorAtomSchemaType.HSL_LuminanceSlider]: {
     colorToOffset: ({
       trackWidth,
       centerOffsetX,
@@ -268,7 +272,7 @@ const colorAtomPropsSchema: Record<ColorAtomSchemaType, ColorBoxFloatProps> = {
     layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
     float: (color) => <Float color={color.toRgbString()} />,
   },
-  [ColorAtomSchemaType.RGBRed]: {
+  [ColorAtomSchemaType.RGB_Red]: {
     colorToOffset: ({
       trackWidth,
       centerOffsetX,
@@ -307,7 +311,7 @@ const colorAtomPropsSchema: Record<ColorAtomSchemaType, ColorBoxFloatProps> = {
     layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
     float: (color) => <Float color={color.toRgbString()} />,
   },
-  [ColorAtomSchemaType.RGBGreen]: {
+  [ColorAtomSchemaType.RGB_Green]: {
     colorToOffset: ({
       trackWidth,
       centerOffsetX,
@@ -346,7 +350,7 @@ const colorAtomPropsSchema: Record<ColorAtomSchemaType, ColorBoxFloatProps> = {
     layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
     float: (color) => <Float color={color.toRgbString()} />,
   },
-  [ColorAtomSchemaType.RGBBlue]: {
+  [ColorAtomSchemaType.RGB_Blue]: {
     colorToOffset: ({
       trackWidth,
       centerOffsetX,
@@ -376,6 +380,162 @@ const colorAtomPropsSchema: Record<ColorAtomSchemaType, ColorBoxFloatProps> = {
         generateColor({ ...rgb, b: 0 }).toRgbString(),
         generateColor({ ...rgb, b: 127.5 }).toRgbString(),
         generateColor({ ...rgb, b: 255 }).toRgbString()
+      ].join(', ')
+
+      return {
+        backgroundImage: `linear-gradient(to right, ${gradient})`
+      }
+    },
+    layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
+    float: (color) => <Float color={color.toRgbString()} />,
+  },
+  [ColorAtomSchemaType.CMYK_Cyan]: {
+    colorToOffset: ({
+      trackWidth,
+      centerOffsetX,
+      offsetY
+    }: CalculateEvent, color: Color) => {
+      const cmyk = color.toCmyk();
+
+      return {
+        x: (cmyk.c / 100) * trackWidth - centerOffsetX,
+        y: offsetY
+      }
+    },
+    offsetToColor: (offset: TransformOffset, { centerOffsetX, trackWidth }: DragChangeEvent, color: Color) => {
+      const xValue = ((offset.x + centerOffsetX) / trackWidth) * 100
+      const newColor = Color.cmykToRgb({
+        ...color.toCmyk(),
+        c: xValue <= 0 ? 0 : xValue
+      })
+
+      return generateColor(newColor)
+    },
+    className: 'w-full h-[10px] rounded-full',
+    direction: 'x',
+    layerGradientStyle: (color) => {
+      const cmyk = color.toCmyk();
+      const gradient = [
+        Color.cmykToRgbString({ ...cmyk, c: 0 }),
+        Color.cmykToRgbString({ ...cmyk, c: 50 }),
+        Color.cmykToRgbString({ ...cmyk, c: 100 })
+      ].join(', ')
+
+      return {
+        backgroundImage: `linear-gradient(to right, ${gradient})`
+      }
+    },
+    layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
+    float: (color) => <Float color={color.toRgbString()} />,
+  },
+  [ColorAtomSchemaType.CMYK_Magenta]: {
+    colorToOffset: ({
+      trackWidth,
+      centerOffsetX,
+      offsetY
+    }: CalculateEvent, color: Color) => {
+      const cmyk = color.toCmyk();
+
+      return {
+        x: (cmyk.m / 100) * trackWidth - centerOffsetX,
+        y: offsetY
+      }
+    },
+    offsetToColor: (offset: TransformOffset, { centerOffsetX, trackWidth }: DragChangeEvent, color: Color) => {
+      const xValue = ((offset.x + centerOffsetX) / trackWidth) * 100
+      const newColor = Color.cmykToRgb({
+        ...color.toCmyk(),
+        m: xValue <= 0 ? 0 : xValue
+      })
+
+      return generateColor(newColor)
+    },
+    className: 'w-full h-[10px] rounded-full',
+    direction: 'x',
+    layerGradientStyle: (color) => {
+      const cmyk = color.toCmyk();
+      const gradient = [
+        Color.cmykToRgbString({ ...cmyk, m: 0 }),
+        Color.cmykToRgbString({ ...cmyk, m: 50 }),
+        Color.cmykToRgbString({ ...cmyk, m: 100 })
+      ].join(', ')
+
+      return {
+        backgroundImage: `linear-gradient(to right, ${gradient})`
+      }
+    },
+    layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
+    float: (color) => <Float color={color.toRgbString()} />,
+  },
+  [ColorAtomSchemaType.CMYK_Yellow]: {
+    colorToOffset: ({
+      trackWidth,
+      centerOffsetX,
+      offsetY
+    }: CalculateEvent, color: Color) => {
+      const cmyk = color.toCmyk();
+
+      return {
+        x: (cmyk.y / 100) * trackWidth - centerOffsetX,
+        y: offsetY
+      }
+    },
+    offsetToColor: (offset: TransformOffset, { centerOffsetX, trackWidth }: DragChangeEvent, color: Color) => {
+      const xValue = ((offset.x + centerOffsetX) / trackWidth) * 100
+      const newColor = Color.cmykToRgb({
+        ...color.toCmyk(),
+        y: xValue <= 0 ? 0 : xValue
+      })
+
+      return generateColor(newColor)
+    },
+    className: 'w-full h-[10px] rounded-full',
+    direction: 'x',
+    layerGradientStyle: (color) => {
+      const cmyk = color.toCmyk();
+      const gradient = [
+        Color.cmykToRgbString({ ...cmyk, y: 0 }),
+        Color.cmykToRgbString({ ...cmyk, y: 50 }),
+        Color.cmykToRgbString({ ...cmyk, y: 100 })
+      ].join(', ')
+
+      return {
+        backgroundImage: `linear-gradient(to right, ${gradient})`
+      }
+    },
+    layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
+    float: (color) => <Float color={color.toRgbString()} />,
+  },
+  [ColorAtomSchemaType.CMYK_Black]: {
+    colorToOffset: ({
+      trackWidth,
+      centerOffsetX,
+      offsetY
+    }: CalculateEvent, color: Color) => {
+      const cmyk = color.toCmyk();
+
+      return {
+        x: (cmyk.k / 100) * trackWidth - centerOffsetX,
+        y: offsetY
+      }
+    },
+    offsetToColor: (offset: TransformOffset, { centerOffsetX, trackWidth }: DragChangeEvent, color: Color) => {
+      const xValue = ((offset.x + centerOffsetX) / trackWidth) * 100
+      const newColor = Color.cmykToRgb({
+        ...color.toCmyk(),
+        k: xValue <= 0 ? 0 : xValue
+      })
+
+      return generateColor(newColor)
+    },
+    className: 'w-full h-[10px] rounded-full',
+    direction: 'x',
+    layerGradientStyle: (color) => {
+      const cmyk = color.toCmyk();
+      const gradient = [
+        Color.cmykToRgbString({ ...cmyk, k: 0 }),
+        Color.cmykToRgbString({ ...cmyk, k: 50 }),
+        Color.cmykToRgbString({ ...cmyk, k: 100 })
       ].join(', ')
 
       return {
