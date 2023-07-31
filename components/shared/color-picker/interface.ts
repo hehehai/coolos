@@ -26,6 +26,12 @@ export interface LAB {
   b: number;
 }
 
+export interface XYZ {
+  x: number;
+  y: number;
+  z: number;
+}
+
 export interface HSVA extends HSV {
   a: number;
 }

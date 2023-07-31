@@ -12,6 +12,7 @@ import HSB from "@/components/shared/color-picker/panels/HSB";
 import HSL from "@/components/shared/color-picker/panels/HSL";
 import RGB from "@/components/shared/color-picker/panels/RGB";
 import CMYK from "@/components/shared/color-picker/panels/CMYK";
+import LAB from "./panels/LAB";
 
 export enum PickerMethod {
   Picker = 'Picker',
@@ -39,7 +40,7 @@ const pickerMethodPanel: Record<PickerMethod, React.ComponentType<CommonPickerPa
   [PickerMethod.HSL]: HSL,
   [PickerMethod.RGB]: RGB,
   [PickerMethod.CMYK]: CMYK,
-  [PickerMethod.LAB]: PickerPanel,
+  [PickerMethod.LAB]: LAB,
   [PickerMethod.Name]: PickerPanel,
 }
 

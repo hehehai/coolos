@@ -2,7 +2,7 @@ import { TransformOffset } from "@/components/shared/color-picker/interface";
 import { ColorBoxFloatProps } from "@/components/shared/color-picker/components/ColorBoxFloat";
 import { CalculateEvent, DragChangeEvent } from "@/components/shared/color-picker/hooks/useColorDrag";
 import { Color } from "@/components/shared/color-picker/color";
-import { generateColor, getFullAlphaColor } from "@/components/shared/color-picker/util";
+import { generateColor, getFullAlphaColor, round } from "@/components/shared/color-picker/util";
 import Float from "@/components/shared/color-picker/components/Float";
 
 export enum ColorAtomSchemaType {
@@ -20,6 +20,9 @@ export enum ColorAtomSchemaType {
   CMYK_Magenta,
   CMYK_Yellow,
   CMYK_Black,
+  LAB_Luminance,
+  LAB_A,
+  LAB_B,
 }
 
 const commonPropsSchema: Partial<ColorBoxFloatProps> = {
@@ -536,6 +539,125 @@ const colorAtomPropsSchema: Record<ColorAtomSchemaType, ColorBoxFloatProps> = {
         Color.cmykToRgbString({ ...cmyk, k: 0 }),
         Color.cmykToRgbString({ ...cmyk, k: 50 }),
         Color.cmykToRgbString({ ...cmyk, k: 100 })
+      ].join(', ')
+
+      return {
+        backgroundImage: `linear-gradient(to right, ${gradient})`
+      }
+    },
+    layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
+    float: (color) => <Float color={color.toRgbString()} />,
+  },
+  [ColorAtomSchemaType.LAB_Luminance]: {
+    colorToOffset: ({
+      trackWidth,
+      centerOffsetX,
+      offsetY
+    }: CalculateEvent, color: Color) => {
+      const lab = color.toLab();
+
+      return {
+        x: (lab.l / 100) * trackWidth - centerOffsetX,
+        y: offsetY
+      }
+    },
+    offsetToColor: (offset: TransformOffset, { centerOffsetX, trackWidth }: DragChangeEvent, color: Color) => {
+      const xValue = ((offset.x + centerOffsetX) / trackWidth) * 100
+      const newColor = Color.labToRgb({
+        ...color.toLab(),
+        l: xValue <= 0 ? 0 : xValue
+      })
+
+      return generateColor(newColor)
+    },
+    className: 'w-full h-[10px] rounded-full',
+    direction: 'x',
+    layerGradientStyle: (color) => {
+      const lab = color.toLab();
+      const gradient = [
+        Color.labToRgbString({ ...lab, l: 0 }),
+        Color.labToRgbString({ ...lab, l: 50 }),
+        Color.labToRgbString({ ...lab, l: 100 })
+      ].join(', ')
+
+      return {
+        backgroundImage: `linear-gradient(to right, ${gradient})`
+      }
+    },
+    layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
+    float: (color) => <Float color={color.toRgbString()} />,
+  },
+  [ColorAtomSchemaType.LAB_A]: {
+    colorToOffset: ({
+      trackWidth,
+      centerOffsetX,
+      offsetY
+    }: CalculateEvent, color: Color) => {
+      const lab = color.toLab();
+
+      return {
+        x: ((lab.a + 128) / 255) * trackWidth - centerOffsetX,
+        y: offsetY
+      }
+    },
+    offsetToColor: (offset: TransformOffset, { centerOffsetX, trackWidth }: DragChangeEvent, color: Color) => {
+      let xValue = (offset.x + centerOffsetX) / trackWidth
+      xValue = round(xValue * 255) - 128
+      const newColor = Color.labToRgb({
+        ...color.toLab(),
+        a: xValue <= -128 ? -128 : xValue
+      })
+
+      return generateColor(newColor)
+    },
+    className: 'w-full h-[10px] rounded-full',
+    direction: 'x',
+    layerGradientStyle: (color) => {
+      const lab = color.toLab();
+      const gradient = [
+        Color.labToRgbString({ ...lab, a: -128 }),
+        Color.labToRgbString({ ...lab, a: 0 }),
+        Color.labToRgbString({ ...lab, a: 127 })
+      ].join(', ')
+
+      return {
+        backgroundImage: `linear-gradient(to right, ${gradient})`
+      }
+    },
+    layerGradientClassName: 'rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08)]',
+    float: (color) => <Float color={color.toRgbString()} />,
+  },
+  [ColorAtomSchemaType.LAB_B]: {
+    colorToOffset: ({
+      trackWidth,
+      centerOffsetX,
+      offsetY
+    }: CalculateEvent, color: Color) => {
+      const lab = color.toLab();
+
+      return {
+        x: ((lab.b + 128) / 255) * trackWidth - centerOffsetX,
+        y: offsetY
+      }
+    },
+    offsetToColor: (offset: TransformOffset, { centerOffsetX, trackWidth }: DragChangeEvent, color: Color) => {
+      let xValue = (offset.x + centerOffsetX) / trackWidth
+      xValue = round(xValue * 255) - 128
+      const newColor = Color.labToRgb({
+        ...color.toLab(),
+        b: xValue <= -128 ? -128 : xValue
+      })
+
+      return generateColor(newColor)
+    },
+    className: 'w-full h-[10px] rounded-full',
+    direction: 'x',
+    layerGradientStyle: (color) => {
+      const lab = color.toLab();
+      const gradient = [
+        Color.labToRgbString({ ...lab, b: -128 }),
+        Color.labToRgbString({ ...lab, b: 0 }),
+        Color.labToRgbString({ ...lab, b: 127 })
       ].join(', ')
 
       return {

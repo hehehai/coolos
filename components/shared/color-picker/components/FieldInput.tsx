@@ -36,7 +36,7 @@ const FieldInput = ({
     if (val === '') {
       onChange?.(0)
     } else if (/[-+]?d*/.test(val)) {
-      const newVal = Math.abs(Number.parseInt(val))
+      const newVal = Number.parseInt(val)
       // FIX: 舍去小数，未重新赋值
       setTmpVal(newVal)
       onChange?.(newVal)
