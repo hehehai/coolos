@@ -12,7 +12,8 @@ import HSB from "@/components/shared/color-picker/panels/HSB";
 import HSL from "@/components/shared/color-picker/panels/HSL";
 import RGB from "@/components/shared/color-picker/panels/RGB";
 import CMYK from "@/components/shared/color-picker/panels/CMYK";
-import LAB from "./panels/LAB";
+import LAB from "@/components/shared/color-picker/panels/LAB";
+import Name from "@/components/shared/color-picker/panels/Name";
 
 export enum PickerMethod {
   Picker = 'Picker',
@@ -41,7 +42,7 @@ const pickerMethodPanel: Record<PickerMethod, React.ComponentType<CommonPickerPa
   [PickerMethod.RGB]: RGB,
   [PickerMethod.CMYK]: CMYK,
   [PickerMethod.LAB]: LAB,
-  [PickerMethod.Name]: PickerPanel,
+  [PickerMethod.Name]: Name,
 }
 
 interface ColorPickerProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'defaultValue'> {

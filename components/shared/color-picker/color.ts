@@ -157,4 +157,24 @@ export class Color extends TinyColor {
     const rgb = Color.labToRgb(lab)
     return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
   }
+
+  findClosestColor(colors: Array<{ name: string, rgb: number[] }>) {
+    const rgb = this.toRgb();
+    const { r: r1, g: g1, b: b1 } = rgb
+    let smallest = Number.MAX_VALUE;
+    let closestColor: string | undefined;
+
+    colors.forEach(color => {
+      let [r2, g2, b2] = color.rgb
+
+      let total = Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
+
+      if (total < smallest) {
+        smallest = total;
+        closestColor = color.name;
+      }
+    });
+
+    return closestColor;
+  }
 }

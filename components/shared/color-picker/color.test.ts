@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
 import { generateColor } from './util'
 import { Color } from './color'
+import names from './data/names.json'
 
 test('color rgb to cmyk', () => {
   expect(generateColor('rgb(0, 0, 0)').toCmyk()).toMatchInlineSnapshot(`
@@ -204,7 +205,7 @@ test('colot rgb to lab', () => {
   `)
 })
 
-test.only('color lab to rgb', () => {
+test('color lab to rgb', () => {
   expect(Color.labToRgb({ a: 0, b: 0, l: 100 })).toMatchInlineSnapshot(`
     {
       "b": 255,
@@ -247,4 +248,39 @@ test.only('color lab to rgb', () => {
       "r": 0,
     }
   `)
+})
+
+test.only('find closest color', () => {
+  const colors = [
+    ['rgb(205, 92, 92)', 'IndianRed'],
+    ['rgb(203, 91, 91)', 'IndianRed'],
+    ['rgb(220, 20, 60)', 'Crimson'],
+    ['rgb(245, 245, 3)', 'Yellow'],
+  ]
+
+  colors.forEach(([val, name]) => {
+    expect(generateColor(val).findClosestColor(names as any)).toBe(name)
+  })
+
+  const colors2 = [
+    ['rgb(255, 0, 255)', 'Orchid'],
+    ['rgb(252, 2, 250)', 'Orchid'],
+    ['rgb(0, 128, 0)', 'DarkGreen'],
+    ['rgb(176, 224, 230)', 'LightBlue'],
+  ]
+
+  colors2.forEach(([val, name]) => {
+    expect(generateColor(val).findClosestColor(names as any)).not.toBe(name)
+  })
+})
+
+test('find closest color same get first', () => {
+  const colors = [
+    ['rgb(0, 255, 255)', 'Aqua'],
+    ['rgb(255, 0, 255)', 'Fuchsia'],
+  ]
+
+  colors.forEach(([val, name]) => {
+    expect(generateColor(val).findClosestColor(names as any)).toBe(name)
+  })
 })

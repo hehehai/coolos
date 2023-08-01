@@ -88,6 +88,7 @@ export enum ColorAtomType {
   Black = 'black',
   GreenRed = 'green-red',
   BlueYellow = 'blue-yellow',
+  Name = 'name'
 }
 
 export interface CommonPickerPanelProps {

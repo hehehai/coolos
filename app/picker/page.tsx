@@ -6,6 +6,7 @@ import useColorState from "@/components/shared/color-picker/hooks/useColorState"
 import { defaultColor } from "@/components/shared/color-picker";
 import { useMemo } from "react";
 import { isReadable } from "@ctrl/tinycolor";
+import names from '@/components/shared/color-picker/data/names.json'
 
 const PickerPage = () => {
   const [color, setColor] = useColorState(defaultColor, {})
@@ -25,9 +26,10 @@ const PickerPage = () => {
         style={{ backgroundColor: color.toHex8String() }}
       >
         <div
-          className={cn('text-4xl', boardTextIsReadable ? 'text-white' : 'text-black')}
+          className={cn('text-4xl text-center', boardTextIsReadable ? 'text-white' : 'text-black')}
         >
-          {color.toHex8String()}
+          <p className="mb-2">{color.toHex8String()}</p>
+          <p className="text-2xl">{color.findClosestColor(names)}</p>
         </div>
       </div>
       <div>
