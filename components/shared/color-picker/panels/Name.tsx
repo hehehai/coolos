@@ -66,7 +66,7 @@ const Name = ({ value, onChange }: CommonPickerPanelProps) => {
               <TooltipTrigger>
                 <div
                   className={cn(`aspect-square rounded-sm shadow-[inset_0_0_0_1px_rgba(0,0,0,0.075)] cursor-pointer relative before:absolute before:w-2 before:h-2 before:top-1/2 before:left-1/2 before:-translate-x-2/4 before:-translate-y-2/4 before:bg-white before:rounded-full before:hidden`, {
-                    'before:block': item.name === name,
+                    'before:block before:shadow-[inset_0_0_0_1px_rgba(0,0,0,0.075)]': item.name === name,
                   })}
                   title={item.name}
                   style={{ backgroundColor: `rgb(${item.rgb[0]}, ${item.rgb[1]}, ${item.rgb[2]})` }}
