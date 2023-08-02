@@ -65,12 +65,18 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "zoom": {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.1)" },
+          "100%": { transform: "scale(1)" },
+        },
       },
       gridTemplateColumns: {
         '14': 'repeat(14, minmax(0, 1fr))',
         '16': 'repeat(16, minmax(0, 1fr))',
       },
       animation: {
+        "zoom": "zoom 0.2s ease-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
