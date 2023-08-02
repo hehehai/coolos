@@ -22,6 +22,8 @@ import LAB from "@/components/shared/color-picker/panels/LAB";
 import Name from "@/components/shared/color-picker/panels/Name";
 import { IconEyeDropper } from "@/components/icons/EyeDropper";
 import { useEyeDropper } from "@/hooks/useEyeDropper";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { toast } from "react-hot-toast";
 
 export enum PickerMethod {
   Picker = "Picker",
@@ -79,6 +81,7 @@ const BaseColorPicker = (
     PickerMethod.Picker
   );
   const { isSupport, onOpenDropper } = useEyeDropper();
+  const copy = useCopyToClipboard();
 
   const PickerPanelComponent = useMemo(() => {
     return pickerMethodPanel[pickerMethod];
@@ -102,6 +105,13 @@ const BaseColorPicker = (
     const color = await onOpenDropper();
     if (color) {
       handleColorChange(generateColor(color));
+    }
+  };
+
+  const handleCopyColor = () => {
+    const success = copy(color.toHex());
+    if (success) {
+      toast("color copy success");
     }
   };
 
@@ -160,7 +170,10 @@ const BaseColorPicker = (
               onClick={handleOpenDropper}
             />
           )}
-          <IconCopy className="text-gray-500 hover:text-slate-900 cursor-pointer" />
+          <IconCopy
+            className="text-gray-500 hover:text-slate-900 cursor-pointer"
+            onClick={handleCopyColor}
+          />
         </div>
       </div>
     </div>
