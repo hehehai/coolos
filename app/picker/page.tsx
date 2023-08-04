@@ -9,15 +9,16 @@ import { isReadable } from "@ctrl/tinycolor";
 import names from "@/components/shared/color-picker/data/names.json";
 import { IconMaximize } from "@/components/icons/Maximize";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { useAnchorPoint } from "@/hooks/useAnchorPoint";
 
-const navItems = [
-  "Conversion",
-  "Variations",
-  "Color harmonies",
-  "Blindness simulator",
-  "Contrast checker",
-  "Color libraries",
-];
+const navItems = {
+  conversion: "Conversion",
+  variations: "Variations",
+  colorHarmonies: "Color harmonies",
+  blindnessSimulator: "Blindness simulator",
+  contrastChecker: "Contrast checker",
+  colorLibraries: "Color libraries",
+};
 
 const PickerPage = () => {
   const navRef = useRef<HTMLDivElement>(null);
@@ -25,6 +26,7 @@ const PickerPage = () => {
     threshold: [1],
     logicFn: (entry) => entry.intersectionRatio < 1,
   });
+  const [navAnchorPoint] = useAnchorPoint(navItems);
   const [color, setColor] = useColorState(defaultColor, {});
 
   const boardTextIsReadable = useMemo(() => {
@@ -95,23 +97,31 @@ const PickerPage = () => {
         )}
       >
         <ul className="flex items-center justify-center space-x-5">
-          {navItems.map((item) => (
+          {Object.entries(navItems).map(([key, label]) => (
             <li
-              key={item}
+              key={key}
               className={cn(
                 "px-4 py-1.5 rounded-full hover:bg-gray-100 cursor-pointer",
                 {
-                  "bg-blue-100 text-blue-600": false,
+                  "bg-blue-100 text-blue-600": navAnchorPoint === key,
                 }
               )}
             >
-              {item}
+              {label}
             </li>
           ))}
         </ul>
       </div>
-      <div className="mt-24">
-        <div className="h-[2000px] w-full bg-gray-100"></div>
+      <div className="mt-24 px-4 space-y-10">
+        {Object.entries(navItems).map(([key, label], idx) => (
+          <div
+            key={key}
+            id={key}
+            className="h-[500px] w-full bg-gray-100 rounded-lg text-2xl text-slate-700 flex items-center justify-center"
+          >
+            {`${idx}   ${label}`}
+          </div>
+        ))}
       </div>
     </div>
   );
