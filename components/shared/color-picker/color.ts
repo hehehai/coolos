@@ -85,6 +85,10 @@ export class Color extends TinyColor {
     return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
   }
 
+  toXYZ(): XYZ {
+    return Color.rgbaToXyz(this.toRgb());
+  }
+
   /**
    * Converts an RGB color (D65) to CIE XYZ (D50)
    * https://image-engineering.de/library/technotes/958-how-to-convert-between-srgb-and-ciexyz

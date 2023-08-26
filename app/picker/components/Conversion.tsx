@@ -1,30 +1,113 @@
-// TODO: 在 color picker 中导出 coolors 支持的色彩模式, 封装，根据不同模式，获取的颜色 string 活 struct
-
 import { Color } from "@/components/shared/color-picker";
 import { IconCopy } from "@/components/icons";
 import { memo } from "react";
+import { cn } from "@/lib/utils";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import toast from "react-hot-toast";
 
-const ConversionBlock: React.FC<{
-  color: string,
+interface ConversionBlockProps extends React.ComponentPropsWithoutRef<'div'> {
+  colorStr: string,
   label: string
-}> = memo((props) => {
-  // TODO: block 需要支持 copy 颜色，成功后显示 copy success 弹窗（可以封装 hook 以及图标组件）
-  return <div className={'flex items-center justify-between'}>
-    <div>{props.label}</div>
-    <div>
-      <IconCopy />
-      <div>{props.color}</div>
+}
+
+const ConversionBlock: React.FC<ConversionBlockProps> = memo((props) => {
+  const { colorStr, label, ...otherProps } = props
+  return <div
+    {...otherProps}
+    className={cn('group px-5 py-4 cursor-pointer flex items-center justify-between', otherProps.className)}
+  >
+    <div>{label}</div>
+    <div className="flex items-center space-x-3">
+      <IconCopy className="hidden group-hover:block" />
+      <div>{colorStr}</div>
     </div>
   </div>
 })
 
 ConversionBlock.displayName = 'ConversionBlock'
 
+const conversionMap: {
+  key: string,
+  bg: string,
+  get: (color: Color) => string
+}[] = [
+    {
+      key: 'HEX',
+      bg: 'bg-gray-100',
+      get: (color: Color) => `${color.toHexString().toUpperCase().replace('#', '')}`,
+    },
+    {
+      key: 'LAB',
+      bg: 'bg-white',
+      get: (color: Color) => {
+        const lab = color.toLab();
+        return `${lab.l.toFixed(0)}, ${lab.a.toFixed(0)}, ${lab.b.toFixed(0)}`
+      },
+    },
+    {
+      key: 'RGB',
+      bg: 'bg-gray-100',
+      get: (color: Color) => {
+        const rgb = color.toRgb();
+        return `${rgb.r}, ${rgb.g}, ${rgb.b}`
+      },
+    },
+    // {
+    //   key: 'XYZ',
+    //   get: (color: Color) => {
+    //     const xyz = color.toXYZ();
+    //     return `${xyz.x}, ${xyz.y}, ${xyz.z}`
+    //   },
+    // },
+    {
+      key: 'CMYK',
+      bg: 'bg-gray-100',
+      get: (color: Color) => {
+        const cmyk = color.toCmyk();
+        return `${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k}`
+      },
+    },
+    {
+      key: 'HSB',
+      bg: 'bg-white',
+      get: (color: Color) => {
+        const hsb = color.toHsb();
+        return `${hsb.h.toFixed(0)}, ${hsb.s.toFixed(0)}, ${hsb.b.toFixed(0)}`
+      },
+    },
+    {
+      key: 'HSL',
+      bg: 'bg-gray-100',
+      get: (color: Color) => {
+        const hsl = color.toHsl();
+        return `${hsl.h.toFixed(0)}, ${hsl.s.toFixed(0)}, ${hsl.l.toFixed(0)}`
+      },
+    },
+  ]
+
 export const Conversion: React.FC<{
   color: Color,
-}> = () => {
-  // 便利 颜色模式，循环展示 block, 布局可以使用 col-2, 采用斑马条纹区别 block
-  return <div>
-    <h1> hello </h1>
+}> = (props) => {
+  const { color } = props
+
+  const copy = useCopyToClipboard();
+
+  const handleCopyColor = (val: string) => {
+    const success = copy(val);
+    if (success) {
+      toast("color copy success");
+    }
+  };
+
+  return <div className="columns-2 gap-10">
+    {conversionMap.map((item) =>
+      <ConversionBlock
+        key={item.key}
+        className={item.bg}
+        label={item.key}
+        colorStr={item.get(color)}
+        onClick={() => handleCopyColor(item.get(color))}
+      />
+    )}
   </div>
 }

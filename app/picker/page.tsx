@@ -10,6 +10,8 @@ import names from "@/components/shared/color-picker/data/names.json";
 import { IconMaximize } from "@/components/icons/Maximize";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useAnchorPoint } from "@/hooks/useAnchorPoint";
+import SectionCard from "./components/SectionCard";
+import { Conversion } from "./components/Conversion";
 
 const navItems = {
   conversion: "Conversion",
@@ -48,10 +50,10 @@ const PickerPage = () => {
         </div>
       </div>
 
-      <div className="p-4 flex items-center justify-center space-x-5 mb-32">
+      <div className="max-w-7xl mx-auto flex items-center justify-center space-x-5 mb-32">
         <div
           className={
-            "w-[800px] h-[320px] rounded-2xl flex items-center justify-center relative"
+            "w-full h-[320px] rounded-2xl flex items-center justify-center relative"
           }
           style={{ backgroundColor: color.toHex8String() }}
         >
@@ -98,7 +100,7 @@ const PickerPage = () => {
           }
         )}
       >
-        <ul className="flex items-center justify-center space-x-5">
+        <ul className="max-w-4xl mx-auto flex items-center justify-between">
           {Object.entries(navItems).map(([key, label]) => (
             <li
               key={key}
@@ -116,14 +118,15 @@ const PickerPage = () => {
         </ul>
       </div>
       <div className="mt-24 px-4 space-y-10">
-        {Object.entries(navItems).map(([key, label], idx) => (
-          <div
+        {Object.entries(navItems).map(([key, label]) => (
+          <SectionCard
             key={key}
             id={key}
-            className="h-[500px] w-full bg-gray-100 rounded-lg text-2xl text-slate-700 flex items-center justify-center"
+            title={label}
+            description={`Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum?`}
           >
-            {`${idx}   ${label}`}
-          </div>
+            <Conversion color={color} />
+          </SectionCard>
         ))}
       </div>
     </div>
