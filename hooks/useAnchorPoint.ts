@@ -1,37 +1,65 @@
-import React from "react";
+'use client';
 
-export const useAnchorPoint = (
-  anchors: {
-    [key: string]: string
-  }) => {
+import React, { useRef } from "react";
+import { throttleByRaf } from "@/lib/throttle-by-raf";
+
+const firstGtAnchor = (anchorsTops: [string, number][], point: number) => {
+  for (let i = 0; i < anchorsTops.length; i++) {
+    const [key, top] = anchorsTops[i]
+    if (top <= point) {
+      return key
+    }
+  }
+  return null
+}
+
+export const useAnchorPoint = (anchors: string[]) => {
   const [anchorPoint, setAnchorPoint] = React.useState<string | null>(null);
 
+  const anchorsTops = useRef<[string, number][]>([])
+
+  const viewHalf = document.documentElement.clientHeight / 2
+
+  const handleScroll = throttleByRaf(() => {
+    const scrollTop = document.documentElement.scrollTop
+    const pointLIne = scrollTop + viewHalf
+
+    const nextAnchor = firstGtAnchor(anchorsTops.current, pointLIne)
+
+    setAnchorPoint(nextAnchor)
+  })
+
   React.useEffect(() => {
-    // 使用 id 获取所有 anchors dom
-    // 创建 IntersectionObserver 实例并传入回调
-    // 通过回调获取当前可见的 anchor,并且 anchor 的一半在可视区域的上半部分
-    // 则该 anchor 为当前可见的 anchor
-    // 可见元素可能又多个，但只取离上半部分最近的一个
-
-    const observer = new IntersectionObserver(([entry]) => {
-      console.log(entry)
-    }, {
-      threshold: [1]
-    });
-
-    Object.keys(anchors).forEach((anchor) => {
+    anchors.forEach((anchor) => {
       const anchorDom = document.getElementById(anchor);
       if (!anchorDom) {
         return;
       }
-
-      observer.observe(anchorDom);
+      anchorsTops.current.push([anchor, anchorDom.offsetTop])
     })
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [])
+    if (anchorsTops.current.length) {
+      anchorsTops.current.sort((a, b) => b[1] - a[1])
+      window.addEventListener('scroll', handleScroll)
+    }
 
-  return [anchorPoint, setAnchorPoint]
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [anchors])
+
+  const handleScrollToAnchor = (key: string) => {
+    const anchorPoint = anchorsTops.current.find(([a, _]) => a === key)
+
+    if (anchorPoint?.length) {
+      const [_, top] = anchorPoint
+
+      window.scrollTo({
+        top: Math.max(top - viewHalf, 0),
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  return [anchorPoint, handleScrollToAnchor] as const
 }

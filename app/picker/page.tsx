@@ -20,13 +20,15 @@ const navItems = {
   colorLibraries: "Color libraries",
 };
 
+const navKeys = Object.keys(navItems)
+
 const PickerPage = () => {
   const navRef = useRef<HTMLDivElement>(null);
   const navStuck = useIntersectionObserver(navRef, {
     threshold: [1],
     logicFn: (entry) => entry.intersectionRatio < 1,
   });
-  const [navAnchorPoint] = useAnchorPoint(navItems);
+  const [navAnchorPoint, setAnchorPoint] = useAnchorPoint(navKeys);
   const [color, setColor] = useColorState(defaultColor, {});
 
   const boardTextIsReadable = useMemo(() => {
@@ -106,6 +108,7 @@ const PickerPage = () => {
                   "bg-blue-100 text-blue-600": navAnchorPoint === key,
                 }
               )}
+              onClick={() => setAnchorPoint(key)}
             >
               {label}
             </li>
