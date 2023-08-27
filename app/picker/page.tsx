@@ -12,14 +12,33 @@ import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useAnchorPoint } from "@/hooks/useAnchorPoint";
 import SectionCard from "./components/SectionCard";
 import { Conversion } from "./components/Conversion";
+import Variations from "./components/Variations";
 
 const navItems = {
-  conversion: "Conversion",
-  variations: "Variations",
-  colorHarmonies: "Color harmonies",
-  blindnessSimulator: "Blindness simulator",
-  contrastChecker: "Contrast checker",
-  colorLibraries: "Color libraries",
+  conversion: {
+    label: "Conversion",
+    Component: Conversion,
+  },
+  variations: {
+    label: "Variations",
+    Component: Variations,
+  },
+  colorHarmonies: {
+    label: "Color harmonies",
+    Component: Conversion,
+  },
+  blindnessSimulator: {
+    label: "Blindness simulator",
+    Component: Conversion,
+  },
+  contrastChecker: {
+    label: "Contrast checker",
+    Component: Conversion,
+  },
+  colorLibraries: {
+    label: "Color libraries",
+    Component: Conversion,
+  },
 };
 
 const navKeys = Object.keys(navItems)
@@ -101,7 +120,7 @@ const PickerPage = () => {
         )}
       >
         <ul className="max-w-4xl mx-auto flex items-center justify-between">
-          {Object.entries(navItems).map(([key, label]) => (
+          {Object.entries(navItems).map(([key, item]) => (
             <li
               key={key}
               className={cn(
@@ -112,20 +131,20 @@ const PickerPage = () => {
               )}
               onClick={() => setAnchorPoint(key)}
             >
-              {label}
+              {item.label}
             </li>
           ))}
         </ul>
       </div>
       <div className="mt-24 px-4 space-y-10">
-        {Object.entries(navItems).map(([key, label]) => (
+        {Object.entries(navItems).map(([key, item]) => (
           <SectionCard
             key={key}
             id={key}
-            title={label}
+            title={item.label}
             description={`Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum?`}
           >
-            <Conversion color={color} />
+            <item.Component color={color} />
           </SectionCard>
         ))}
       </div>

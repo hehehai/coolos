@@ -18,10 +18,9 @@ export const useAnchorPoint = (anchors: string[]) => {
 
   const anchorsTops = useRef<[string, number][]>([])
 
-  const viewHalf = document.documentElement.clientHeight / 2
-
   const handleScroll = throttleByRaf(() => {
     const scrollTop = document.documentElement.scrollTop
+    const viewHalf = document.documentElement.clientHeight / 2
     const pointLIne = scrollTop + viewHalf
 
     const nextAnchor = firstGtAnchor(anchorsTops.current, pointLIne)
@@ -53,6 +52,7 @@ export const useAnchorPoint = (anchors: string[]) => {
 
     if (anchorPoint?.length) {
       const [_, top] = anchorPoint
+      const viewHalf = document.documentElement.clientHeight / 2
 
       window.scrollTo({
         top: Math.max(top - viewHalf, 0),

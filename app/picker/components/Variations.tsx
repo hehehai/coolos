@@ -1,11 +1,47 @@
-import { Color } from "@/components/shared/color-picker";
+import { Color, generateColor, generateHues, generateShadows } from "@/components/shared/color-picker";
+import ExpansionStrip from "./ExpansionStrip";
+
+const variationMap = [
+  {
+    label: 'Shades',
+    description: 'A shade is created by adding black to a base color, increasing its darkness. Shades appear more dramatic and richer.',
+    getColors: (color: Color) => generateShadows(color.toRgb(), 15).map((rgb) => generateColor(rgb).toHexString())
+  },
+  {
+    label: 'Tints',
+    description: 'A tint is created by adding white to a base color, increasing its lightness. Tints are likely to look pastel and less intense.',
+    getColors: (color: Color) => generateShadows(color.toRgb(), 15, { r: 255, g: 255, b: 255 }).map((rgb) => generateColor(rgb).toHexString())
+  },
+  {
+    label: 'Tones',
+    description: 'A tone is created by adding gray to a base color, increasing its lightness. Tones looks more sophisticated and complex than base colors.',
+    getColors: (color: Color) => generateShadows(color.toRgb(), 15, { r: 127.5, g: 127.5, b: 127.5 }).map((rgb) => generateColor(rgb).toHexString())
+  },
+  {
+    label: 'Hues',
+    description: 'A hue refers to the basic family of a color from red to violet. Hues are variations of a base color on the color wheel.',
+    getColors: (color: Color) => generateHues(color.toHsv(), 15).map((rgb) => generateColor(rgb).toHexString())
+  },
+]
 
 const Variations: React.FC<{
   color: Color
 }> = (props) => {
-  // TODO: 获取颜色的 variations, 获取当前 ref point
-  // hover: 效果，需要判断当前 hover 的 variation 是?
-  return <div>
-    <div></div>
+  const { color } = props
+
+  return <div className="space-y-10">
+    {variationMap.map((variation) => {
+      const colors = variation.getColors(color)
+      return <ExpansionStrip
+        key={variation.label}
+        title={variation.label}
+        description={variation.description}
+        colors={colors}
+      />
+    })}
   </div>
 }
+
+Variations.displayName = 'Variations';
+
+export default Variations;

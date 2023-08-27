@@ -1,6 +1,7 @@
-import { Numberify } from '@ctrl/tinycolor';
+import { HSV, Numberify } from '@ctrl/tinycolor';
 import { Color } from './color';
 import type { ColorGenInput, RGB, XYZ } from './interface';
+import { adjustValue } from '@/lib/utils';
 
 export const round = (number: number, digits = 0, base = Math.pow(10, digits)): number => {
   return Math.round(base * number) / base + 0;
@@ -92,4 +93,56 @@ export const getFullAlphaColor = (color: Color) => {
   // alpha color need equal 1 for base color
   rgb.setAlpha(1);
   return rgb.toRgbString();
+}
+
+export function generateShadows(
+  baseColor: RGB,
+  levels: number,
+  blackColor: RGB = { r: 0, g: 0, b: 0 },
+): RGB[] {
+
+  const decreaseRate = 1 / levels;
+  const shadows: RGB[] = [];
+
+  for (let i = 0; i < levels; i++) {
+
+    const shadowColor: RGB = {
+      r: Number(baseColor.r) * (1 - decreaseRate * i) + Number(blackColor.r) * decreaseRate * i,
+      g: Number(baseColor.g) * (1 - decreaseRate * i) + Number(blackColor.g) * decreaseRate * i,
+      b: Number(baseColor.b) * (1 - decreaseRate * i) + Number(blackColor.b) * decreaseRate * i
+    };
+
+    shadows.push(shadowColor);
+  }
+
+  return shadows;
+}
+
+
+export function generateHues(
+  baseColor: HSV,
+  levels: number,
+): HSV[] {
+  const baseH = Number.parseInt(baseColor.h.toString())
+
+  const wheelThunks: {
+    left: number[],
+    right: number[]
+  } = {
+    left: [],
+    right: []
+  }
+
+  levels = levels > 19 ? 19 : levels
+
+  const rangeSize = Math.floor((levels - 1) / 2)
+
+  const thunkSize = 360 / 36
+
+  for (let i = 1; i <= rangeSize; i++) {
+    wheelThunks.left.unshift(adjustValue(baseH - thunkSize * i, 360))
+    wheelThunks.right.push(adjustValue(baseH + thunkSize * i, 360))
+  }
+
+  return [...wheelThunks.left, baseH, ...wheelThunks.right].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
 }

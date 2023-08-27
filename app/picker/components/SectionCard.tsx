@@ -1,7 +1,7 @@
 interface SectionCardProps extends React.ComponentPropsWithoutRef<'section'> {
   title: string;
-  description?: JSX.Element | string;
-  children?: JSX.Element | string;
+  description?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const SectionCard = (props: SectionCardProps) => {
