@@ -95,7 +95,8 @@ export const getFullAlphaColor = (color: Color) => {
   return rgb.toRgbString();
 }
 
-export function generateShadows(
+// 生成明暗变体
+export function generateVariations(
   baseColor: RGB,
   levels: number,
   blackColor: RGB = { r: 0, g: 0, b: 0 },
@@ -119,6 +120,7 @@ export function generateShadows(
 }
 
 
+// 生成 HUE 色系组
 export function generateHues(
   baseColor: HSV,
   levels: number,
@@ -145,4 +147,65 @@ export function generateHues(
   }
 
   return [...wheelThunks.left, baseH, ...wheelThunks.right].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
+}
+
+// 邻近色
+export function colorAnalogous(baseColor: HSV) {
+  const baseH = Number.parseInt(baseColor.h.toString())
+
+  const left = adjustValue(baseH - 30, 360)
+  const right = adjustValue(baseH + 30, 360)
+
+  return [left, baseH, right].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
+}
+
+// 互补色
+export function colorComplementary(baseColor: HSV) {
+  const baseH = Number.parseInt(baseColor.h.toString())
+
+  const left = adjustValue(baseH - 180, 360)
+
+  return [baseH, left].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
+}
+
+// 互补分裂色
+export function colorSplitComplementary(baseColor: HSV) {
+  const baseH = Number.parseInt(baseColor.h.toString())
+
+  const left = adjustValue(baseH - 150, 360)
+  const right = adjustValue(baseH + 150, 360)
+
+  return [baseH, left, right].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
+}
+
+// 三角色
+export function colorTriadic(baseColor: HSV) {
+  const baseH = Number.parseInt(baseColor.h.toString())
+
+  const left = adjustValue(baseH - 120, 360)
+  const right = adjustValue(baseH + 120, 360)
+
+  return [baseH, left, right].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
+}
+
+// 四元色
+export function colorTetradic(baseColor: HSV) {
+  const baseH = Number.parseInt(baseColor.h.toString())
+
+  const left = adjustValue(baseH - 60, 360)
+  const right = adjustValue(baseH + 120, 360)
+  const antagonism = adjustValue(baseH + 180, 360)
+
+  return [baseH, left, right, antagonism].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
+}
+
+// 四方色
+export function colorSquare(baseColor: HSV) {
+  const baseH = Number.parseInt(baseColor.h.toString())
+
+  const left = adjustValue(baseH - 90, 360)
+  const antagonism = adjustValue(baseH - 180, 360)
+  const right = adjustValue(baseH + 90, 360)
+
+  return [baseH, left, antagonism, right].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
 }

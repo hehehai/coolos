@@ -85,7 +85,7 @@ const conversionMap: {
     },
   ]
 
-export const Conversion: React.FC<{
+const Conversion: React.FC<{
   color: Color,
 }> = (props) => {
   const { color } = props
@@ -111,3 +111,7 @@ export const Conversion: React.FC<{
     )}
   </div>
 }
+
+Conversion.displayName = 'Conversion'
+
+export default Conversion

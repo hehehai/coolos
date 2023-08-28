@@ -14,7 +14,7 @@ const ShowCard = (props: ShowCardProps) => {
         <div className="text-xl font-medium">{title}</div>
         {extra && <div>{extra}</div>}
       </div>
-      {description && <div className="text-gray-500 mt-2">{description}</div>}
+      {description && <div className="text-sm text-gray-500 mt-2">{description}</div>}
     </div>
     <div className="w-full">{children}</div>
   </div>

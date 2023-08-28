@@ -11,8 +11,9 @@ import { IconMaximize } from "@/components/icons/Maximize";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useAnchorPoint } from "@/hooks/useAnchorPoint";
 import SectionCard from "./components/SectionCard";
-import { Conversion } from "./components/Conversion";
+import Conversion from "./components/Conversion";
 import Variations from "./components/Variations";
+import Harmonies from "./components/Harmonies";
 
 const navItems = {
   conversion: {
@@ -25,7 +26,7 @@ const navItems = {
   },
   colorHarmonies: {
     label: "Color harmonies",
-    Component: Conversion,
+    Component: Harmonies,
   },
   blindnessSimulator: {
     label: "Blindness simulator",
