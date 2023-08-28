@@ -1,9 +1,0 @@
-.expansion-strip_colors .expansion-strip_block:first-child{
-    border-radius: 8px 0 0 8px;
-    box-shadow: inset rgba(0, 0, 0, 0.08) 1px 1px, inset rgba(0, 0, 0, 0.08) 0 -1px;
-}
-
-.expansion-strip_colors .expansion-strip_block:last-child{
-    border-radius: 0 8px 8px 0;
-    box-shadow: inset rgba(0, 0, 0, 0.08) -1px 1px, inset rgba(0, 0, 0, 0.08) 0 -1px;
-}
