@@ -14,31 +14,28 @@ import SectionCard from "./components/SectionCard";
 import Conversion from "./components/Conversion";
 import Variations from "./components/Variations";
 import Harmonies from "./components/Harmonies";
+import ContrastChecker from "./components/ContrastChecker";
 
 const navItems = {
   conversion: {
     label: "Conversion",
+    description: 'Convert colors between different color models like RGB, HSL, HSV, CMYK and more.',
     Component: Conversion,
   },
   variations: {
     label: "Variations",
+    description: 'View this color variations of shades, tints, tones, hues and temperatures.',
     Component: Variations,
   },
   colorHarmonies: {
     label: "Color harmonies",
+    description: 'Color harmonies are pleasing color schemes created according to their position on a color wheel.',
     Component: Harmonies,
-  },
-  blindnessSimulator: {
-    label: "Blindness simulator",
-    Component: Conversion,
   },
   contrastChecker: {
     label: "Contrast checker",
-    Component: Conversion,
-  },
-  colorLibraries: {
-    label: "Color libraries",
-    Component: Conversion,
+    description: 'Verify the contrast of a text on white and black backgrounds.',
+    Component: ContrastChecker,
   },
 };
 
@@ -58,7 +55,7 @@ const PickerPage = () => {
   }, [color]);
 
   return (
-    <div className={cn(`bg-white relative`)}>
+    <div className={cn(`bg-white relative pb-20`)}>
       <div className="text-center py-28">
         <div className="text-5xl font-bold text-slate-800 mb-8">
           Color Picker
@@ -120,7 +117,7 @@ const PickerPage = () => {
           }
         )}
       >
-        <ul className="max-w-4xl mx-auto flex items-center justify-between">
+        <ul className="max-w-2xl mx-auto flex items-center justify-between">
           {Object.entries(navItems).map(([key, item]) => (
             <li
               key={key}
@@ -143,7 +140,7 @@ const PickerPage = () => {
             key={key}
             id={key}
             title={item.label}
-            description={`Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum?`}
+            description={item.description}
           >
             <item.Component color={color} />
           </SectionCard>

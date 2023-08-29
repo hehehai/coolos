@@ -1,4 +1,4 @@
-import { HSV, Numberify } from '@ctrl/tinycolor';
+import { HSV, Numberify, readability } from '@ctrl/tinycolor';
 import { Color } from './color';
 import type { ColorGenInput, RGB, XYZ } from './interface';
 import { adjustValue } from '@/lib/utils';
@@ -208,4 +208,42 @@ export function colorSquare(baseColor: HSV) {
   const right = adjustValue(baseH + 90, 360)
 
   return [baseH, left, antagonism, right].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
+}
+
+// 颜色对比度等级
+export function colorContrastLevel(baseColor: Color, targetColor: Color) {
+  const contrast = readability(baseColor, targetColor) - 1
+
+  switch (true) {
+    case contrast <= 4.2:
+      return {
+        level: 'A',
+        label: 'very poor'
+      }
+    case contrast <= 4.2 * 2:
+      return {
+        level: 'AA',
+        label: 'poor'
+      }
+    case contrast <= 4.2 * 3:
+      return {
+        level: 'AAA',
+        label: 'good'
+      }
+    case contrast <= 4.2 * 4:
+      return {
+        level: 'AAAA',
+        label: 'very good'
+      }
+    case contrast <= 4.2 * 5:
+      return {
+        level: 'AAAAA',
+        label: 'super'
+      }
+    default:
+      return {
+        level: 'AAAAA',
+        label: 'super'
+      }
+  }
 }
