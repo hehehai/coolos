@@ -10,7 +10,7 @@ interface ConversionBlockProps extends React.ComponentPropsWithoutRef<'div'> {
   label: string
 }
 
-const ConversionBlock: React.FC<ConversionBlockProps> = memo((props) => {
+const ConversionBlock = memo((props: ConversionBlockProps) => {
   const { colorStr, label, ...otherProps } = props
   return <div
     {...otherProps}
@@ -85,11 +85,7 @@ const conversionMap: {
     },
   ]
 
-const Conversion: React.FC<{
-  color: Color,
-}> = (props) => {
-  const { color } = props
-
+const Conversion = memo(({ color }: { color: Color }) => {
   const copy = useCopyToClipboard();
 
   const handleCopyColor = (val: string) => {
@@ -110,7 +106,7 @@ const Conversion: React.FC<{
       />
     )}
   </div>
-}
+})
 
 Conversion.displayName = 'Conversion'
 

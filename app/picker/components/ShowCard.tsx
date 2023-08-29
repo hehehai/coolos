@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 export interface ShowCardProps extends React.ComponentPropsWithoutRef<'div'> {
   title: string;
   description?: React.ReactNode;
@@ -5,7 +7,7 @@ export interface ShowCardProps extends React.ComponentPropsWithoutRef<'div'> {
   children?: React.ReactNode;
 }
 
-const ShowCard = (props: ShowCardProps) => {
+const ShowCard = memo((props: ShowCardProps) => {
   const { title, description, extra, children, ...otherProps } = props
 
   return <div {...otherProps}>
@@ -18,7 +20,7 @@ const ShowCard = (props: ShowCardProps) => {
     </div>
     <div className="w-full">{children}</div>
   </div>
-}
+})
 
 ShowCard.displayName = 'ShowCard'
 

@@ -3,13 +3,14 @@ import ShowCard, { ShowCardProps } from "./ShowCard";
 import { cn } from "@/lib/utils";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import toast from "react-hot-toast";
+import { memo } from "react";
 
 interface ExpansionStripProps extends Omit<ShowCardProps, 'children'> {
   colors: string[];
   point?: string;
 }
 
-const ExpansionStrip = (props: ExpansionStripProps) => {
+const ExpansionStrip = memo((props: ExpansionStripProps) => {
   const { colors, point, ...otherProps } = props
 
   const copy = useCopyToClipboard();
@@ -39,7 +40,7 @@ const ExpansionStrip = (props: ExpansionStripProps) => {
       ))}
     </div>
   </ShowCard>
-}
+})
 
 ExpansionStrip.displayName = 'ExpansionStrip'
 

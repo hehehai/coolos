@@ -24,8 +24,9 @@ export const useAnchorPoint = (anchors: string[]) => {
     const pointLIne = scrollTop + viewHalf
 
     const nextAnchor = firstGtAnchor(anchorsTops.current, pointLIne)
-
-    setAnchorPoint(nextAnchor)
+    if (nextAnchor !== anchorPoint) {
+      setAnchorPoint(nextAnchor)
+    }
   })
 
   React.useEffect(() => {

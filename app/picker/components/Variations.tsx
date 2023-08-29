@@ -1,5 +1,6 @@
 import { Color, generateColor, generateHues, generateVariations } from "@/components/shared/color-picker";
 import ExpansionStrip from "./ExpansionStrip";
+import { memo } from "react";
 
 const variationMap = [
   {
@@ -24,12 +25,8 @@ const variationMap = [
   },
 ]
 
-const Variations: React.FC<{
-  color: Color
-}> = (props) => {
-  const { color } = props
-
-  return <div className="space-y-10">
+const Variations = memo(({ color }: { color: Color }) =>
+  <div className="space-y-10">
     {variationMap.map((variation) => {
       const colors = variation.getColors(color)
       return <ExpansionStrip
@@ -40,7 +37,7 @@ const Variations: React.FC<{
       />
     })}
   </div>
-}
+)
 
 Variations.displayName = 'Variations';
 

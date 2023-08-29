@@ -1,10 +1,12 @@
+import { memo } from "react";
+
 interface SectionCardProps extends React.ComponentPropsWithoutRef<'section'> {
   title: string;
   description?: React.ReactNode;
   children?: React.ReactNode;
 }
 
-const SectionCard = (props: SectionCardProps) => {
+const SectionCard = memo((props: SectionCardProps) => {
   const { title, description, children, ...otherProps } = props
 
   return <section
@@ -19,7 +21,7 @@ const SectionCard = (props: SectionCardProps) => {
       {children}
     </div>
   </section>;
-}
+})
 
 SectionCard.displayName = 'SectionCard';
 

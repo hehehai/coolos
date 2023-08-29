@@ -1,5 +1,6 @@
 import { Color, colorAnalogous, colorComplementary, colorSplitComplementary, colorSquare, colorTetradic, colorTriadic, generateColor } from "@/components/shared/color-picker"
 import ExpansionStrip from "./ExpansionStrip"
+import { memo } from "react"
 
 const harmoniesMap = [
   {
@@ -34,12 +35,8 @@ const harmoniesMap = [
   },
 ]
 
-const Harmonies: React.FC<{
-  color: Color
-}> = (props) => {
-  const { color } = props
-
-  return <div className="grid gap-10 grid-cols-2">
+const Harmonies = memo(({ color }: { color: Color }) =>
+  <div className="grid gap-10 grid-cols-2">
     {harmoniesMap.map((harmonie) => {
       const colors = harmonie.getColors(color)
       return <ExpansionStrip
@@ -50,7 +47,7 @@ const Harmonies: React.FC<{
       />
     })}
   </div>
-}
+)
 
 Harmonies.displayName = 'Harmonies'
 

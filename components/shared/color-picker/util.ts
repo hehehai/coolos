@@ -215,35 +215,40 @@ export function colorContrastLevel(baseColor: Color, targetColor: Color) {
   const contrast = readability(baseColor, targetColor) - 1
 
   switch (true) {
-    case contrast <= 4.2:
+    case contrast <= 4:
       return {
         level: 'A',
-        label: 'very poor'
+        label: 'VERY POOR',
+        color: 'text-vilet-700',
+        bg: 'bg-red-200'
       }
-    case contrast <= 4.2 * 2:
+    case contrast <= 8:
       return {
         level: 'AA',
-        label: 'poor'
+        label: 'POOR',
+        color: 'text-vilet-700',
+        bg: 'bg-red-200'
       }
-    case contrast <= 4.2 * 3:
+    case contrast <= 12:
       return {
         level: 'AAA',
-        label: 'good'
+        label: 'GOOD',
+        color: 'text-orange-500',
+        bg: 'bg-orange-100'
       }
-    case contrast <= 4.2 * 4:
+    case contrast <= 16:
       return {
         level: 'AAAA',
-        label: 'very good'
-      }
-    case contrast <= 4.2 * 5:
-      return {
-        level: 'AAAAA',
-        label: 'super'
+        label: 'VERY GOOD',
+        color: 'text-green-500',
+        bg: 'bg-green-100'
       }
     default:
       return {
         level: 'AAAAA',
-        label: 'super'
+        label: 'SUPER',
+        color: 'text-green-600',
+        bg: 'bg-green-200'
       }
   }
 }
