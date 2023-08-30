@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { throttleByRaf } from "@/lib/throttle-by-raf";
 
 const firstGtAnchor = (anchorsTops: [string, number][], point: number) => {
@@ -18,7 +18,7 @@ export const useAnchorPoint = (anchors: string[]) => {
 
   const anchorsTops = useRef<[string, number][]>([])
 
-  const handleScroll = throttleByRaf(() => {
+  const handleScroll = useCallback((() => {
     const scrollTop = document.documentElement.scrollTop
     const viewHalf = document.documentElement.clientHeight / 2
     const pointLIne = scrollTop + viewHalf
@@ -27,9 +27,11 @@ export const useAnchorPoint = (anchors: string[]) => {
     if (nextAnchor !== anchorPoint) {
       setAnchorPoint(nextAnchor)
     }
-  })
+  }), [anchorsTops, anchorPoint])
 
   React.useEffect(() => {
+    anchorsTops.current = []
+
     anchors.forEach((anchor) => {
       const anchorDom = document.getElementById(anchor);
       if (!anchorDom) {
@@ -38,15 +40,17 @@ export const useAnchorPoint = (anchors: string[]) => {
       anchorsTops.current.push([anchor, anchorDom.offsetTop])
     })
 
+    const handleScrollThrottle = throttleByRaf(handleScroll)
+
     if (anchorsTops.current.length) {
       anchorsTops.current.sort((a, b) => b[1] - a[1])
-      window.addEventListener('scroll', handleScroll)
+      window.addEventListener('scroll', handleScrollThrottle)
     }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('scroll', handleScrollThrottle)
     }
-  }, [anchors])
+  }, [anchors, handleScroll])
 
   const handleScrollToAnchor = (key: string) => {
     const anchorPoint = anchorsTops.current.find(([a, _]) => a === key)
