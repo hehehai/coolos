@@ -43,15 +43,12 @@ export class Color extends TinyColor {
     let hsv = this.toHsv();
     if (typeof this.originalInput === 'object' && this.originalInput) {
       if ('h' in this.originalInput) {
-        hsv = this.originalInput as Numberify<HSVA>;
+        hsv.h = (this.originalInput as Numberify<HSVA>).h;
       }
     }
 
-    const { v, ...resets } = hsv;
-    return {
-      ...resets,
-      b: hsv.v,
-    };
+    const { h, s, v, a } = hsv;
+    return { h, s, a, b: v };
   }
 
   toCmyk(): CMYK {
