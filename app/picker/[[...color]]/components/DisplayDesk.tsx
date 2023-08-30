@@ -7,6 +7,7 @@ import { memo, useMemo, useState } from "react";
 import names from "@/components/shared/color-picker/data/names.json";
 import { IconMaximize } from "@/components/icons/Maximize";
 import ColorFullScreen from "@/components/shared/color-fullscreen";
+import { useLockedBody } from 'usehooks-ts'
 
 const DisplayDesk = memo(({ color }: { color: Color }) => {
   const boardTextIsReadable = useMemo(() => {
@@ -14,9 +15,14 @@ const DisplayDesk = memo(({ color }: { color: Color }) => {
   }, [color]);
 
   const [isColorFullScreen, setColorFullScreen] = useState(false);
+  const [_, setLocked] = useLockedBody(false, 'root')
 
   const handleColorFullScreen = () => {
-    setColorFullScreen((state) => !state);
+    setColorFullScreen((state) => {
+      const nectState = !state
+      setLocked(nectState)
+      return nectState
+    });
   };
 
   return <div
