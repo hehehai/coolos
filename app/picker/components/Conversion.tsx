@@ -91,7 +91,7 @@ const Conversion = memo(({ color }: { color: Color }) => {
   const handleCopyColor = (val: string) => {
     const success = copy(val);
     if (success) {
-      toast("color copy success");
+      toast.success("color copy success");
     }
   };
 

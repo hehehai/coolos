@@ -22,12 +22,14 @@ export const useIntersectionObserver = <T extends HTMLElement | null>(
       observer.observe(ref.current);
     }
 
+    const refCurrent = ref.current
+
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (refCurrent) {
+        observer.unobserve(refCurrent);
       }
     };
-  }, []);
+  }, [options, ref]);
 
   return isIntersecting;
 };

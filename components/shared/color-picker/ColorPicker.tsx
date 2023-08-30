@@ -111,7 +111,7 @@ const BaseColorPicker = (
   const handleCopyColor = () => {
     const success = copy(color.toHex());
     if (success) {
-      toast("color copy success");
+      toast.success("color copy success");
     }
   };
 

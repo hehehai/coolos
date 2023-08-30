@@ -1,3 +1,5 @@
 export * from './ChevronUp'
 export * from './ChevronDown'
 export * from './Copy'
+export * from './EyeDropper'
+export * from './Maximize'
