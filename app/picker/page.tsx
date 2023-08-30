@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import ColorPicker from "@/components/shared/color-picker/ColorPicker";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import { defaultColor } from "@/components/shared/color-picker";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { isReadable } from "@ctrl/tinycolor";
 import names from "@/components/shared/color-picker/data/names.json";
 import { IconMaximize } from "@/components/icons/Maximize";
@@ -15,6 +15,7 @@ import Conversion from "./components/Conversion";
 import Variations from "./components/Variations";
 import Harmonies from "./components/Harmonies";
 import ContrastChecker from "./components/ContrastChecker";
+import ColorFullScreen from "@/components/shared/color-fullscreen";
 
 const navItems = {
   conversion: {
@@ -49,6 +50,11 @@ const PickerPage = () => {
   });
   const [navAnchorPoint, setAnchorPoint] = useAnchorPoint(navKeys);
   const [color, setColor] = useColorState(defaultColor, {});
+  const [isColorFullScreen, setColorFullScreen] = useState(false);
+
+  const handleColorFullScreen = () => {
+    setColorFullScreen((state) => !state);
+  };
 
   const boardTextIsReadable = useMemo(() => {
     return isReadable(color, "#fff", { level: "AA", size: "large" });
@@ -70,7 +76,7 @@ const PickerPage = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-center space-x-5 mb-32">
         <div
           className={
-            "w-full h-[320px] rounded-2xl flex items-center justify-center relative"
+            "w-full h-[320px] rounded-2xl flex items-center justify-center relative shadow-[inset_rgba(0,0,0,0.05)_0_0_0_1px]"
           }
           style={{ backgroundColor: color.toHex8String() }}
         >
@@ -100,6 +106,7 @@ const PickerPage = () => {
                   ? "text-white/50 hover:text-white"
                   : "text-black/50 hover:text-black"
               )}
+              onClick={handleColorFullScreen}
             />
           </div>
         </div>
@@ -146,6 +153,7 @@ const PickerPage = () => {
           </SectionCard>
         ))}
       </div>
+      <ColorFullScreen show={isColorFullScreen} color={color.toHexString()} onClose={handleColorFullScreen} />
     </div>
   );
 };
