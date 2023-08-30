@@ -1,10 +1,10 @@
-import PageWrapper from "@/app/components/PageWrapper";
 import { Metadata } from "next";
 import { FC } from "react";
+import PageWrapper from "../components/PageWrapper";
 
 const pageMeta = {
-  title: 'Color Picker',
-  description: 'Get useful color information like conversion, combinations, blindness simulation and more'
+  title: 'Color Contrast Checker',
+  description: 'Calculate the contrast ratio of text and background colors.'
 }
 
 export const metadata: Metadata = {
