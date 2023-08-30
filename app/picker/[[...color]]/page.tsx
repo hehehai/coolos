@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from "@/lib/utils";
 import ColorPicker from "@/components/shared/color-picker/ColorPicker";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import { defaultColor, generateColor } from "@/components/shared/color-picker";
@@ -20,18 +19,7 @@ const PickerPage = ({ params }: { params: { color?: string[] } }) => {
   const [color, setColor] = useColorState(firstColor, {});
 
   return (
-    <div className={cn(`bg-white relative pb-20`)}>
-      <div className="text-center py-28">
-        <div className="text-5xl font-bold text-slate-800 mb-8">
-          Color Picker
-        </div>
-        <div className="text-xl text-gray-500 leading-relaxed">
-          Get useful color information like conversion,
-          <br />
-          combinations, blindness simulation and more.
-        </div>
-      </div>
-
+    <div>
       <div className="max-w-7xl mx-auto flex items-center justify-center space-x-5 mb-28">
         <DisplayDesk color={color} />
         <ColorPicker value={color} onChange={setColor}></ColorPicker>
