@@ -53,7 +53,7 @@ const BoxFloat = forwardRef<HTMLDivElement, BoxFloatProps>(({
   const trackRef = useRef<HTMLDivElement>(null)
   const transformRef = useRef<HTMLDivElement>(null)
 
-  const [offset, handleDragStart, { getBaseData }] = useColorDrag({
+  const [offset, handleDragStart, { getBaseData, offsetIsInit }] = useColorDrag({
     initOffset,
     inside,
     trackRef,
@@ -99,7 +99,7 @@ const BoxFloat = forwardRef<HTMLDivElement, BoxFloatProps>(({
       onMouseDown={handleDragStart}
       onTouchStart={handleDragStart}
     >
-      <div ref={transformRef} className={cn('absolute', 'z-1')} style={{
+      <div ref={transformRef} className={cn('absolute', 'z-1', { 'invisible': !offsetIsInit })} style={{
         left: offset.x,
         top: offset.y,
       }}>

@@ -80,6 +80,7 @@ function useColorDrag({
 }: DragOptions) {
 
   const [offset, setOffset] = useState<TransformOffset>(initOffset ?? { x: 0, y: 0 })
+  const [offsetIsInit, setOffsetIsInit] = useState(false)
   const dragMoveRef = useRef<((event: MouseEvent | TouchEvent) => void) | null>(null)
   const dragUpRef = useRef<((event: MouseEvent | TouchEvent) => void) | null>(null)
   const dragRef = useRef({
@@ -149,6 +150,7 @@ function useColorDrag({
       if (!baseData) return
       const offsetVal = offsetCalculate(baseData)
       if (!offsetVal) return
+      setOffsetIsInit(true)
       setOffset(offsetVal)
     }
   }, [offsetCalculate, getBaseData])
@@ -253,7 +255,7 @@ function useColorDrag({
     dragUpRef.current = handleDragEnd
   }
 
-  return [offset, handleDragStart, { getBaseData }] as const
+  return [offset, handleDragStart, { getBaseData, offsetIsInit }] as const
 }
 
 export default useColorDrag
