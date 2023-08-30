@@ -3,14 +3,21 @@
 import { cn } from "@/lib/utils";
 import ColorPicker from "@/components/shared/color-picker/ColorPicker";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
-import { defaultColor } from "@/components/shared/color-picker";
+import { defaultColor, generateColor } from "@/components/shared/color-picker";
 import SectionCard from "./components/SectionCard";
 import DisplayDesk from "./components/DisplayDesk";
 import NavBar from "./components/NavBar";
 import { navItems } from "./constants.schema";
+import { useMemo } from "react";
 
-const PickerPage = () => {
-  const [color, setColor] = useColorState(defaultColor, {});
+const PickerPage = ({ params }: { params: { color?: string[] } }) => {
+  // route color params
+  const firstColor = useMemo(() => {
+    if (!params.color?.length) return defaultColor
+    const routeColor = generateColor(params.color[0])
+    return routeColor.isValid ? routeColor : defaultColor
+  }, [params.color])
+  const [color, setColor] = useColorState(firstColor, {});
 
   return (
     <div className={cn(`bg-white relative pb-20`)}>
