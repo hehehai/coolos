@@ -4,7 +4,7 @@ import { Color, colorContrastLevel, generateColor } from "@/components/shared/co
 import { memo } from "react";
 
 const CheckerDemo = memo((props: { color: string, className?: string }) => {
-  return <div className={cn('w-full p-5 text-center space-y-4 rounded-lg border border-gray-200', props.className)} style={{ color: props.color }}>
+  return <div className={cn('w-full px-5 py-8 text-center space-y-4 rounded-lg border border-gray-200', props.className)} style={{ color: props.color }}>
     <p className="text-2xl">Quote n. 3</p>
     <p>Courage is not the absence of fear, but rather the judgement that something else is more important than fear.</p>
     <p className="font-medium">Ambrose Redmoon</p>

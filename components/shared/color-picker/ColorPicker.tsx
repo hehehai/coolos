@@ -119,7 +119,7 @@ const BaseColorPicker = (
     <div
       ref={ref}
       className={cn(
-        "relative w-[300px] h-[320px] overflow-hidden bg-white rounded-2xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)]"
+        "relative shrink-0 w-[300px] h-[320px] overflow-hidden bg-white rounded-2xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)]"
       )}
     >
       <div className={cn("relative w-full h-[calc(100%-46px)]")}>

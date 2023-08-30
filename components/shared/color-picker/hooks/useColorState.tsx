@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import type { Color } from '../color';
 import type { ColorGenInput } from '../interface';
