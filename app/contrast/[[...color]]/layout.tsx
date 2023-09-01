@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { FC } from "react";
-import PageWrapper from "../components/PageWrapper";
+import PageWrapper from "@/app/components/PageWrapper";
 
 const pageMeta = {
   title: 'Color Contrast Checker',
