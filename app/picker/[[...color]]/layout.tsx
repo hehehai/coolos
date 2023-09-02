@@ -1,4 +1,4 @@
-import PageWrapper from "@/app/components/PageWrapper";
+import PageWrapper from "@/components/shared/page-wrapper";
 import { Metadata } from "next";
 import { FC } from "react";
 

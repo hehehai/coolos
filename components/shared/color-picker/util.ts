@@ -210,34 +210,40 @@ export function colorSquare(baseColor: HSV) {
   return [baseH, left, antagonism, right].map(h => ({ h, s: baseColor.s, v: baseColor.v }));
 }
 
+
+
 // 颜色对比度等级
 export function colorContrastLevel(baseColor: Color, targetColor: Color) {
-  const contrast = readability(baseColor, targetColor) - 1
+  const contrast = readability(baseColor, targetColor)
 
   switch (true) {
-    case contrast <= 4:
+    case contrast <= 5:
       return {
+        contrast,
         level: 'A',
         label: 'VERY POOR',
         color: 'text-vilet-700',
         bg: 'bg-red-200'
       }
-    case contrast <= 8:
+    case contrast <= 9:
       return {
+        contrast,
         level: 'AA',
         label: 'POOR',
         color: 'text-vilet-700',
         bg: 'bg-red-200'
       }
-    case contrast <= 12:
+    case contrast <= 13:
       return {
+        contrast,
         level: 'AAA',
         label: 'GOOD',
         color: 'text-orange-500',
         bg: 'bg-orange-100'
       }
-    case contrast <= 16:
+    case contrast <= 17:
       return {
+        contrast,
         level: 'AAAA',
         label: 'VERY GOOD',
         color: 'text-green-500',
@@ -245,10 +251,61 @@ export function colorContrastLevel(baseColor: Color, targetColor: Color) {
       }
     default:
       return {
+        contrast,
         level: 'AAAAA',
         label: 'SUPER',
         color: 'text-green-600',
         bg: 'bg-green-200'
       }
   }
+}
+
+// W3C Contrast checker 等级
+enum ContrastLevel {
+  AA,
+  AAA
+}
+
+interface LevelDetails {
+  label: string;
+  minContrast: number;
+}
+
+const levels: {
+  [key in ContrastLevel]: LevelDetails
+} = {
+  [ContrastLevel.AA]: {
+    label: 'AA',
+    minContrast: 4.5
+  },
+
+  [ContrastLevel.AAA]: {
+    label: 'AAA',
+    minContrast: 7
+  }
+}
+
+function getContrastLevel(contrast: number): ContrastLevel | null {
+  if (contrast >= levels[ContrastLevel.AAA].minContrast) {
+    return ContrastLevel.AAA;
+  }
+
+  if (contrast >= levels[ContrastLevel.AA].minContrast) {
+    return ContrastLevel.AA;
+  }
+
+  return null
+}
+
+export function colorContrastCheck(baseColor: Color, targetColor: Color) {
+
+  const contrast = readability(baseColor, targetColor);
+
+  const level = getContrastLevel(contrast);
+
+  return {
+    level,
+    passed: level ? true : false
+  }
+
 }

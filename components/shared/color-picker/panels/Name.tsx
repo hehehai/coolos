@@ -1,28 +1,28 @@
 import { useMemo, useState } from "react";
 import { ColorAtomType, CommonPickerPanelProps } from "../interface";
 import Fuse from 'fuse.js'
-import names from '../data/names.json'
+import { colorNames } from '../data/'
 import { generateColor } from "../util";
 import { Input } from "@/components/ui/input";
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Tooltip } from "@radix-ui/react-tooltip";
 import { cn } from "@/lib/utils";
 
-const fuseName = new Fuse(names, {
+const fuseName = new Fuse(colorNames, {
   keys: ['name'],
 })
 
 const Name = ({ value, onChange }: CommonPickerPanelProps) => {
-  const [name, setName] = useState(value ? generateColor(value).findClosestColor(names) : "");
+  const [name, setName] = useState(value ? generateColor(value).findClosestColor(colorNames) : "");
   const [tmpName, setTmpName] = useState<string | null>(null);
 
   const activeName = useMemo(() => {
-    return names.find(item => item.name === name)
+    return colorNames.find(item => item.name === name)
   }, [name])
 
   const showNames = useMemo(() => {
     if (!tmpName) {
-      return names;
+      return colorNames;
     }
     return fuseName.search(tmpName).map(item => item.item);
   }, [tmpName])
@@ -43,7 +43,7 @@ const Name = ({ value, onChange }: CommonPickerPanelProps) => {
 
   const handleNameBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
-    const matched = names.find(item => item.name.toLowerCase() === name.toLowerCase())
+    const matched = colorNames.find(item => item.name.toLowerCase() === name.toLowerCase())
     if (matched) {
       handleEmitChange(matched)
     } else {

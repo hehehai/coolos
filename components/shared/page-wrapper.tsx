@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ComponentPropsWithoutRef, FC, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 import Balancer from "react-wrap-balancer";
 
 interface PageWrapperProps extends Omit<ComponentPropsWithoutRef<'div'>, 'title'> {

@@ -3,7 +3,7 @@
 import ColorPicker from "@/components/shared/color-picker/ColorPicker";
 import useColorState from "@/components/shared/color-picker/hooks/useColorState";
 import { defaultColor, generateColor } from "@/components/shared/color-picker";
-import names from "@/components/shared/color-picker/data/names.json";
+import { colorNames } from "@/components/shared/color-picker/data";
 import SectionCard from "@/components/shared/section-card";
 import DisplayDesk from "@/components/shared/display-desk";
 import NavBar from "./components/NavBar";
@@ -46,7 +46,7 @@ const PickerPage = ({ params }: { params: { color?: string[] } }) => {
               {color.toHex()}
             </p>
             <p className="text-4xl font-bold">
-              {color.findClosestColor(names)}
+              {color.findClosestColor(colorNames)}
             </p>
           </div>
         </DisplayDesk>
