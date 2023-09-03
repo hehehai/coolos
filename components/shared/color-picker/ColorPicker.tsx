@@ -63,13 +63,14 @@ interface ColorPickerProps
     React.ComponentPropsWithoutRef<"div">,
     "onChange" | "defaultValue"
   > {
+  ghost?: boolean;
   value?: ColorGenInput;
   defaultValue?: ColorGenInput;
   onChange?: (color: Color) => void;
 }
 
 const BaseColorPicker = (
-  { value, defaultValue, onChange }: ColorPickerProps,
+  { ghost = false, value, defaultValue, onChange }: ColorPickerProps,
   ref: Ref<HTMLDivElement>
 ) => {
   const [color, setColor] = useColorState(defaultColor, {
@@ -119,7 +120,8 @@ const BaseColorPicker = (
     <div
       ref={ref}
       className={cn(
-        "relative shrink-0 w-[300px] h-[320px] overflow-hidden bg-white rounded-2xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)]"
+        "relative overflow-hidden",
+        ghost ? 'w-full h-full bg-transparent' : 'w-[300px] h-[320px] shrink-0 bg-white rounded-2xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)]'
       )}
     >
       <div className={cn("relative w-full h-[calc(100%-46px)]")}>

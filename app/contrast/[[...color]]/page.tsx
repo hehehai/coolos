@@ -1,6 +1,7 @@
 'use client';
 
 import { generateColor } from "@/components/shared/color-picker"
+import ColorPicker from "@/components/shared/color-picker/ColorPicker";
 import HexInput from "@/components/shared/color-picker/components/HexInput"
 import useColorState from "@/components/shared/color-picker/hooks/useColorState"
 import DisplayDesk from "@/components/shared/display-desk"
@@ -43,11 +44,15 @@ const ContrastPage = ({ params }: { params: { colors?: string[] } }) => {
         <div className="flex items-center gap-10">
           <div className="grow">
             <div className="text-sm mb-2">Text color</div>
-            <HexInput value={textColor} onChange={(val) => setTextColor(val)} />
+            <HexInput value={textColor} onChange={(val) => setTextColor(val)} popContent={
+              <ColorPicker ghost value={textColor} onChange={(val) => setTextColor(val)} />
+            } />
           </div>
           <div className="grow">
             <div className="text-sm mb-2">Background color</div>
-            <HexInput value={bgColor} onChange={(val) => setBgColor(val)} />
+            <HexInput value={bgColor} onChange={(val) => setBgColor(val)} popContent={
+              <ColorPicker ghost value={bgColor} onChange={(val) => setBgColor(val)} />
+            } />
           </div>
         </div>
         <div>
