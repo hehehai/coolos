@@ -16,7 +16,7 @@ const useColorState = (
   option: {
     defaultValue?: ColorValue;
     value?: ColorValue;
-  },
+  } = {},
 ): [Color, React.Dispatch<React.SetStateAction<Color>>] => {
   const { defaultValue, value } = option;
   const [colorValue, setColorValue] = useState(() => {

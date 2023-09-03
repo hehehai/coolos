@@ -212,12 +212,10 @@ export function colorSquare(baseColor: HSV) {
 
 
 
-// 颜色对比度等级
-export function colorContrastLevel(baseColor: Color, targetColor: Color) {
-  const contrast = readability(baseColor, targetColor)
-
+// 颜色对比度评分
+export function getContrastScore(contrast: number) {
   switch (true) {
-    case contrast <= 5:
+    case contrast <= 3:
       return {
         contrast,
         level: 'A',
@@ -225,7 +223,7 @@ export function colorContrastLevel(baseColor: Color, targetColor: Color) {
         color: 'text-vilet-700',
         bg: 'bg-red-200'
       }
-    case contrast <= 9:
+    case contrast <= 8:
       return {
         contrast,
         level: 'AA',
@@ -233,7 +231,7 @@ export function colorContrastLevel(baseColor: Color, targetColor: Color) {
         color: 'text-vilet-700',
         bg: 'bg-red-200'
       }
-    case contrast <= 13:
+    case contrast <= 15:
       return {
         contrast,
         level: 'AAA',
@@ -297,15 +295,33 @@ function getContrastLevel(contrast: number): ContrastLevel | null {
   return null
 }
 
-export function colorContrastCheck(baseColor: Color, targetColor: Color) {
+export interface contrastStatus {
+  contrast: number;
+  level: {
+    big: boolean;
+    small: boolean;
+  },
+  score: {
+    contrast: number;
+    level: string;
+    label: string;
+    color: string,
+    bg: string
+  }
+}
 
+export function colorContrastCheck(baseColor: Color, targetColor: Color): contrastStatus | null {
   const contrast = readability(baseColor, targetColor);
 
   const level = getContrastLevel(contrast);
+  const score = getContrastScore(contrast);
 
   return {
-    level,
-    passed: level ? true : false
+    contrast,
+    level: {
+      big: level === ContrastLevel.AAA,
+      small: level === ContrastLevel.AAA || level === ContrastLevel.AA,
+    },
+    score
   }
-
 }

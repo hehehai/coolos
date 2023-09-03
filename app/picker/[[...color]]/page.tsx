@@ -19,7 +19,7 @@ const PickerPage = ({ params }: { params: { color?: string[] } }) => {
     const routeColor = generateColor(params.color[0])
     return routeColor.isValid ? routeColor : defaultColor
   }, [params.color])
-  const [color, setColor] = useColorState(firstColor, {});
+  const [color, setColor] = useColorState(firstColor);
   const boardTextIsReadable = useMemo(() => {
     return isReadable(color, "#fff", { level: "AA", size: "large" });
   }, [color]);

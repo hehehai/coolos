@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import ShowCard from "./ShowCard";
-import { Color, colorContrastLevel, generateColor } from "@/components/shared/color-picker";
+import { Color, colorContrastCheck, generateColor } from "@/components/shared/color-picker";
 import { memo } from "react";
 
 const CheckerDemo = memo((props: { color: string, className?: string }) => {
@@ -14,17 +14,17 @@ const CheckerDemo = memo((props: { color: string, className?: string }) => {
 CheckerDemo.displayName = "CheckerDemo";
 
 const ContrastChecker = memo(({ color }: { color: Color }) => {
-  const lightCheck = colorContrastLevel(generateColor('#ffffff'), color)
-  const darkCheck = colorContrastLevel(generateColor('#000000'), color)
+  const lightCheck = colorContrastCheck(generateColor('#ffffff'), color)
+  const darkCheck = colorContrastCheck(generateColor('#000000'), color)
 
   return <div className="columns-2 gap-10">
     <ShowCard
       title="White background"
       extra={
         <div
-          className={cn('px-1 rounded-sm text-sm', lightCheck.color, lightCheck.bg)}
+          className={cn('px-1 rounded-sm text-sm', lightCheck?.score.color, lightCheck?.score.bg)}
         >
-          {lightCheck.label} {lightCheck.level}
+          {lightCheck?.score.label} {lightCheck?.score.level}
         </div>
       }
     >
@@ -34,9 +34,9 @@ const ContrastChecker = memo(({ color }: { color: Color }) => {
       title="Black background"
       extra={
         <div
-          className={cn('px-1 rounded-sm text-sm', darkCheck.color, darkCheck.bg)}
+          className={cn('px-1 rounded-sm text-sm', darkCheck?.score.color, darkCheck?.score.bg)}
         >
-          {darkCheck.label} {darkCheck.level}
+          {darkCheck?.score.label} {darkCheck?.score.level}
         </div>
       }
     >
