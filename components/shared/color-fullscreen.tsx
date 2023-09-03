@@ -11,8 +11,9 @@ const ColorFullScreen = (props: {
   show: boolean;
   color: string;
   onClose?: () => void;
+  children?: React.ReactNode
 }) => {
-  const { show, color, onClose } = props
+  const { show, color, onClose, children } = props
 
   return <AnimatePresence>
     {show && <motion.div
@@ -26,7 +27,9 @@ const ColorFullScreen = (props: {
       <Button className="absolute right-4 top-4 z-20" variant="outline" size="icon" onClick={() => onClose?.()}>
         <X className="h-6 w-6 text-slate-700" />
       </Button>
-      <div className="absolute insert-0 z-10 w-full h-full" style={{ backgroundColor: color }} />
+      <div className="absolute insert-0 z-10 w-full h-full" style={{ backgroundColor: color }}>
+        {children}
+      </div>
     </motion.div>}
   </AnimatePresence>
 }

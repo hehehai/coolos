@@ -8,7 +8,7 @@ import ColorFullScreen from "@/components/shared/color-fullscreen";
 import { useLockedBody } from 'usehooks-ts'
 import { isReadable } from "@ctrl/tinycolor";
 
-const DisplayDesk = memo(({ color, className, children }: { color: Color, className?: string, children: React.ReactNode }) => {
+const DisplayDesk = memo(({ color, className, children, fullChidlren }: { color: Color, className?: string, children: React.ReactNode, fullChidlren?: React.ReactNode }) => {
   const boardTextIsReadable = useMemo(() => {
     return isReadable(color, "#fff", { level: "AA", size: "large" });
   }, [color]);
@@ -40,7 +40,9 @@ const DisplayDesk = memo(({ color, className, children }: { color: Color, classN
       />
     </div>
 
-    <ColorFullScreen show={isColorFullScreen} color={color.toHexString()} onClose={handleColorFullScreen} />
+    <ColorFullScreen show={isColorFullScreen} color={color.toHexString()} onClose={handleColorFullScreen}>
+      {fullChidlren}
+    </ColorFullScreen>
   </div>
 })
 

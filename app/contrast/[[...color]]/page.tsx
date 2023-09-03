@@ -51,6 +51,14 @@ const ContrastPage = ({ params }: { params: { colors?: string[] } }) => {
     return colorContrastCheck(textColor, bgColor)
   }, [textColor, bgColor])
 
+  const deskText = useMemo(() => {
+    return <div className={cn('w-full px-20 py-8 text-center space-y-5')} style={{ color: textColor.toHexString() }}>
+      <p className="text-4xl">Quote n. 18</p>
+      <p>Before I got married I had six theories about bringing up children; now I have six children and no theories.</p>
+      <p className="font-medium">John Wilmot</p>
+    </div>
+  }, [textColor])
+
   return <div>
     <div className="max-w-7xl mx-auto flex items-center mb-28 h-[400px] rounded-2xl border border-zinc-200">
       <div className="w-1/2 h-full p-8 flex flex-col justify-between">
@@ -74,12 +82,12 @@ const ContrastPage = ({ params }: { params: { colors?: string[] } }) => {
         </div>
         {contrast && <div className="text-sm text-zinc-400 h-10">{contrastScoreTip[contrast?.score.level.length - 1]}</div>}
       </div>
-      <DisplayDesk className="w-1/2 h-full flex items-center justify-center rounded-r-2xl border-l border-zinc-200" color={bgColor} >
-        <div className={cn('w-full px-20 py-8 text-center space-y-5')} style={{ color: textColor.toHexString() }}>
-          <p className="text-4xl">Quote n. 18</p>
-          <p>Before I got married I had six theories about bringing up children; now I have six children and no theories.</p>
-          <p className="font-medium">John Wilmot</p>
+      <DisplayDesk className="w-1/2 h-full flex items-center justify-center rounded-r-2xl border-l border-zinc-200" color={bgColor} fullChidlren={
+        <div className="w-full h-full flex items-center justify-center">
+          {deskText}
         </div>
+      }>
+        {deskText}
       </DisplayDesk>
     </div>
 
