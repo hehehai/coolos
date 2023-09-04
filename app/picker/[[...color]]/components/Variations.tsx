@@ -1,6 +1,7 @@
 import { Color, generateColor, generateHues, generateVariations } from "@/components/shared/color-picker";
-import ExpansionStrip from "./ExpansionStrip";
 import { memo } from "react";
+import ShowCard from "./ShowCard";
+import ExpansionStrip from "@/components/shared/expansion-strip";
 
 const variationMap = [
   {
@@ -29,12 +30,13 @@ const Variations = memo(({ color }: { color: Color }) =>
   <div className="space-y-10">
     {variationMap.map((variation) => {
       const colors = variation.getColors(color)
-      return <ExpansionStrip
+      return <ShowCard
         key={variation.label}
         title={variation.label}
         description={variation.description}
-        colors={colors}
-      />
+      >
+        <ExpansionStrip className="h-20" colors={colors} />
+      </ShowCard>
     })}
   </div>
 )

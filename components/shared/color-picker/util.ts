@@ -325,3 +325,32 @@ export function colorContrastCheck(baseColor: Color, targetColor: Color): contra
     score
   }
 }
+
+// 由插值法插补
+function interpolate(start: number, end: number, ratio: number) {
+  return start * (1 - ratio) + end * ratio;
+}
+
+// 生成颜色过渡色板
+export function getTransitionColors(
+  startColor: Color,
+  endColor: Color,
+  steps: number
+) {
+  const startRGB = startColor.toRgb()
+  const endRGB = endColor.toRgb()
+
+  const result: Color[] = [];
+
+  for (let i = 0; i <= steps; i++) {
+    const ratio = i / steps;
+
+    const r = interpolate(Number(startRGB.r), Number(endRGB.r), ratio);
+    const g = interpolate(Number(startRGB.g), Number(endRGB.g), ratio);
+    const b = interpolate(Number(startRGB.b), Number(endRGB.b), ratio);
+
+    result.push(generateColor({ r, g, b }));
+  }
+
+  return result;
+}
