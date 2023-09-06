@@ -3,7 +3,7 @@
 import { ColorCategory, colorCollection, colorNames } from "@/components/shared/color-picker/data"
 import { cn } from "@/lib/utils"
 import { useMemo, useState } from "react"
-import NameColorCard from "./components/NameColorCard"
+import NameColorCard from "./_components/NameColorCard"
 
 const colorCategories = Object.keys(colorCollection) as ColorCategory[]
 

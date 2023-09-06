@@ -6,7 +6,7 @@ import { defaultColor, generateColor } from "@/components/shared/color-picker";
 import { colorNames } from "@/components/shared/color-picker/data";
 import SectionCard from "@/components/shared/section-card";
 import DisplayDesk from "@/components/shared/display-desk";
-import NavBar from "./components/NavBar";
+import NavBar from "./_components/NavBar";
 import { navItems } from "./constants.schema";
 import { useMemo } from "react";
 import { isReadable } from "@ctrl/tinycolor";

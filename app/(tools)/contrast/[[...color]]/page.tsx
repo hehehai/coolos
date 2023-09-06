@@ -7,7 +7,7 @@ import useColorState from "@/components/shared/color-picker/hooks/useColorState"
 import DisplayDesk from "@/components/shared/display-desk"
 import { cn } from "@/lib/utils"
 import { useMemo } from "react"
-import ContrastDetail from "./components/ContrastDetail";
+import ContrastDetail from "./_components/ContrastDetail";
 
 const contrastScoreTip = [
   'Poor contrast for all text sizes.',

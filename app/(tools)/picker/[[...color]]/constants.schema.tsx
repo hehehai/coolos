@@ -1,7 +1,7 @@
-import ContrastChecker from "./components/ContrastChecker";
-import Conversion from "./components/Conversion";
-import Harmonies from "./components/Harmonies";
-import Variations from "./components/Variations";
+import ContrastChecker from "./_components/ContrastChecker";
+import Conversion from "./_components/Conversion";
+import Harmonies from "./_components/Harmonies";
+import Variations from "./_components/Variations";
 
 export const navItems = {
   conversion: {
