@@ -17,3 +17,21 @@ export function adjustValue(val: number, full: number): number {
 
   return val;
 }
+
+// 下载 svg
+export function downloadSVG(svgCode: string, name?: string) {
+  const blob = new Blob([svgCode], { type: 'image/svg+xml' });
+
+  const url = URL.createObjectURL(blob);
+
+  // 创建a标签下载
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${name ?? Date.now()}.svg`;
+
+  document.body.appendChild(a);
+  a.click();
+
+  URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+}
