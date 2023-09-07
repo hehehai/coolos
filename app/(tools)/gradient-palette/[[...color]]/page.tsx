@@ -1,6 +1,6 @@
 'use client';
 
-import { generateColor, getTransitionColors } from "@/components/shared/color-picker"
+import { generateColor, getRandomRgb, getTransitionColors, isSameRgb } from "@/components/shared/color-picker"
 import { useMemo, useState } from "react"
 import { useSearchParams } from 'next/navigation'
 import ExpansionStrip from "@/components/shared/expansion-strip";
@@ -10,6 +10,7 @@ import ColorPicker from "@/components/shared/color-picker/ColorPicker";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
+import { RGB } from "@ctrl/tinycolor";
 
 const DEFAULT_STEPS = 6
 
@@ -55,6 +56,21 @@ const GradientPalette = ({ params }: { params: { colors?: string[] } }) => {
     return getTransitionColors(startColor, endColor, steps).map((item) => item.toHexString())
   }, [startColor, endColor, steps])
 
+  const handleRandom = () => {
+    const startRGB = getRandomRgb()
+    let endRGB: RGB | null = null
+
+    while (true) {
+      endRGB = getRandomRgb()
+      if (!isSameRgb(startRGB, endRGB)) {
+        break
+      }
+    }
+
+    setStartColor(generateColor(startRGB))
+    setEndColor(generateColor(endRGB))
+  }
+
   return <div className="max-w-7xl mx-auto">
     <ExpansionStrip className="h-[380px]" colors={colors} />
     <div className="mt-10 flex items-end gap-10 p-8 border border-zinc-200 rounded-lg">
@@ -86,7 +102,7 @@ const GradientPalette = ({ params }: { params: { colors?: string[] } }) => {
         />
       </div>
       <div className="grow">
-        <Button className="w-full" variant="outline">Random</Button>
+        <Button className="w-full" variant="outline" onClick={handleRandom}>Random</Button>
       </div>
       <div className="grow">
         <Button className="w-full">

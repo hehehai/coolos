@@ -354,3 +354,17 @@ export function getTransitionColors(
 
   return result;
 }
+
+// 随机生成 rgb
+export function getRandomRgb(): RGB {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+
+  return { r, g, b };
+}
+
+// 判断 rgb 颜色是否相同
+export function isSameRgb(m: RGB, n: RGB): boolean {
+  return m.r === n.r && m.g === n.g && m.b === n.b
+}
