@@ -20,6 +20,7 @@ export function adjustValue(val: number, full: number): number {
 
 // 下载 svg
 export function downloadSVG(svgCode: string, name?: string) {
+  'use client'
   const blob = new Blob([svgCode], { type: 'image/svg+xml' });
 
   const url = URL.createObjectURL(blob);
@@ -34,4 +35,11 @@ export function downloadSVG(svgCode: string, name?: string) {
 
   URL.revokeObjectURL(url);
   document.body.removeChild(a);
+}
+
+// 在新标签打开 svg
+export function openSVGinNewTab(svgCode: string) {
+  'use client'
+
+  return window.open('')?.document.write(svgCode)
 }

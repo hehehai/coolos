@@ -9,9 +9,9 @@ import HexInput from "@/components/shared/color-picker/components/HexInput";
 import ColorPicker from "@/components/shared/color-picker/ColorPicker";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, ScreenShare } from "lucide-react";
 import { RGB } from "@ctrl/tinycolor";
-import { downloadSVG } from "@/lib/utils";
+import { downloadSVG, openSVGinNewTab } from "@/lib/utils";
 import { genGradientPaletteSVG } from "./_utils";
 
 const DEFAULT_STEPS = 6
@@ -75,9 +75,13 @@ const GradientPalette = ({ params }: { params: { colors?: string[] } }) => {
     setEndColor(generateColor(endRGB))
   }
 
-  const handleExportSVG = useCallback(() => {
+  const handleMakeSVG = useCallback((open: boolean = false) => {
     const img = genGradientPaletteSVG(colors, 500, 200)
-    downloadSVG(img)
+    if (open) {
+      openSVGinNewTab(img)
+    } else {
+      downloadSVG(img)
+    }
   }, [colors])
 
   return <div className="max-w-7xl mx-auto">
@@ -113,10 +117,13 @@ const GradientPalette = ({ params }: { params: { colors?: string[] } }) => {
       <div className="grow">
         <Button className="w-full" variant="outline" onClick={handleRandom}>Random</Button>
       </div>
-      <div className="grow">
-        <Button className="w-full" onClick={handleExportSVG}>
+      <div className="grow space-x-2 flex items-center">
+        <Button className="w-full" onClick={() => handleMakeSVG()}>
           Export
           <Download className="ml-2 h-4 w-4" />
+        </Button>
+        <Button className="w-full w-12" onClick={() => handleMakeSVG(true)}>
+          <ScreenShare className="h-4 w-4" />
         </Button>
       </div>
     </div>
