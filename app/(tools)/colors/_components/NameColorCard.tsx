@@ -6,12 +6,13 @@ import { MoreHorizontal } from "lucide-react";
 import { FC, useMemo } from "react";
 import toast from "react-hot-toast";
 
-interface NameColorCardProps {
+interface NameColorCardProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'name' | 'color'> {
   name: string;
   color: number[];
+  showInfo?: boolean
 }
 
-const NameColorCard: FC<NameColorCardProps> = ({ name, color }) => {
+const NameColorCard: FC<NameColorCardProps> = ({ name, color, showInfo = false, ...otherProps }) => {
   const realColor = useMemo(() => {
     const [r, g, b] = color
 
@@ -31,9 +32,9 @@ const NameColorCard: FC<NameColorCardProps> = ({ name, color }) => {
     }
   };
 
-  return <div className="w-full">
+  return <div {...otherProps} className={cn('w-full flex flex-col', otherProps.className)}>
     <div
-      className="group h-32 flex items-center justify-center rounded-xl cursor-pointer"
+      className="group grow flex items-center justify-center rounded-xl cursor-pointer"
       style={{ backgroundColor: realColor.toHexString() }}
       onClick={() => handleCopyColor(realColor.toHex().toUpperCase())}
     >
@@ -43,12 +44,12 @@ const NameColorCard: FC<NameColorCardProps> = ({ name, color }) => {
         {realColor.toHex().toUpperCase()}
       </span>
     </div>
-    <div className="flex items-center justify-between p-1">
+    {showInfo && <div className="flex items-center justify-between p-1">
       <div className="text-sm text-slate-900">{name}</div>
       <div>
         <MoreHorizontal />
       </div>
-    </div>
+    </div>}
   </div>
 }
 

@@ -45,7 +45,7 @@ const ColorsPage = () => {
     </div>
     <div className="mt-40 max-w-7xl mx-auto grid grid-cols-4 gap-x-8 gap-y-6">
       {showColors.map((color) => {
-        return <NameColorCard key={color.name} name={color.name} color={color.rgb} />
+        return <NameColorCard className="h-40" key={color.name} name={color.name} color={color.rgb} showInfo />
       })}
     </div>
   </div>
