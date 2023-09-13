@@ -1,12 +1,16 @@
+import { LinkIcon } from "@/components/icons";
+import ColorPicker from "@/components/shared/color-picker/ColorPicker";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { FC } from "react";
+import ColorPickerFloat from "./ColorPickerFloat";
 
 interface HomeGridCardProps extends React.ComponentPropsWithoutRef<'div'> {
   title: string;
   slug: string;
   description: string;
   link: string;
+  float?: React.ReactNode;
 }
 
 const HomeGridCard: FC<HomeGridCardProps> = ({
@@ -15,6 +19,7 @@ const HomeGridCard: FC<HomeGridCardProps> = ({
   description,
   link,
   className,
+  float,
   ...otherProps
 }) => {
   return <div {...otherProps} className={cn('relative bg-[#FBFBFB] shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset] rounded-2xl', className)}>
@@ -23,9 +28,13 @@ const HomeGridCard: FC<HomeGridCardProps> = ({
       <div>
         <div className="text-3xl text-slate-900 font-medium max-w-xs">{slug}</div>
         <div className="mt-3 text-gray-500 text-sm leading-normal max-w-xs">{description}</div>
-        <Link href={link} className="block mt-8 text-sm">More ablout {title}</Link>
+        <Link href={link} className="group block mt-8 text-sm inline-flex items-center space-x-1">
+          <span>More ablout {title} </span>
+          <LinkIcon className="group-hover:translate-x-1 transition-transform" />
+        </Link>
       </div>
     </div>
+    {float}
   </div>
 }
 
@@ -39,7 +48,8 @@ const HomeGrid = () => {
           description="like conversion, combinations, blindness simulation and more."
           link="/picker"
           className="h-[360px]"
-        ></HomeGridCard>
+          float={<ColorPickerFloat />}
+        />
       </div>
       <div className="col-span-4">
         <HomeGridCard
