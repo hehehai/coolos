@@ -5,8 +5,9 @@ import { FC } from "react";
 import ColorPickerFloat from "./ColorPickerFloat";
 import ColorNameFloat from "./ColorNameFloat";
 import ContrastCheckerFloat from "./ContrastCheckerFloat";
+import GradientPaletteFloat from "./GradientPaletteFloat";
 
-interface HomeGridCardProps extends React.ComponentPropsWithoutRef<'div'> {
+interface HomeGridCardProps extends React.ComponentPropsWithoutRef<"div"> {
   title: string;
   slug: string;
   description: string;
@@ -23,21 +24,36 @@ const HomeGridCard: FC<HomeGridCardProps> = ({
   float,
   ...otherProps
 }) => {
-  return <div {...otherProps} className={cn('relative bg-[#FBFBFB] shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset] rounded-2xl', className)}>
-    <div className="relative h-full flex flex-col justify-between p-8">
-      <div className="relative z-20 text-gray-400 font-medium">{title}</div>
-      <div>
-        <div className="relative z-20 text-3xl text-slate-900 font-medium max-w-xs">{slug}</div>
-        <div className="relative z-20 mt-3 text-gray-500 text-sm leading-normal max-w-xs">{description}</div>
-        <Link href={link} className="relative z-20 group mt-8 text-sm inline-flex items-center space-x-1">
-          <span>More ablout {title} </span>
-          <LinkIcon className="group-hover:translate-x-1 transition-transform" />
-        </Link>
+  return (
+    <div
+      {...otherProps}
+      className={cn(
+        "relative bg-[#FBFBFB] shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset] rounded-2xl",
+        className
+      )}
+    >
+      <div className="relative h-full flex flex-col justify-between p-8">
+        <div className="relative z-20 text-gray-400 font-medium">{title}</div>
+        <div>
+          <div className="relative z-20 text-3xl text-slate-900 font-medium max-w-xs">
+            {slug}
+          </div>
+          <div className="relative z-20 mt-3 text-gray-500 text-sm leading-normal max-w-xs">
+            {description}
+          </div>
+          <Link
+            href={link}
+            className="relative z-20 group mt-8 text-sm inline-flex items-center space-x-1"
+          >
+            <span>More ablout {title} </span>
+            <LinkIcon className="group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
       </div>
+      {float}
     </div>
-    {float}
-  </div>
-}
+  );
+};
 
 const HomeGrid = () => {
   return (
@@ -80,16 +96,19 @@ const HomeGrid = () => {
             description="Custom ladder length, fine-tuned transition algorithm to generate a harmonious swatch."
             link="/gradient-palette"
             className="h-[360px]"
-          ></HomeGridCard>
+            float={<GradientPaletteFloat />}
+          />
         </div>
         <div className="col-span-8">
-          <div className="bg-gray-200 h-[100px]">Subscribe</div>
+          <div className="h-[100px] flex items-center px-5 bg-[#FBFBFB] shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset] rounded-2xl">
+            Subscribe
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-HomeGrid.displayName = "HomeGrid"
+HomeGrid.displayName = "HomeGrid";
 
-export default HomeGrid
+export default HomeGrid;

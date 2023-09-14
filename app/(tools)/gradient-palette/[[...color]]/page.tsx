@@ -122,7 +122,7 @@ const GradientPalette = ({ params }: { params: { colors?: string[] } }) => {
           Export
           <Download className="ml-2 h-4 w-4" />
         </Button>
-        <Button className="w-full w-12" onClick={() => handleMakeSVG(true)}>
+        <Button className="w-12" onClick={() => handleMakeSVG(true)}>
           <ScreenShare className="h-4 w-4" />
         </Button>
       </div>
