@@ -10,6 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.23.5",
     "@ctrl/tinycolor": "^3.6.0",
     "@hookform/resolvers": "^3.1.1",
     "@radix-ui/react-accordion": "^1.1.2",
