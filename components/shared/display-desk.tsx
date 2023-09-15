@@ -1,51 +1,70 @@
-'use client';
+"use client"
 
-import { Color } from "@/components/shared/color-picker";
-import { cn } from "@/lib/utils";
-import { memo, useMemo, useState } from "react";
-import { IconMaximize } from "@/components/icons/Maximize";
-import ColorFullScreen from "@/components/shared/color-fullscreen";
-import { useLockedBody } from 'usehooks-ts'
-import { isReadable } from "@ctrl/tinycolor";
+import { memo, useMemo, useState } from "react"
+import { isReadable } from "@ctrl/tinycolor"
+import { useLockedBody } from "usehooks-ts"
 
-const DisplayDesk = memo(({ color, className, children, fullChidlren }: { color: Color, className?: string, children: React.ReactNode, fullChidlren?: React.ReactNode }) => {
-  const boardTextIsReadable = useMemo(() => {
-    return isReadable(color, "#fff", { level: "AA", size: "large" });
-  }, [color]);
-  const [isColorFullScreen, setColorFullScreen] = useState(false);
-  const [_, setLocked] = useLockedBody(false, 'root')
+import { cn } from "@/lib/utils"
+import { IconMaximize } from "@/components/icons/Maximize"
+import ColorFullScreen from "@/components/shared/color-fullscreen"
+import { Color } from "@/components/shared/color-picker"
 
-  const handleColorFullScreen = () => {
-    setColorFullScreen((state) => {
-      const nectState = !state
-      setLocked(nectState)
-      return nectState
-    });
-  };
+const DisplayDesk = memo(
+  ({
+    color,
+    className,
+    children,
+    fullChidlren,
+  }: {
+    color: Color
+    className?: string
+    children: React.ReactNode
+    fullChidlren?: React.ReactNode
+  }) => {
+    const boardTextIsReadable = useMemo(() => {
+      return isReadable(color, "#fff", { level: "AA", size: "large" })
+    }, [color])
+    const [isColorFullScreen, setColorFullScreen] = useState(false)
+    const [_, setLocked] = useLockedBody(false, "root")
 
-  return <div
-    className={cn("relative", className)}
-    style={{ backgroundColor: color.toHex8String() }}
-  >
-    {children}
-    <div className="absolute right-4 top-4">
-      <IconMaximize
-        className={cn(
-          "w-5 h-5 cursor-pointer hover:animate-zoom",
-          boardTextIsReadable
-            ? "text-white/50 hover:text-white"
-            : "text-black/50 hover:text-black"
-        )}
-        onClick={() => handleColorFullScreen()}
-      />
-    </div>
+    const handleColorFullScreen = () => {
+      setColorFullScreen((state) => {
+        const nectState = !state
+        setLocked(nectState)
+        return nectState
+      })
+    }
 
-    <ColorFullScreen show={isColorFullScreen} color={color.toHexString()} onClose={handleColorFullScreen}>
-      {fullChidlren}
-    </ColorFullScreen>
-  </div>
-})
+    return (
+      <div
+        className={cn("relative", className)}
+        style={{ backgroundColor: color.toHex8String() }}
+      >
+        {children}
+        <div className="absolute right-4 top-4">
+          <IconMaximize
+            className={cn(
+              "hover:animate-zoom h-5 w-5 cursor-pointer",
+              boardTextIsReadable
+                ? "text-white/50 hover:text-white"
+                : "text-black/50 hover:text-black"
+            )}
+            onClick={() => handleColorFullScreen()}
+          />
+        </div>
 
-DisplayDesk.displayName = 'DisplayDesk'
+        <ColorFullScreen
+          show={isColorFullScreen}
+          color={color.toHexString()}
+          onClose={handleColorFullScreen}
+        >
+          {fullChidlren}
+        </ColorFullScreen>
+      </div>
+    )
+  }
+)
+
+DisplayDesk.displayName = "DisplayDesk"
 
 export default DisplayDesk

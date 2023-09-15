@@ -1,16 +1,18 @@
-'use client';
+"use client"
 
-import ColorPicker from "@/components/shared/color-picker/ColorPicker";
-import useColorState from "@/components/shared/color-picker/hooks/useColorState";
-import { defaultColor, generateColor } from "@/components/shared/color-picker";
-import { colorNames } from "@/components/shared/color-picker/data";
-import SectionCard from "@/components/shared/section-card";
-import DisplayDesk from "@/components/shared/display-desk";
-import NavBar from "./_components/NavBar";
-import { navItems } from "./constants.schema";
-import { useMemo } from "react";
-import { isReadable } from "@ctrl/tinycolor";
-import { cn } from "@/lib/utils";
+import { useMemo } from "react"
+import { isReadable } from "@ctrl/tinycolor"
+
+import { cn } from "@/lib/utils"
+import { defaultColor, generateColor } from "@/components/shared/color-picker"
+import ColorPicker from "@/components/shared/color-picker/ColorPicker"
+import { colorNames } from "@/components/shared/color-picker/data"
+import useColorState from "@/components/shared/color-picker/hooks/useColorState"
+import DisplayDesk from "@/components/shared/display-desk"
+import SectionCard from "@/components/shared/section-card"
+
+import NavBar from "./_components/NavBar"
+import { navItems } from "./constants.schema"
 
 const PickerPage = ({ params }: { params: { color?: string[] } }) => {
   // route color params
@@ -19,16 +21,16 @@ const PickerPage = ({ params }: { params: { color?: string[] } }) => {
     const routeColor = generateColor(params.color[0])
     return routeColor.isValid ? routeColor : defaultColor
   }, [params.color])
-  const [color, setColor] = useColorState(firstColor);
+  const [color, setColor] = useColorState(firstColor)
   const boardTextIsReadable = useMemo(() => {
-    return isReadable(color, "#fff", { level: "AA", size: "large" });
-  }, [color]);
+    return isReadable(color, "#fff", { level: "AA", size: "large" })
+  }, [color])
 
   return (
     <div>
-      <div className="max-w-7xl mx-auto flex items-center justify-center space-x-5 mb-28">
+      <div className="mx-auto mb-28 flex max-w-7xl items-center justify-center space-x-5">
         <DisplayDesk
-          className="w-full h-[320px] rounded-2xl flex items-center justify-center shadow-[inset_rgba(0,0,0,0.05)_0_0_0_1px]"
+          className="flex h-[320px] w-full items-center justify-center rounded-2xl shadow-[inset_rgba(0,0,0,0.05)_0_0_0_1px]"
           color={color}
         >
           <div
@@ -54,7 +56,7 @@ const PickerPage = ({ params }: { params: { color?: string[] } }) => {
       </div>
 
       <NavBar navItems={navItems} />
-      <div className="mt-24 px-4 space-y-10">
+      <div className="mt-24 space-y-10 px-4">
         {Object.entries(navItems).map(([key, item]) => (
           <SectionCard
             key={key}
@@ -67,7 +69,7 @@ const PickerPage = ({ params }: { params: { color?: string[] } }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PickerPage;
+export default PickerPage

@@ -1,43 +1,44 @@
-'use client';
+"use client"
 
-import { useEffect, useState } from 'react';
-import type { Color } from '../color';
-import type { ColorGenInput } from '../interface';
-import { generateColor } from '../util';
+import { useEffect, useState } from "react"
 
-type ColorValue = ColorGenInput | undefined;
+import type { Color } from "../color"
+import type { ColorGenInput } from "../interface"
+import { generateColor } from "../util"
+
+type ColorValue = ColorGenInput | undefined
 
 function hasValue(value: ColorValue) {
-  return value !== undefined;
+  return value !== undefined
 }
 
 const useColorState = (
   defaultStateValue: ColorValue,
   option: {
-    defaultValue?: ColorValue;
-    value?: ColorValue;
-  } = {},
+    defaultValue?: ColorValue
+    value?: ColorValue
+  } = {}
 ): [Color, React.Dispatch<React.SetStateAction<Color>>] => {
-  const { defaultValue, value } = option;
+  const { defaultValue, value } = option
   const [colorValue, setColorValue] = useState(() => {
-    let mergeState;
+    let mergeState
     if (hasValue(value)) {
-      mergeState = value;
+      mergeState = value
     } else if (hasValue(defaultValue)) {
-      mergeState = defaultValue;
+      mergeState = defaultValue
     } else {
-      mergeState = defaultStateValue;
+      mergeState = defaultStateValue
     }
-    return generateColor(mergeState!);
-  });
+    return generateColor(mergeState!)
+  })
 
   useEffect(() => {
     if (value) {
-      setColorValue(generateColor(value));
+      setColorValue(generateColor(value))
     }
-  }, [value]);
+  }, [value])
 
-  return [colorValue, setColorValue];
-};
+  return [colorValue, setColorValue]
+}
 
-export default useColorState;
+export default useColorState

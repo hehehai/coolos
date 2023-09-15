@@ -1,29 +1,30 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
-import { forwardRef, Ref, useMemo, useState } from "react";
-import { IconChevronDown, IconChevronUp, IconCopy } from "@/components/icons";
-import PickerPanel from "@/components/shared/color-picker/panels/Picker";
-import { Color } from "@/components/shared/color-picker/color";
+import { forwardRef, Ref, useMemo, useState } from "react"
+import { toast } from "react-hot-toast"
+
+import { cn } from "@/lib/utils"
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
+import { useEyeDropper } from "@/hooks/useEyeDropper"
+import { IconChevronDown, IconChevronUp, IconCopy } from "@/components/icons"
+import { IconEyeDropper } from "@/components/icons/EyeDropper"
+import { Color } from "@/components/shared/color-picker/color"
+import useColorState from "@/components/shared/color-picker/hooks/useColorState"
 import {
   ColorGenInput,
   CommonPickerPanelProps,
-} from "@/components/shared/color-picker/interface";
-import useColorState from "@/components/shared/color-picker/hooks/useColorState";
+} from "@/components/shared/color-picker/interface"
+import CMYK from "@/components/shared/color-picker/panels/CMYK"
+import HSB from "@/components/shared/color-picker/panels/HSB"
+import HSL from "@/components/shared/color-picker/panels/HSL"
+import LAB from "@/components/shared/color-picker/panels/LAB"
+import Name from "@/components/shared/color-picker/panels/Name"
+import PickerPanel from "@/components/shared/color-picker/panels/Picker"
+import RGB from "@/components/shared/color-picker/panels/RGB"
 import {
   defaultColor,
   generateColor,
-} from "@/components/shared/color-picker/util";
-import HSB from "@/components/shared/color-picker/panels/HSB";
-import HSL from "@/components/shared/color-picker/panels/HSL";
-import RGB from "@/components/shared/color-picker/panels/RGB";
-import CMYK from "@/components/shared/color-picker/panels/CMYK";
-import LAB from "@/components/shared/color-picker/panels/LAB";
-import Name from "@/components/shared/color-picker/panels/Name";
-import { IconEyeDropper } from "@/components/icons/EyeDropper";
-import { useEyeDropper } from "@/hooks/useEyeDropper";
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import { toast } from "react-hot-toast";
+} from "@/components/shared/color-picker/util"
 
 export enum PickerMethod {
   Picker = "Picker",
@@ -43,7 +44,7 @@ const pickerMethodList = [
   PickerMethod.CMYK,
   PickerMethod.LAB,
   PickerMethod.Name,
-];
+]
 
 const pickerMethodPanel: Record<
   PickerMethod,
@@ -56,17 +57,17 @@ const pickerMethodPanel: Record<
   [PickerMethod.CMYK]: CMYK,
   [PickerMethod.LAB]: LAB,
   [PickerMethod.Name]: Name,
-};
+}
 
 interface ColorPickerProps
   extends Omit<
     React.ComponentPropsWithoutRef<"div">,
     "onChange" | "defaultValue"
   > {
-  ghost?: boolean;
-  value?: ColorGenInput;
-  defaultValue?: ColorGenInput;
-  onChange?: (color: Color) => void;
+  ghost?: boolean
+  value?: ColorGenInput
+  defaultValue?: ColorGenInput
+  onChange?: (color: Color) => void
 }
 
 const BaseColorPicker = (
@@ -76,66 +77,68 @@ const BaseColorPicker = (
   const [color, setColor] = useColorState(defaultColor, {
     value,
     defaultValue,
-  });
-  const [visibleMethodMenu, setVisibleMethodMenu] = useState<boolean>(false);
+  })
+  const [visibleMethodMenu, setVisibleMethodMenu] = useState<boolean>(false)
   const [pickerMethod, setPickerMethod] = useState<PickerMethod>(
     PickerMethod.Picker
-  );
-  const { isSupport, onOpenDropper } = useEyeDropper();
-  const copy = useCopyToClipboard();
+  )
+  const { isSupport, onOpenDropper } = useEyeDropper()
+  const copy = useCopyToClipboard()
 
   const PickerPanelComponent = useMemo(() => {
-    return pickerMethodPanel[pickerMethod];
-  }, [pickerMethod]);
+    return pickerMethodPanel[pickerMethod]
+  }, [pickerMethod])
 
   const handleToggleMethodPickerMenu = () => {
-    setVisibleMethodMenu((val) => !val);
-  };
+    setVisibleMethodMenu((val) => !val)
+  }
 
   const handleSelectPickerMethod = (val: PickerMethod) => {
-    setPickerMethod(val);
-    setVisibleMethodMenu(false);
-  };
+    setPickerMethod(val)
+    setVisibleMethodMenu(false)
+  }
 
   const handleColorChange = (val: Color) => {
-    setColor(val);
-    onChange?.(val);
-  };
+    setColor(val)
+    onChange?.(val)
+  }
 
   const handleOpenDropper = async () => {
-    const color = await onOpenDropper();
+    const color = await onOpenDropper()
     if (color) {
-      handleColorChange(generateColor(color));
+      handleColorChange(generateColor(color))
     }
-  };
+  }
 
   const handleCopyColor = () => {
-    const success = copy(color.toHex());
+    const success = copy(color.toHex())
     if (success) {
-      toast.success("color copy success");
+      toast.success("color copy success")
     }
-  };
+  }
 
   return (
     <div
       ref={ref}
       className={cn(
         "relative overflow-hidden",
-        ghost ? 'w-full h-full bg-transparent' : 'w-[300px] h-[320px] shrink-0 bg-white rounded-2xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)]'
+        ghost
+          ? "h-full w-full bg-transparent"
+          : "h-[320px] w-[300px] shrink-0 rounded-2xl bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.1)]"
       )}
     >
-      <div className={cn("relative w-full h-[calc(100%-46px)]")}>
+      <div className={cn("relative h-[calc(100%-46px)] w-full")}>
         {visibleMethodMenu && (
           <div
             className={cn(
-              "absolute z-[10] p-[10px] bg-white w-full h-full space-y-1 overflow-auto no-scrollbar"
+              "no-scrollbar absolute z-[10] h-full w-full space-y-1 overflow-auto bg-white p-[10px]"
             )}
           >
             {pickerMethodList.map((item) => (
               <div
                 key={item}
                 className={cn(
-                  "py-[8px] px-[10px] text-sm text-slate-900 rounded-md cursor-pointer hover:bg-gray-100",
+                  "cursor-pointer rounded-md px-[10px] py-[8px] text-sm text-slate-900 hover:bg-gray-100",
                   {
                     "bg-gray-100": pickerMethod === item,
                   }
@@ -147,18 +150,18 @@ const BaseColorPicker = (
             ))}
           </div>
         )}
-        <div className={"w-full h-full p-4 space-y-4"}>
+        <div className={"h-full w-full space-y-4 p-4"}>
           <PickerPanelComponent value={color} onChange={handleColorChange} />
         </div>
       </div>
       <div
         className={cn(
-          "h-[46px] px-4 flex items-center justify-between relative z-[11] shadow-[0_-1px_rgba(0,0,0,0.075)]"
+          "relative z-[11] flex h-[46px] items-center justify-between px-4 shadow-[0_-1px_rgba(0,0,0,0.075)]"
         )}
       >
         <div
           className={cn(
-            "flex items-center space-x-1 cursor-pointer text-sm px-1"
+            "flex cursor-pointer items-center space-x-1 px-1 text-sm"
           )}
           onClick={handleToggleMethodPickerMenu}
         >
@@ -168,22 +171,22 @@ const BaseColorPicker = (
         <div className="flex items-center space-x-3">
           {isSupport && (
             <IconEyeDropper
-              className="text-gray-500 hover:text-slate-900 cursor-pointer"
+              className="cursor-pointer text-gray-500 hover:text-slate-900"
               onClick={handleOpenDropper}
             />
           )}
           <IconCopy
-            className="text-gray-500 hover:text-slate-900 cursor-pointer"
+            className="cursor-pointer text-gray-500 hover:text-slate-900"
             onClick={handleCopyColor}
           />
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-const ColorPicker = forwardRef(BaseColorPicker);
+const ColorPicker = forwardRef(BaseColorPicker)
 
-ColorPicker.displayName = "ColorPicker";
+ColorPicker.displayName = "ColorPicker"
 
-export default ColorPicker;
+export default ColorPicker

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 export function IconEyeDropper(props: SVGProps<SVGSVGElement>) {
   return (
@@ -20,5 +20,5 @@ export function IconEyeDropper(props: SVGProps<SVGSVGElement>) {
         <path d="m15 6l3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"></path>
       </g>
     </svg>
-  );
+  )
 }

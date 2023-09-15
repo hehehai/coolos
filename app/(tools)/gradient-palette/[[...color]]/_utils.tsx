@@ -1,11 +1,18 @@
-const paletteSVGTemplate = ({ link, site, block, width, height }: {
-  block: string;
-  link?: string;
-  site?: string;
-  width: number;
-  height: number;
+const paletteSVGTemplate = ({
+  link,
+  site,
+  block,
+  width,
+  height,
+}: {
+  block: string
+  link?: string
+  site?: string
+  width: number
+  height: number
 }) => {
-  const siteStr = site ? `<text
+  const siteStr = site
+    ? `<text
     x="10"
     y="${height + 15}"
     font-family="Arial"
@@ -13,9 +20,11 @@ const paletteSVGTemplate = ({ link, site, block, width, height }: {
     alignment-baseline="middle"
   >
     Exported from ${site}
-  </text>` : ''
+  </text>`
+    : ""
 
-  const linkStr = link ? `<text
+  const linkStr = link
+    ? `<text
   x="490"
   y="${height + 15}"
   font-family="Arial"
@@ -24,14 +33,15 @@ const paletteSVGTemplate = ({ link, site, block, width, height }: {
   text-anchor="end"
 >
   ${link}
-</text>` : ''
+</text>`
+    : ""
 
   return `
   <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       version="1.1"
-      viewBox="0 0 ${width} ${height + ((siteStr || linkStr) ? 30 : 0)}"
+      viewBox="0 0 ${width} ${height + (siteStr || linkStr ? 30 : 0)}"
       xml:space="preserve"
     >
       ${block}
@@ -41,24 +51,33 @@ const paletteSVGTemplate = ({ link, site, block, width, height }: {
   `
 }
 
-export function genGradientPaletteSVG(colors: string[], width: number, height: number) {
+export function genGradientPaletteSVG(
+  colors: string[],
+  width: number,
+  height: number
+) {
   const blockWidth = width / colors.length
   const colorBlocks = colors.reduce((acc, color, idx) => {
     const x = idx * blockWidth
-    return acc + `<rect
+    return (
+      acc +
+      `<rect
       fill="${color}"
       x="${x}"
       y="0"
       width="${blockWidth}"
       height="${height}"
     />`
-  }, '')
+    )
+  }, "")
 
   return paletteSVGTemplate({
     width,
     height,
     block: colorBlocks,
-    site: 'Coolors',
-    link: `http://localhost:3000/gradient-palette?colors=${colors.at(0)}-${colors.at(-1)}`
+    site: "Coolors",
+    link: `http://localhost:3000/gradient-palette?colors=${colors.at(
+      0
+    )}-${colors.at(-1)}`,
   })
 }

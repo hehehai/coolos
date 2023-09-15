@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react"
 
-export interface FieldInputProps extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
-  value?: number;
-  title: string;
-  min?: number;
-  max?: number;
+import { cn } from "@/lib/utils"
+
+export interface FieldInputProps
+  extends Omit<React.ComponentPropsWithoutRef<"input">, "onChange"> {
+  value?: number
+  title: string
+  min?: number
+  max?: number
   onChange?: (val: number) => void
 }
 
@@ -33,7 +35,7 @@ const FieldInput = ({
 
   const handleBlur = (e: React.SyntheticEvent) => {
     const val = (e.target as HTMLInputElement).value
-    if (val === '') {
+    if (val === "") {
       onChange?.(0)
     } else if (/[-+]?d*/.test(val)) {
       const newVal = Number.parseInt(val)
@@ -45,27 +47,31 @@ const FieldInput = ({
     }
   }
 
-  return <div className={'space-y-2'}>
-    <div className={'flex items-center justify-between'}>
-      <label className={'text-sm'}>{title}</label>
-      <div>
-        <input
-          className={cn('number-hide-arrows w-12 px-[5px] h-6 text-xs rounded-md border border-gray-300 text-center border-transparent hover:border-gray-300 focus:border-blue-500')}
-          type="number"
-          value={tmpVal}
-          min={min}
-          max={max}
-          pattern="[-+]?d*"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          {...rest}
-        />
+  return (
+    <div className={"space-y-2"}>
+      <div className={"flex items-center justify-between"}>
+        <label className={"text-sm"}>{title}</label>
+        <div>
+          <input
+            className={cn(
+              "number-hide-arrows h-6 w-12 rounded-md border border-gray-300 px-[5px] text-center text-xs hover:border-gray-300 focus:border-blue-500"
+            )}
+            type="number"
+            value={tmpVal}
+            min={min}
+            max={max}
+            pattern="[-+]?d*"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            {...rest}
+          />
+        </div>
       </div>
+      {children}
     </div>
-    {children}
-  </div>
+  )
 }
 
-FieldInput.displayName = 'FieldInput'
+FieldInput.displayName = "FieldInput"
 
 export default FieldInput

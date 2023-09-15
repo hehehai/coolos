@@ -1,7 +1,8 @@
-'use client';
+"use client"
 
-import React, { useCallback, useRef } from "react";
-import { throttleByRaf } from "@/lib/throttle-by-raf";
+import React, { useCallback, useRef } from "react"
+
+import { throttleByRaf } from "@/lib/throttle-by-raf"
 
 const firstGtAnchor = (anchorsTops: [string, number][], point: number) => {
   for (let i = 0; i < anchorsTops.length; i++) {
@@ -14,11 +15,11 @@ const firstGtAnchor = (anchorsTops: [string, number][], point: number) => {
 }
 
 export const useAnchorPoint = (anchors: string[]) => {
-  const [anchorPoint, setAnchorPoint] = React.useState<string | null>(null);
+  const [anchorPoint, setAnchorPoint] = React.useState<string | null>(null)
 
   const anchorsTops = useRef<[string, number][]>([])
 
-  const handleScroll = useCallback((() => {
+  const handleScroll = useCallback(() => {
     const scrollTop = document.documentElement.scrollTop
     const viewHalf = document.documentElement.clientHeight / 2
     const pointLIne = scrollTop + viewHalf
@@ -27,15 +28,15 @@ export const useAnchorPoint = (anchors: string[]) => {
     if (nextAnchor !== anchorPoint) {
       setAnchorPoint(nextAnchor)
     }
-  }), [anchorsTops, anchorPoint])
+  }, [anchorsTops, anchorPoint])
 
   React.useEffect(() => {
     anchorsTops.current = []
 
     anchors.forEach((anchor) => {
-      const anchorDom = document.getElementById(anchor);
+      const anchorDom = document.getElementById(anchor)
       if (!anchorDom) {
-        return;
+        return
       }
       anchorsTops.current.push([anchor, anchorDom.offsetTop])
     })
@@ -44,11 +45,11 @@ export const useAnchorPoint = (anchors: string[]) => {
 
     if (anchorsTops.current.length) {
       anchorsTops.current.sort((a, b) => b[1] - a[1])
-      window.addEventListener('scroll', handleScrollThrottle)
+      window.addEventListener("scroll", handleScrollThrottle)
     }
 
     return () => {
-      window.removeEventListener('scroll', handleScrollThrottle)
+      window.removeEventListener("scroll", handleScrollThrottle)
     }
   }, [anchors, handleScroll])
 
@@ -61,7 +62,7 @@ export const useAnchorPoint = (anchors: string[]) => {
 
       window.scrollTo({
         top: Math.max(top - viewHalf, 0),
-        behavior: 'smooth'
+        behavior: "smooth",
       })
     }
   }

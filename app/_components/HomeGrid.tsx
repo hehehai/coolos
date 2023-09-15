@@ -1,18 +1,20 @@
-import { LinkIcon } from "@/components/icons";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { FC } from "react";
-import ColorPickerFloat from "./ColorPickerFloat";
-import ColorNameFloat from "./ColorNameFloat";
-import ContrastCheckerFloat from "./ContrastCheckerFloat";
-import GradientPaletteFloat from "./GradientPaletteFloat";
+import { FC } from "react"
+import Link from "next/link"
+
+import { cn } from "@/lib/utils"
+import { LinkIcon } from "@/components/icons"
+
+import ColorNameFloat from "./ColorNameFloat"
+import ColorPickerFloat from "./ColorPickerFloat"
+import ContrastCheckerFloat from "./ContrastCheckerFloat"
+import GradientPaletteFloat from "./GradientPaletteFloat"
 
 interface HomeGridCardProps extends React.ComponentPropsWithoutRef<"div"> {
-  title: string;
-  slug: string;
-  description: string;
-  link: string;
-  float?: React.ReactNode;
+  title: string
+  slug: string
+  description: string
+  link: string
+  float?: React.ReactNode
 }
 
 const HomeGridCard: FC<HomeGridCardProps> = ({
@@ -28,36 +30,36 @@ const HomeGridCard: FC<HomeGridCardProps> = ({
     <div
       {...otherProps}
       className={cn(
-        "relative bg-[#FBFBFB] shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset] rounded-2xl",
+        "relative rounded-2xl bg-[#FBFBFB] shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset]",
         className
       )}
     >
-      <div className="relative h-full flex flex-col justify-between p-8">
-        <div className="relative z-20 text-gray-400 font-medium">{title}</div>
+      <div className="relative flex h-full flex-col justify-between p-8">
+        <div className="relative z-20 font-medium text-gray-400">{title}</div>
         <div>
-          <div className="relative z-20 text-3xl text-slate-900 font-medium max-w-xs">
+          <div className="relative z-20 max-w-xs text-3xl font-medium text-slate-900">
             {slug}
           </div>
-          <div className="relative z-20 mt-3 text-gray-500 text-sm leading-normal max-w-xs">
+          <div className="relative z-20 mt-3 max-w-xs text-sm leading-normal text-gray-500">
             {description}
           </div>
           <Link
             href={link}
-            className="relative z-20 group mt-8 text-sm inline-flex items-center space-x-1"
+            className="group relative z-20 mt-8 inline-flex items-center space-x-1 text-sm"
           >
             <span>More ablout {title} </span>
-            <LinkIcon className="group-hover:translate-x-1 transition-transform" />
+            <LinkIcon className="transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
       </div>
       {float}
     </div>
-  );
-};
+  )
+}
 
 const HomeGrid = () => {
   return (
-    <div className="max-w-7xl mx-auto w-full">
+    <div className="mx-auto w-full max-w-7xl">
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-8">
           <HomeGridCard
@@ -100,15 +102,15 @@ const HomeGrid = () => {
           />
         </div>
         <div className="col-span-8">
-          <div className="h-[100px] flex items-center px-5 bg-[#FBFBFB] shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset] rounded-2xl">
+          <div className="flex h-[100px] items-center rounded-2xl bg-[#FBFBFB] px-5 shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset]">
             Subscribe
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-HomeGrid.displayName = "HomeGrid";
+HomeGrid.displayName = "HomeGrid"
 
-export default HomeGrid;
+export default HomeGrid

@@ -1,21 +1,22 @@
-import "@/styles/globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
-import { ClerkProvider } from "@clerk/nextjs";
-import { zhCN } from "@clerk/localizations";
+import "@/styles/globals.css"
 
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { zhCN } from "@clerk/localizations"
+import { ClerkProvider } from "@clerk/nextjs"
+import { Toaster } from "react-hot-toast"
+
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Coolors",
   description: "fast color generator",
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <ClerkProvider localization={zhCN}>
@@ -30,5 +31,5 @@ export default function RootLayout({
         </body>
       </html>
     </ClerkProvider>
-  );
+  )
 }

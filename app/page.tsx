@@ -1,5 +1,5 @@
-import HomeGrid from "./_components/HomeGrid";
-import HomeHeader from "./_components/HomeHeader";
+import HomeGrid from "./_components/HomeGrid"
+import HomeHeader from "./_components/HomeHeader"
 
 function Home() {
   return (

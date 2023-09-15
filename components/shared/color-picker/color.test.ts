@@ -1,10 +1,11 @@
-import { expect, test } from 'vitest'
-import { generateColor } from './util'
-import { Color } from './color'
-import names from './data/names.json'
+import { expect, test } from "vitest"
 
-test('color rgb to cmyk', () => {
-  expect(generateColor('rgb(0, 0, 0)').toCmyk()).toMatchInlineSnapshot(`
+import { Color } from "./color"
+import names from "./data/names.json"
+import { generateColor } from "./util"
+
+test("color rgb to cmyk", () => {
+  expect(generateColor("rgb(0, 0, 0)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 0,
       "k": 100,
@@ -12,7 +13,7 @@ test('color rgb to cmyk', () => {
       "y": 0,
     }
   `)
-  expect(generateColor('rgb(255, 255, 255)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(255, 255, 255)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 0,
       "k": 0,
@@ -20,7 +21,7 @@ test('color rgb to cmyk', () => {
       "y": 0,
     }
   `)
-  expect(generateColor('rgb(255, 0, 0)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(255, 0, 0)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 0,
       "k": 0,
@@ -28,7 +29,7 @@ test('color rgb to cmyk', () => {
       "y": 100,
     }
   `)
-  expect(generateColor('rgb(0, 255, 0)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(0, 255, 0)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 100,
       "k": 0,
@@ -36,7 +37,7 @@ test('color rgb to cmyk', () => {
       "y": 100,
     }
   `)
-  expect(generateColor('rgb(0, 0, 255)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(0, 0, 255)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 100,
       "k": 0,
@@ -44,7 +45,7 @@ test('color rgb to cmyk', () => {
       "y": 0,
     }
   `)
-  expect(generateColor('rgb(255, 255, 0)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(255, 255, 0)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 0,
       "k": 0,
@@ -52,7 +53,7 @@ test('color rgb to cmyk', () => {
       "y": 100,
     }
   `)
-  expect(generateColor('rgb(0, 255, 255)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(0, 255, 255)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 100,
       "k": 0,
@@ -60,7 +61,7 @@ test('color rgb to cmyk', () => {
       "y": 0,
     }
   `)
-  expect(generateColor('rgb(255, 0, 255)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(255, 0, 255)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 0,
       "k": 0,
@@ -68,7 +69,7 @@ test('color rgb to cmyk', () => {
       "y": 0,
     }
   `)
-  expect(generateColor('rgb(175, 63, 75)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(175, 63, 75)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 0,
       "k": 31,
@@ -76,7 +77,7 @@ test('color rgb to cmyk', () => {
       "y": 57,
     }
   `)
-  expect(generateColor('rgb(176, 63, 76)').toCmyk()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(176, 63, 76)").toCmyk()).toMatchInlineSnapshot(`
     {
       "c": 0,
       "k": 31,
@@ -86,8 +87,8 @@ test('color rgb to cmyk', () => {
   `)
 })
 
-test('color cmyk to rgb', () => {
-  expect(Color.cmykToRgb({ "c": 0, "k": 100, "m": 0, "y": 0, })).toMatchInlineSnapshot(`
+test("color cmyk to rgb", () => {
+  expect(Color.cmykToRgb({ c: 0, k: 100, m: 0, y: 0 })).toMatchInlineSnapshot(`
     {
       "b": 0,
       "g": 0,
@@ -95,63 +96,67 @@ test('color cmyk to rgb', () => {
     }
   `)
 
-  expect(Color.cmykToRgb({ "c": 0, "k": 100, "m": 0, "y": 0, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 0, k: 100, m: 0, y: 0 })).toMatchInlineSnapshot(`
     {
       "b": 0,
       "g": 0,
       "r": 0,
     }
   `)
-  expect(Color.cmykToRgb({ "c": 0, "k": 0, "m": 0, "y": 0, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 0, k: 0, m: 0, y: 0 })).toMatchInlineSnapshot(`
     {
       "b": 255,
       "g": 255,
       "r": 255,
     }
   `)
-  expect(Color.cmykToRgb({ "c": 0, "k": 0, "m": 100, "y": 100, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 0, k: 0, m: 100, y: 100 }))
+    .toMatchInlineSnapshot(`
     {
       "b": 0,
       "g": 0,
       "r": 255,
     }
   `)
-  expect(Color.cmykToRgb({ "c": 100, "k": 0, "m": 0, "y": 100, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 100, k: 0, m: 0, y: 100 }))
+    .toMatchInlineSnapshot(`
     {
       "b": 0,
       "g": 255,
       "r": 0,
     }
   `)
-  expect(Color.cmykToRgb({ "c": 100, "k": 0, "m": 100, "y": 0, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 100, k: 0, m: 100, y: 0 }))
+    .toMatchInlineSnapshot(`
     {
       "b": 255,
       "g": 0,
       "r": 0,
     }
   `)
-  expect(Color.cmykToRgb({ "c": 0, "k": 0, "m": 100, "y": 100, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 0, k: 0, m: 100, y: 100 }))
+    .toMatchInlineSnapshot(`
     {
       "b": 0,
       "g": 0,
       "r": 255,
     }
   `)
-  expect(Color.cmykToRgb({ "c": 100, "k": 0, "m": 0, "y": 0, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 100, k: 0, m: 0, y: 0 })).toMatchInlineSnapshot(`
     {
       "b": 255,
       "g": 255,
       "r": 0,
     }
   `)
-  expect(Color.cmykToRgb({ "c": 0, "k": 0, "m": 100, "y": 0, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 0, k: 0, m: 100, y: 0 })).toMatchInlineSnapshot(`
     {
       "b": 255,
       "g": 0,
       "r": 255,
     }
   `)
-  expect(Color.cmykToRgb({ "c": 0, "k": 31, "m": 64, "y": 57, })).toMatchInlineSnapshot(`
+  expect(Color.cmykToRgb({ c: 0, k: 31, m: 64, y: 57 })).toMatchInlineSnapshot(`
     {
       "b": 75.6585,
       "g": 63.34199999999999,
@@ -160,43 +165,43 @@ test('color cmyk to rgb', () => {
   `)
 })
 
-test('colot rgb to lab', () => {
-  expect(generateColor('rgb(0, 0, 0)').toLab()).toMatchInlineSnapshot(`
+test("colot rgb to lab", () => {
+  expect(generateColor("rgb(0, 0, 0)").toLab()).toMatchInlineSnapshot(`
     {
       "a": 0,
       "b": 0,
       "l": 0,
     }
   `)
-  expect(generateColor('rgb(255, 255, 255)').toLab()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(255, 255, 255)").toLab()).toMatchInlineSnapshot(`
     {
       "a": -0.000011729228754919774,
       "b": 0.000005144762482700571,
       "l": 100,
     }
   `)
-  expect(generateColor('rgb(255, 0, 0)').toLab()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(255, 0, 0)").toLab()).toMatchInlineSnapshot(`
     {
       "a": 80.81243175889557,
       "b": 69.8850744848609,
       "l": 54.29173546502365,
     }
   `)
-  expect(generateColor('rgb(0, 0, 255)').toLab()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(0, 0, 255)").toLab()).toMatchInlineSnapshot(`
     {
       "a": 68.29859917400464,
       "b": -112.02941005918544,
       "l": 29.567582570569506,
     }
   `)
-  expect(generateColor('rgb(0, 255, 0)').toLab()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(0, 255, 0)").toLab()).toMatchInlineSnapshot(`
     {
       "a": -79.2872863932051,
       "b": 80.99026038511582,
       "l": 87.81813005327668,
     }
   `)
-  expect(generateColor('rgb(150, 54, 142)').toLab()).toMatchInlineSnapshot(`
+  expect(generateColor("rgb(150, 54, 142)").toLab()).toMatchInlineSnapshot(`
     {
       "a": 48.77142053308855,
       "b": -28.87396637415157,
@@ -205,7 +210,7 @@ test('colot rgb to lab', () => {
   `)
 })
 
-test('color lab to rgb', () => {
+test("color lab to rgb", () => {
   expect(Color.labToRgb({ a: 0, b: 0, l: 100 })).toMatchInlineSnapshot(`
     {
       "b": 255,
@@ -250,12 +255,12 @@ test('color lab to rgb', () => {
   `)
 })
 
-test.only('find closest color', () => {
+test.only("find closest color", () => {
   const colors = [
-    ['rgb(205, 92, 92)', 'IndianRed'],
-    ['rgb(203, 91, 91)', 'IndianRed'],
-    ['rgb(220, 20, 60)', 'Crimson'],
-    ['rgb(245, 245, 3)', 'Yellow'],
+    ["rgb(205, 92, 92)", "IndianRed"],
+    ["rgb(203, 91, 91)", "IndianRed"],
+    ["rgb(220, 20, 60)", "Crimson"],
+    ["rgb(245, 245, 3)", "Yellow"],
   ]
 
   colors.forEach(([val, name]) => {
@@ -263,10 +268,10 @@ test.only('find closest color', () => {
   })
 
   const colors2 = [
-    ['rgb(255, 0, 255)', 'Orchid'],
-    ['rgb(252, 2, 250)', 'Orchid'],
-    ['rgb(0, 128, 0)', 'DarkGreen'],
-    ['rgb(176, 224, 230)', 'LightBlue'],
+    ["rgb(255, 0, 255)", "Orchid"],
+    ["rgb(252, 2, 250)", "Orchid"],
+    ["rgb(0, 128, 0)", "DarkGreen"],
+    ["rgb(176, 224, 230)", "LightBlue"],
   ]
 
   colors2.forEach(([val, name]) => {
@@ -274,10 +279,10 @@ test.only('find closest color', () => {
   })
 })
 
-test('find closest color same get first', () => {
+test("find closest color same get first", () => {
   const colors = [
-    ['rgb(0, 255, 255)', 'Aqua'],
-    ['rgb(255, 0, 255)', 'Fuchsia'],
+    ["rgb(0, 255, 255)", "Aqua"],
+    ["rgb(255, 0, 255)", "Fuchsia"],
   ]
 
   colors.forEach(([val, name]) => {
