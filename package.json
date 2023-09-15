@@ -10,6 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@clerk/localizations": "^1.25.2",
     "@clerk/nextjs": "^4.23.5",
     "@ctrl/tinycolor": "^3.6.0",
     "@hookform/resolvers": "^3.1.1",
@@ -66,6 +67,7 @@
     "tailwind-merge": "^1.13.2",
     "tailwindcss": "3.3.2",
     "tailwindcss-animate": "^1.0.6",
+    "ts-pattern": "^5.0.5",
     "typescript": "5.1.6",
     "usehooks-ts": "^2.9.1",
     "zod": "^3.21.4"

@@ -1,22 +1,12 @@
-'use client';
-
-import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
 import HomeNav from "./HomeNav";
 
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import HeaderAuth from "./HeaderAuth";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const HomeHeader = () => {
-  const router = useRouter();
-
-  const handleLogin = () => {
-    router.replace("/sign-in");
-  };
-
   return (
     <div className={cn("max-w-7xl mx-auto w-full", inter.className)}>
       <div className="flex items-center justify-between">
@@ -26,10 +16,7 @@ const HomeHeader = () => {
             <HomeNav />
           </div>
         </div>
-        <div className="flex items-center space-x-3">
-          <Button onClick={handleLogin}>Login</Button>
-          <UserButton afterSignOutUrl="/" />
-        </div>
+        <HeaderAuth></HeaderAuth>
       </div>
     </div>
   );
