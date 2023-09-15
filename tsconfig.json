@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    // add Bun type definitions
+    "types": [
+      "bun-types"
+    ],
+
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
