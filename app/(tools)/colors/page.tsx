@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils"
 import {
   ColorCategory,
   colorCollection,
-  colorNames,
 } from "@/components/shared/color-picker/data"
 
 import NameColorCard from "./_components/NameColorCard"
@@ -48,10 +47,8 @@ const ColorsPage = () => {
   const [filter, setFilter] = useState<ColorCategory | "">("")
 
   const showColors = useMemo(() => {
-    if (!filter) return colorNames
-    const colors = colorCollection[filter]
-    if (!colors) return []
-    return colors
+    if (!filter) return colorCollection
+    return { [filter]: colorCollection[filter] }
   }, [filter])
 
   return (
@@ -72,16 +69,16 @@ const ColorsPage = () => {
         ))}
       </div>
       <div className="mx-auto mt-40 grid max-w-7xl grid-cols-4 gap-x-8 gap-y-6">
-        {showColors.map((color) => {
-          return (
+        {Object.entries(showColors).map(([category, colors]) => {
+          return colors.map((color) => (
             <NameColorCard
               className="h-40"
-              key={color.name}
+              key={`${category}__${color.name}`}
               name={color.name}
               color={color.rgb}
               showInfo
             />
-          )
+          ))
         })}
       </div>
     </div>

@@ -466,14 +466,11 @@
     { "name": "Telemagenta", "rgb": [207, 52, 118] },
     { "name": "Violet(JTC)", "rgb": [91, 50, 86] },
     { "name": "Violet(webColor)", "rgb": [238, 130, 238] },
-    { "name": "Amaranth", "rgb": [229, 43, 80] },
     { "name": "AmaranthPink", "rgb": [241, 156, 187] },
-    { "name": "Baker-MillerPink", "rgb": [255, 145, 175] },
     { "name": "Blush", "rgb": [222, 93, 131] },
     { "name": "BrilliantRose", "rgb": [246, 83, 166] },
     { "name": "BrinkPink", "rgb": [251, 96, 127] },
     { "name": "CarnationPink", "rgb": [255, 166, 201] },
-    { "name": "Cerise", "rgb": [222, 49, 99] },
     { "name": "ChampagnePink", "rgb": [241, 221, 207] }
   ],
   "White": [

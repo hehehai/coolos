@@ -84,7 +84,7 @@ const Name = ({ value, onChange }: CommonPickerPanelProps) => {
       <div className="no-scrollbar mt-4 grow overflow-auto">
         <div className="grid grid-cols-12 gap-1">
           {showNames.map((item) => (
-            <TooltipProvider key={item.name} delayDuration={300}>
+            <TooltipProvider key={item.key} delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger>
                   <div
