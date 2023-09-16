@@ -10,7 +10,7 @@ const pageMeta = {
 }
 
 export const metadata: Metadata = {
-  title: pageMeta.title + "Coolors",
+  title: pageMeta.title + "Coolos",
 }
 
 const PickerPageLayout: FC<{ children: React.ReactNode }> = ({ children }) => {

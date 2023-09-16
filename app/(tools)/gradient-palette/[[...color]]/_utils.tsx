@@ -75,7 +75,7 @@ export function genGradientPaletteSVG(
     width,
     height,
     block: colorBlocks,
-    site: "Coolors",
+    site: "Coolos",
     link: `http://localhost:3000/gradient-palette?colors=${colors.at(
       0
     )}-${colors.at(-1)}`,

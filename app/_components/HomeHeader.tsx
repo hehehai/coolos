@@ -12,7 +12,7 @@ const HomeHeader = () => {
     <div className={cn("mx-auto w-full max-w-7xl", inter.className)}>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <div className="text-2xl font-bold">Coolor</div>
+          <div className="text-2xl font-bold">Coolos</div>
           <div className="ml-20">
             <HomeNav />
           </div>

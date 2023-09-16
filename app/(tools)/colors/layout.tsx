@@ -9,7 +9,7 @@ const pageMeta = {
 }
 
 export const metadata: Metadata = {
-  title: pageMeta.title + "Coolors",
+  title: pageMeta.title + "Coolos",
 }
 
 const ColorsPageLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
