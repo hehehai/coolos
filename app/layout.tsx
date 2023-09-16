@@ -9,7 +9,7 @@ import { Toaster } from "react-hot-toast"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Coolors",
+  title: "Coolos",
   description: "fast color generator",
 }
 
