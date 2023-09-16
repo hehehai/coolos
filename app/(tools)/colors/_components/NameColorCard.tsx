@@ -11,12 +11,14 @@ interface NameColorCardProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "name" | "color"> {
   name: string
   color: number[]
+  colorCardClassName?: string
   showInfo?: boolean
 }
 
 const NameColorCard: FC<NameColorCardProps> = ({
   name,
   color,
+  colorCardClassName,
   showInfo = false,
   ...otherProps
 }) => {
@@ -45,7 +47,10 @@ const NameColorCard: FC<NameColorCardProps> = ({
       className={cn("flex w-full flex-col", otherProps.className)}
     >
       <div
-        className="group flex grow cursor-pointer items-center justify-center rounded-xl"
+        className={cn(
+          "group flex grow cursor-pointer items-center justify-center rounded-xl",
+          colorCardClassName
+        )}
         style={{ backgroundColor: realColor.toHexString() }}
         onClick={() => handleCopyColor(realColor.toHex().toUpperCase())}
       >
