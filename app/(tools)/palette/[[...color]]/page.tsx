@@ -1,57 +1,77 @@
 "use client"
 
 import { useState } from "react"
+import { nanoid } from "nanoid"
 
+import { cn } from "@/lib/utils"
 import { Color, generateColor } from "@/components/shared/color-picker"
+
+import PaletteBlock from "./_components/PaletteBlock"
+import Toolbar from "./_components/Toolbar"
+import { usePaletteStore } from "./_store/palette"
+
+interface IPaletteBlock {
+  id: string
+  color: Color
+}
 
 const ColorPalette = () => {
   // 获取路由的参数
   // 色板块颜色参数
 
-  const [palette, setPalette] = useState<Color[]>([
-    generateColor("#2DE1C2"),
-    generateColor("#6AD5CB"),
-    generateColor("#7FBEAB"),
-    generateColor("#7E998A"),
-    generateColor("#85877C"),
+  const setting = usePaletteStore((state) => state.setting)
+
+  const [palette, setPalette] = useState<IPaletteBlock[]>([
+    {
+      id: nanoid(),
+      color: generateColor("#2DE1C2"),
+    },
+    {
+      id: nanoid(),
+      color: generateColor("#6AD5CB"),
+    },
+    {
+      id: nanoid(),
+      color: generateColor("#7FBEAB"),
+    },
+    {
+      id: nanoid(),
+      color: generateColor("#7E998A"),
+    },
+    {
+      id: nanoid(),
+      color: generateColor("#85877C"),
+    },
   ])
 
-  // 渲染色板操作条
-  // 渲染颜色块
+  const handleChange = (id: string, color: Color) => {
+    const newPalette = [...palette]
+    const idx = newPalette.findIndex((item) => item.id === id)
+    newPalette[idx].color = color
+    setPalette(newPalette)
+  }
+
   return (
     <div className="flex h-screen w-full flex-col">
-      <div className="flex h-16 w-full items-center justify-between bg-gray-300 px-3">
-        <div>tool bar</div>
-        <div className="flex items-center space-x-3">
-          <div>isolate mode</div>
-          <div>zen mode</div>
-          <div>secondary info SELECT</div>
-          <div>prev</div>
-          <div>next</div>
-          <div>Adjust palette</div>
-          <div>Quick view</div>
-          <div>Export</div>
-          <div>Save</div>
-        </div>
-      </div>
+      <Toolbar />
       <div className="w-full grow">
-        <div className="flex h-full w-full items-stretch justify-between">
-          {palette.map((color, idx) => {
+        <div
+          className={cn(
+            "flex h-full w-full items-stretch justify-between",
+            setting.isIsolated && "gap-x-4 p-4"
+          )}
+        >
+          {palette.map((block, idx) => {
             return (
               <div
                 key={idx}
-                className="flex h-full grow flex-col items-center justify-center space-y-3"
-                style={{
-                  backgroundColor: color.toHexString(),
-                }}
+                className="h-full w-full"
+                style={{ flexGrow: 1, width: `${100 / palette.length}%` }}
               >
-                <div>Add</div>
-                <div>Remove</div>
-                <div>Save</div>
-                <div>Drag</div>
-                <div>Copy</div>
-                <div>{color.toHex()}</div>
-                <div>Second info</div>
+                <PaletteBlock
+                  block={block}
+                  onChange={(c) => handleChange(block.id, c)}
+                />
               </div>
             )
           })}

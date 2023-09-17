@@ -50,6 +50,7 @@
     "fuse.js": "^6.6.2",
     "lodash-es": "^4.17.21",
     "lucide-react": "^0.259.0",
+    "nanoid": "^5.0.1",
     "next": "13.4.9",
     "react": "18.2.0",
     "react-day-picker": "^8.8.0",
@@ -62,7 +63,8 @@
     "tailwindcss-animate": "^1.0.6",
     "ts-pattern": "^5.0.5",
     "usehooks-ts": "^2.9.1",
-    "zod": "^3.22.2"
+    "zod": "^3.22.2",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
