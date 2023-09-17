@@ -10,7 +10,7 @@ const pageMeta = {
 }
 
 export const metadata: Metadata = {
-  title: pageMeta.title + "Coolos",
+  title: pageMeta.title + " - Coolos",
 }
 
 const ContrastPageLayout: FC<{ children: React.ReactNode }> = ({

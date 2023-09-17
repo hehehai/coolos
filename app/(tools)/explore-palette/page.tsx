@@ -1,9 +1,5 @@
 "use client"
 
-import { MoreHorizontal } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Color, generateColor } from "@/components/shared/color-picker"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -12,6 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+
+import PaletteCard from "./_components/PaletteCard"
 
 const colorPalettes = [
   {
@@ -58,53 +56,6 @@ const colorPalettes = [
     likes: 26081,
   },
 ]
-
-interface PaletteColorItemProps
-  extends Omit<React.ComponentPropsWithoutRef<"div">, "color"> {
-  color: Color
-}
-
-const PaletteColorItem = ({ color, ...props }: PaletteColorItemProps) => {
-  return (
-    <div
-      {...props}
-      className={cn(
-        "flex h-full grow items-center justify-center",
-        props.className
-      )}
-      style={{ backgroundColor: color.toHexString() }}
-    >
-      <div className="hidden">{color.toHex()}</div>
-    </div>
-  )
-}
-
-interface PaletteCardProps extends React.ComponentPropsWithoutRef<"div"> {
-  palette: (typeof colorPalettes)[0]
-  paletteClassname?: string
-}
-
-const PaletteCard = ({
-  palette,
-  className,
-  paletteClassname,
-}: PaletteCardProps) => {
-  return (
-    <div className={cn(className)}>
-      <div className={cn("flex h-full items-stretch", paletteClassname)}>
-        {palette.colors.map((color, idx) => (
-          <PaletteColorItem key={idx} color={generateColor(color)} />
-        ))}
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-1">
-        <div className="text-sm text-slate-900">{palette.likes}</div>
-        <div>
-          <MoreHorizontal />
-        </div>
-      </div>
-    </div>
-  )
-}
 
 const ExplorePalettePage = () => {
   return (
