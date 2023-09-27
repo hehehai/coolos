@@ -76,6 +76,7 @@ const ColorsPage = () => {
               name={color.name}
               color={color.rgb}
               showInfo
+              showLike
             />
           ))
         })}

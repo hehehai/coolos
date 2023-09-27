@@ -1,11 +1,20 @@
 import { FC, useMemo } from "react"
 import { isReadable } from "@ctrl/tinycolor"
-import { MoreHorizontal } from "lucide-react"
 import toast from "react-hot-toast"
+import useSWRMutation from "swr/mutation"
 
 import { cn } from "@/lib/utils"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { generateColor } from "@/components/shared/color-picker"
+import { likeColor } from "@/app/_requests/color"
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu"
 
 interface NameColorCardProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "name" | "color"> {
@@ -13,6 +22,7 @@ interface NameColorCardProps
   color: number[]
   colorCardClassName?: string
   showInfo?: boolean
+  showLike?: boolean
 }
 
 const NameColorCard: FC<NameColorCardProps> = ({
@@ -20,6 +30,7 @@ const NameColorCard: FC<NameColorCardProps> = ({
   color,
   colorCardClassName,
   showInfo = false,
+  showLike = false,
   ...otherProps
 }) => {
   const realColor = useMemo(() => {
@@ -40,6 +51,15 @@ const NameColorCard: FC<NameColorCardProps> = ({
       toast.success("color copy success")
     }
   }
+
+  const { trigger, isMutating } = useSWRMutation("/api/color", likeColor, {
+    onError: (err) => {
+      toast.error(err.message)
+    },
+    onSuccess: () => {
+      toast.success("color like success")
+    },
+  })
 
   return (
     <div
@@ -64,10 +84,59 @@ const NameColorCard: FC<NameColorCardProps> = ({
         </span>
       </div>
       {showInfo && (
-        <div className="flex items-center justify-between p-1">
+        <div className="flex items-center justify-between px-1 py-2">
           <div className="text-sm text-slate-900">{name}</div>
-          <div>
-            <MoreHorizontal />
+          <div className="flex items-center space-x-2">
+            {showLike && (
+              <span
+                className={cn(
+                  "i-lucide-heart cursor-pointer text-sm text-slate-600 hover:text-black",
+                  isMutating && "i-lucide-loader-2 animate-spin"
+                )}
+                onClick={() => trigger({ name, color: realColor.toHex() })}
+              />
+            )}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center justify-center">
+                <div className="i-lucide-more-horizontal cursor-pointer text-slate-600 hover:text-black" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="space-y-1 rounded-xl p-3">
+                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
+                  <span className="i-lucide-pipette" />
+                  <span> Open in the Color Picker</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
+                  <span className="i-lucide-link" />
+                  <span>Copy URL</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="mx-1" />
+                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
+                  <span className="i-lucide-eye" />
+                  <span> Quick view</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
+                  <span className="i-lucide-maximize-2" />
+                  <span>View fullscreen</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="mx-1" />
+                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
+                  <span className="i-lucide-arrow-down-to-line" />
+                  <span>Export as image</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer space-x-2 rounded-md"
+                  onClick={() => trigger({ name, color: realColor.toHex() })}
+                >
+                  <span
+                    className={cn(
+                      "i-lucide-heart",
+                      isMutating && "i-lucide-loader-2 animate-spin"
+                    )}
+                  />
+                  <span>Save color</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       )}

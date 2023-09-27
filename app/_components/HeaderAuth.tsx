@@ -14,7 +14,9 @@ const HeaderAuth = () => {
   const authKit = useMemo(() => {
     return match(isSignedIn)
       .with(false, P.nullish, () => (
-        <Button onClick={() => router.replace("/sign-in")}>Login</Button>
+        <Button onClick={() => router.replace("/sign-in")} size={"xs"}>
+          Login
+        </Button>
       ))
       .otherwise(() => <UserButton afterSignOutUrl="/" />)
   }, [isSignedIn, router])

@@ -5,6 +5,16 @@ import "./env.mjs"
  */
 const nextConfig = {
   /* config options here */
+  experimental: {
+    swcPlugins: [
+      [
+        'next-superjson-plugin',
+        {
+          excluded: [],
+        },
+      ],
+    ],
+  },
 }
 
 export default nextConfig
