@@ -15,7 +15,7 @@ import {
 import ColorPicker from "@/components/shared/color-picker/ColorPicker"
 import HexInput from "@/components/shared/color-picker/components/HexInput"
 import useColorState from "@/components/shared/color-picker/hooks/useColorState"
-import ExpansionStrip from "@/components/shared/expansion-strip"
+import ExpansionStrip from "@/components/shared/ExpansionStrip"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 

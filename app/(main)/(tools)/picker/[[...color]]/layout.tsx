@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { Metadata } from "next"
 
-import PageWrapper from "@/components/shared/page-wrapper"
+import PageWrapper from "@/components/shared/PageWrapper"
 
 const pageMeta = {
   title: "Color Picker",

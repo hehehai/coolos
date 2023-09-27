@@ -6,8 +6,8 @@ import { useLockedBody } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
 import { IconMaximize } from "@/components/icons/Maximize"
-import ColorFullScreen from "@/components/shared/color-fullscreen"
 import { Color } from "@/components/shared/color-picker"
+import ColorFullScreen from "@/components/shared/ColorFullscreen"
 
 const DisplayDesk = memo(
   ({

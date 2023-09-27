@@ -10,9 +10,8 @@ import {
 import ColorPicker from "@/components/shared/color-picker/ColorPicker"
 import HexInput from "@/components/shared/color-picker/components/HexInput"
 import useColorState from "@/components/shared/color-picker/hooks/useColorState"
-import DisplayDesk from "@/components/shared/display-desk"
-
-import ContrastDetail from "./_components/ContrastDetail"
+import ContrastDetail from "@/components/shared/ContrastDetail"
+import DisplayDesk from "@/components/shared/DisplayDesk"
 
 const contrastScoreTip = [
   "Poor contrast for all text sizes.",

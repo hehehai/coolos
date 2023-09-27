@@ -8,8 +8,7 @@ import {
 } from "@/components/shared/color-picker"
 import HexInput from "@/components/shared/color-picker/components/HexInput"
 import useColorState from "@/components/shared/color-picker/hooks/useColorState"
-
-import ContrastDetail from "../(tools)/contrast/[[...color]]/_components/ContrastDetail"
+import ContrastDetail from "@/components/shared/ContrastDetail"
 
 const ContrastCheckerFloat = () => {
   const [textColor, setTextColor] = useColorState(generateColor("#000"))

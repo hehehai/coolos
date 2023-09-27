@@ -1,24 +1,20 @@
 import prisma from "@/db"
 
 async function main() {
-  const id = "cl9ebqhxk00003b600tymydho"
-  await prisma.example.upsert({
-    where: {
-      id,
+  await prisma.color.create({
+    data: {
+      name: "Demo",
+      color: "#000000",
+      userId: "user_2VSTcgmFlfNJ0ZiF8VGWB38SsN7",
     },
-    create: {
-      id,
-    },
-    update: {},
   })
 }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+try {
+  await main()
+  await prisma.$disconnect()
+} catch (e) {
+  console.error(e)
+  await prisma.$disconnect()
+  process.exit(1)
+}

@@ -1,11 +1,12 @@
 import { FC } from "react"
 import { Metadata } from "next"
 
-import PageWrapper from "@/components/shared/page-wrapper"
+import PageWrapper from "@/components/shared/PageWrapper"
 
 const pageMeta = {
-  title: "Color Contrast Checker",
-  description: "Calculate the contrast ratio of text and background colors.",
+  title: "Trending Color Palettes",
+  description:
+    "Get inspired by thousands of beautiful color schemes and make something cool!",
 }
 
 export const metadata: Metadata = {

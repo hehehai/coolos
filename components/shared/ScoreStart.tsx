@@ -1,8 +1,7 @@
 import { FC } from "react"
 
 import { cn } from "@/lib/utils"
-
-import { IconStarFill } from "../icons"
+import { IconStarFill } from "@/components/icons"
 
 const ScoreStart: FC<{
   score?: number

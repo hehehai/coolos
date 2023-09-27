@@ -6,7 +6,7 @@ import {
   generateHues,
   generateVariations,
 } from "@/components/shared/color-picker"
-import ExpansionStrip from "@/components/shared/expansion-strip"
+import ExpansionStrip from "@/components/shared/ExpansionStrip"
 
 import ShowCard from "./ShowCard"
 

@@ -1,8 +1,7 @@
 "use client"
 
 import { colorCollection } from "@/components/shared/color-picker/data"
-
-import NameColorCard from "../(tools)/colors/_components/NameColorCard"
+import NameColorCard from "@/components/shared/NameColorCard"
 
 const ColorNameFloat = () => {
   return (

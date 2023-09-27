@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import { contrastStatus } from "@/components/shared/color-picker"
-import ScoreStart from "@/components/shared/score-start"
+import ScoreStart from "@/components/shared/ScoreStart"
 
 interface ContrastDetailProps {
   contrast: contrastStatus

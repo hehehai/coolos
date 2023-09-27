@@ -97,6 +97,6 @@
     "vitest": "^0.33.0"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "bun prisma/seed.ts"
   }
 }

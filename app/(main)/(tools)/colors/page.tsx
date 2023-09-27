@@ -7,8 +7,7 @@ import {
   ColorCategory,
   colorCollection,
 } from "@/components/shared/color-picker/data"
-
-import NameColorCard from "./_components/NameColorCard"
+import NameColorCard from "@/components/shared/NameColorCard"
 
 const colorCategories = Object.keys(colorCollection) as ColorCategory[]
 
