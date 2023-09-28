@@ -9,8 +9,9 @@
     "lint": "next lint",
     "test": "vitest",
     "postinstall": "prisma generate",
-    "db:push": "prisma db push",
-    "db:seed": "NODE_ENV=development prisma db seed"
+    "db:push": "dotenv -e .env.local -- prisma db push",
+    "db:studio": "dotenv -e .env.local -- prisma studio",
+    "db:seed": "NODE_ENV=development dotenv -e .env.local -- prisma db seed"
   },
   "dependencies": {
     "@clerk/localizations": "^1.25.2",
@@ -88,6 +89,7 @@
     "@types/react-dom": "18.2.6",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.15",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^8.49.0",
     "eslint-config-next": "^13.4.19",
     "eslint-config-prettier": "^9.0.0",
@@ -105,6 +107,6 @@
     "vitest": "^0.33.0"
   },
   "prisma": {
-    "seed": "bun prisma/seed.ts"
+    "seed": "bun prisma/seeds/index.ts"
   }
 }
