@@ -264,7 +264,7 @@ test.only("find closest color", () => {
   ]
 
   colors.forEach(([val, name]) => {
-    expect(generateColor(val).findClosestColor(names as any)).toBe(name)
+    expect(generateColor(val).findClosestColor(names)).toBe(name)
   })
 
   const colors2 = [
@@ -275,7 +275,7 @@ test.only("find closest color", () => {
   ]
 
   colors2.forEach(([val, name]) => {
-    expect(generateColor(val).findClosestColor(names as any)).not.toBe(name)
+    expect(generateColor(val).findClosestColor(names)).not.toBe(name)
   })
 })
 
@@ -286,6 +286,6 @@ test("find closest color same get first", () => {
   ]
 
   colors.forEach(([val, name]) => {
-    expect(generateColor(val).findClosestColor(names as any)).toBe(name)
+    expect(generateColor(val).findClosestColor(names)).toBe(name)
   })
 })

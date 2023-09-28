@@ -76,12 +76,9 @@ const GradientPalette = ({ params }: { params: { colors?: string[] } }) => {
     const startRGB = getRandomRgb()
     let endRGB: RGB | null = null
 
-    while (true) {
+    do {
       endRGB = getRandomRgb()
-      if (!isSameRgb(startRGB, endRGB)) {
-        break
-      }
-    }
+    } while (isSameRgb(startRGB, endRGB))
 
     setStartColor(generateColor(startRGB))
     setEndColor(generateColor(endRGB))

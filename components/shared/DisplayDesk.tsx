@@ -7,7 +7,6 @@ import useSWRMutation from "swr/mutation"
 import { useLockedBody } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
-import { IconMaximize } from "@/components/icons/Maximize"
 import { Color } from "@/components/shared/color-picker"
 import ColorFullScreen from "@/components/shared/ColorFullscreen"
 import { likeColor } from "@/app/_actions/color"
