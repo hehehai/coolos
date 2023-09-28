@@ -19,6 +19,7 @@ module.exports = {
     "tailwindcss",
     "@typescript-eslint"
   ],
+  ignorePatterns: ["*.json"],
   settings: {
     tailwindcss: {
       callees: [
@@ -35,7 +36,7 @@ module.exports = {
       files: [
         "*.ts",
         "*.tsx"
-      ]
+      ],
     }
   ],
   rules: {
@@ -44,5 +45,5 @@ module.exports = {
     "tailwindcss/no-custom-classname": "off",
     "tailwindcss/classnames-order": "error",
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-  }
+  },
 }

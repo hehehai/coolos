@@ -1,10 +1,10 @@
-// .lintstagedrc.js
 // See https://nextjs.org/docs/basic-features/eslint#lint-staged for details
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('node:path')
 
 const buildEslintCommand = (filenames) =>
-  `next lint --fix --file ${filenames
+  `bun next lint --fix --file ${filenames
     .map((f) => path.relative(process.cwd(), f))
     .join(' --file ')}`
 

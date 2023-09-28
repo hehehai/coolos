@@ -32,12 +32,13 @@
     }
   },
   "include": [
-    ".eslintrc.cjs",
     "globals.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".eslintrc.cjs",
+    "lint-staged.config.cjs"
   ],
   "exclude": [
     "node_modules"
