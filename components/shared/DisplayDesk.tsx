@@ -14,12 +14,12 @@ const DisplayDesk = memo(
     color,
     className,
     children,
-    fullChidlren,
+    fullChildren,
   }: {
     color: Color
     className?: string
     children: React.ReactNode
-    fullChidlren?: React.ReactNode
+    fullChildren?: React.ReactNode
   }) => {
     const boardTextIsReadable = useMemo(() => {
       return isReadable(color, "#fff", { level: "AA", size: "large" })
@@ -29,9 +29,9 @@ const DisplayDesk = memo(
 
     const handleColorFullScreen = () => {
       setColorFullScreen((state) => {
-        const nectState = !state
-        setLocked(nectState)
-        return nectState
+        const nextState = !state
+        setLocked(nextState)
+        return nextState
       })
     }
 
@@ -58,7 +58,7 @@ const DisplayDesk = memo(
           color={color.toHexString()}
           onClose={handleColorFullScreen}
         >
-          {fullChidlren}
+          {fullChildren}
         </ColorFullScreen>
       </div>
     )

@@ -20,8 +20,8 @@ const PaletteColorItem = memo(({ color, ...props }: PaletteColorItemProps) => {
 
   const copy = useCopyToClipboard()
 
-  const handleCopyColor = (val: string) => {
-    const success = copy(val)
+  const handleCopyColor = async (val: string) => {
+    const success = await copy(val)
     if (success) {
       toast.success("color copy success")
     }

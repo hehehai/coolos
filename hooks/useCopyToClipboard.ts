@@ -1,26 +1,23 @@
 "use client"
 
+type CopyFn = (text: string) => Promise<boolean> // Return success
+
 export const useCopyToClipboard = () => {
-  const copyToClipboard = (str: string) => {
-    const el = document.createElement("textarea")
-    el.value = str
-    el.setAttribute("readonly", "")
-    el.style.position = "absolute"
-    el.style.left = "-9999px"
-    document.body.appendChild(el)
-    const selected =
-      document.getSelection() && document.getSelection()!.rangeCount > 0
-        ? document.getSelection()!.getRangeAt(0)
-        : false
-    el.select()
-    const success = document.execCommand("copy")
-    document.body.removeChild(el)
-    if (selected) {
-      document.getSelection()!.removeAllRanges()
-      document.getSelection()!.addRange(selected)
+  const copy: CopyFn = async (text) => {
+    if (!navigator?.clipboard) {
+      console.warn("Clipboard not supported")
+      return false
     }
-    return success
+
+    // Try to save to clipboard then save it in the state if worked
+    try {
+      await navigator.clipboard.writeText(text)
+      return true
+    } catch (error) {
+      console.warn("Copy failed", error)
+      return false
+    }
   }
 
-  return copyToClipboard
+  return copy
 }

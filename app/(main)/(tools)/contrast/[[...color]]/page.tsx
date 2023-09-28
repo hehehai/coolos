@@ -118,7 +118,7 @@ const ContrastPage = ({ params }: { params: { colors?: string[] } }) => {
         <DisplayDesk
           className="flex h-full w-1/2 items-center justify-center rounded-r-2xl border-l border-zinc-200"
           color={bgColor}
-          fullChidlren={
+          fullChildren={
             <div className="flex h-full w-full items-center justify-center">
               {deskText}
             </div>

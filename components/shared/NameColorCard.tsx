@@ -1,7 +1,8 @@
-import { FC, useMemo } from "react"
+import { FC, useMemo, useState } from "react"
 import { isReadable } from "@ctrl/tinycolor"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
+import { useLockedBody } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
@@ -15,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import ColorFullScreen from "./ColorFullscreen"
 
 interface NameColorCardProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "name" | "color"> {
@@ -45,10 +47,10 @@ const NameColorCard: FC<NameColorCardProps> = ({
 
   const copy = useCopyToClipboard()
 
-  const handleCopyColor = (val: string) => {
-    const success = copy(val)
+  const handleCopy = async (val: string, title: "link" | "color") => {
+    const success = await copy(val)
     if (success) {
-      toast.success("color copy success")
+      toast.success(`${title} copy success`)
     }
   }
 
@@ -61,6 +63,17 @@ const NameColorCard: FC<NameColorCardProps> = ({
     },
   })
 
+  const [isColorFullScreen, setColorFullScreen] = useState(false)
+  const [_, setLocked] = useLockedBody(false, "root")
+
+  const handleColorFullScreen = () => {
+    setColorFullScreen((state) => {
+      const nextState = !state
+      setLocked(nextState)
+      return nextState
+    })
+  }
+
   return (
     <div
       {...otherProps}
@@ -72,7 +85,7 @@ const NameColorCard: FC<NameColorCardProps> = ({
           colorCardClassName
         )}
         style={{ backgroundColor: realColor.toHexString() }}
-        onClick={() => handleCopyColor(realColor.toHex().toUpperCase())}
+        onClick={() => handleCopy(realColor.toHex().toUpperCase(), "color")}
       >
         <span
           className={cn(
@@ -101,20 +114,40 @@ const NameColorCard: FC<NameColorCardProps> = ({
                 <div className="i-lucide-more-horizontal cursor-pointer text-slate-600 hover:text-black" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="space-y-1 rounded-xl p-3">
-                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
+                <DropdownMenuItem
+                  className="cursor-pointer space-x-2 rounded-md"
+                  onClick={() => {
+                    window.open(
+                      `/picker/${realColor.toHex()}`,
+                      "_blank",
+                      "noopener,noreferrer"
+                    )
+                  }}
+                >
                   <span className="i-lucide-pipette" />
                   <span> Open in the Color Picker</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
+                <DropdownMenuItem
+                  className="cursor-pointer space-x-2 rounded-md"
+                  onClick={() => {
+                    handleCopy(
+                      `${window.location.origin}/picker/${realColor.toHex()}`,
+                      "link"
+                    )
+                  }}
+                >
                   <span className="i-lucide-link" />
                   <span>Copy URL</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="mx-1" />
                 <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
                   <span className="i-lucide-eye" />
-                  <span> Quick view</span>
+                  <span>Quick view</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
+                <DropdownMenuItem
+                  className="cursor-pointer space-x-2 rounded-md"
+                  onClick={handleColorFullScreen}
+                >
                   <span className="i-lucide-maximize-2" />
                   <span>View fullscreen</span>
                 </DropdownMenuItem>
@@ -140,6 +173,12 @@ const NameColorCard: FC<NameColorCardProps> = ({
           </div>
         </div>
       )}
+
+      <ColorFullScreen
+        show={isColorFullScreen}
+        color={realColor.toHexString()}
+        onClose={handleColorFullScreen}
+      />
     </div>
   )
 }

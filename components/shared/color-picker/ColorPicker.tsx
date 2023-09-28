@@ -110,8 +110,8 @@ const BaseColorPicker = (
     }
   }
 
-  const handleCopyColor = () => {
-    const success = copy(color.toHex())
+  const handleCopyColor = async () => {
+    const success = await copy(color.toHex())
     if (success) {
       toast.success("color copy success")
     }
