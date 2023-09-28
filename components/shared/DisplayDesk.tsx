@@ -2,12 +2,15 @@
 
 import { memo, useMemo, useState } from "react"
 import { isReadable } from "@ctrl/tinycolor"
+import toast from "react-hot-toast"
+import useSWRMutation from "swr/mutation"
 import { useLockedBody } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
 import { IconMaximize } from "@/components/icons/Maximize"
 import { Color } from "@/components/shared/color-picker"
 import ColorFullScreen from "@/components/shared/ColorFullscreen"
+import { likeColor } from "@/app/_actions/color"
 
 const DisplayDesk = memo(
   ({
@@ -15,11 +18,13 @@ const DisplayDesk = memo(
     className,
     children,
     fullChildren,
+    showLike = false,
   }: {
     color: Color
     className?: string
     children: React.ReactNode
     fullChildren?: React.ReactNode
+    showLike?: boolean
   }) => {
     const boardTextIsReadable = useMemo(() => {
       return isReadable(color, "#fff", { level: "AA", size: "large" })
@@ -35,16 +40,42 @@ const DisplayDesk = memo(
       })
     }
 
+    const { trigger, isMutating } = useSWRMutation("/api/color", likeColor, {
+      onError: (err) => {
+        toast.error(err.message)
+      },
+      onSuccess: () => {
+        toast.success("color like success")
+      },
+    })
+
     return (
       <div
         className={cn("relative", className)}
         style={{ backgroundColor: color.toHex8String() }}
       >
         {children}
-        <div className="absolute right-4 top-4">
-          <IconMaximize
+        <div className="absolute right-4 top-4 flex items-center space-x-4">
+          {showLike && (
+            <span
+              className={cn(
+                boardTextIsReadable
+                  ? "text-white/50 hover:text-white"
+                  : "text-black/50 hover:text-black",
+                "i-lucide-heart hover:animate-zoom cursor-pointer text-xl",
+                isMutating && "i-lucide-loader-2 animate-spin"
+              )}
+              onClick={() =>
+                trigger({
+                  name: color.toName() || color.toHex(),
+                  color: color.toHex(),
+                })
+              }
+            />
+          )}
+          <span
             className={cn(
-              "hover:animate-zoom h-5 w-5 cursor-pointer",
+              "i-lucide-maximize-2 hover:animate-zoom cursor-pointer text-xl",
               boardTextIsReadable
                 ? "text-white/50 hover:text-white"
                 : "text-black/50 hover:text-black"

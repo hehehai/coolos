@@ -32,6 +32,7 @@ const PickerPage = ({ params }: { params: { color?: string[] } }) => {
         <DisplayDesk
           className="flex h-[320px] w-full items-center justify-center rounded-2xl shadow-[inset_rgba(0,0,0,0.05)_0_0_0_1px]"
           color={color}
+          showLike
         >
           <div
             className={cn(

@@ -1,5 +1,6 @@
-import { CreateColorDto } from "@/db/dto/color.dto"
 import superjson from "superjson"
+
+import { CreateColorDto } from "@/app/server/db/dto/color.dto"
 
 export async function likeColor(url: string, { arg }: { arg: CreateColorDto }) {
   try {

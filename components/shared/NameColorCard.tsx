@@ -7,7 +7,7 @@ import { useLockedBody } from "usehooks-ts"
 import { cn } from "@/lib/utils"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { generateColor } from "@/components/shared/color-picker"
-import { likeColor } from "@/app/_requests/color"
+import { likeColor } from "@/app/_actions/color"
 
 import {
   DropdownMenu,
