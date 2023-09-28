@@ -8,10 +8,18 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
+    // Clerk
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
     CLERK_SECRET_KEY: z.string().min(1),
-    DATABASE_URL: z.string().min(1),
-    DATABASE_DIRECT_URL: z.string().min(1),
+
+    // Vercel Postgresql
+    POSTGRES_URL: z.string().min(1),
+    POSTGRES_PRISMA_URL: z.string().min(1),
+    POSTGRES_URL_NON_POOLING: z.string().min(1),
+    POSTGRES_USER: z.string().min(1),
+    POSTGRES_HOST: z.string().min(1),
+    POSTGRES_PASSWORD: z.string().min(1),
+    POSTGRES_DATABASE: z.string().min(1),
   },
   /*
    * Environment variables available on the client (and server).
@@ -19,6 +27,7 @@ export const env = createEnv({
    * 💡 You'll get type errors if these are not prefixed with NEXT_PUBLIC_.
    */
   client: {
+    // Clerk
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().optional(),
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().optional(),
     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: z.string().optional(),
@@ -44,7 +53,12 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
 
-    DATABASE_URL: process.env.DATABASE_URL,
-    DATABASE_DIRECT_URL: process.env.DATABASE_DIRECT_URL,
+    POSTGRES_URL: process.env.POSTGRES_URL,
+    POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
+    POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
+    POSTGRES_USER: process.env.POSTGRES_USER,
+    POSTGRES_HOST: process.env.POSTGRES_HOST,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
+    POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
   },
 });

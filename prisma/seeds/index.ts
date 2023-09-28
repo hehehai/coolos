@@ -1,4 +1,4 @@
-import prisma from "@/app/server/db"
+import prisma from "@/db"
 
 async function main() {
   await prisma.color.create({

@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
+import { prisma } from "@/db"
+import { ColorColorDtoSchema } from "@/db/dto/color.dto"
 import { auth } from "@clerk/nextjs"
 import { ZodError } from "zod"
-
-import { prisma } from "@/app/server/db"
-import { ColorColorDtoSchema } from "@/app/server/db/dto/color.dto"
 
 export async function POST(req: NextRequest) {
   const { userId } = auth()
