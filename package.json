@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
-    "db-seed": "NODE_ENV=development prisma db seed"
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "NODE_ENV=development prisma db seed"
   },
   "dependencies": {
     "@clerk/localizations": "^1.25.2",
