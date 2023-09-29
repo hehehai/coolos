@@ -65,6 +65,11 @@ export class Color extends TinyColor {
     return Color.rgbToCmyk(this.toRgb())
   }
 
+  toCmykString(): string {
+    const cmyk = this.toCmyk()
+    return `cmyk(${cmyk.c}, ${cmyk.m}, ${cmyk.y}, ${cmyk.k})`
+  }
+
   public static rgbToCmyk(rgb: Numberify<RGB>): CMYK {
     const k = 1 - Math.max(rgb.r / 255, rgb.g / 255, rgb.b / 255)
     const c = (1 - rgb.r / 255 - k) / (1 - k)
@@ -138,6 +143,10 @@ export class Color extends TinyColor {
 
   toLab(): LAB {
     return Color.rgbToLab(this.toRgb())
+  }
+
+  toLabString(): string {
+    return `lab(${this.toLab().l}, ${this.toLab().a}, ${this.toLab().b})`
   }
 
   public static rgbToLab(rgb: Numberify<RGB>): LAB {

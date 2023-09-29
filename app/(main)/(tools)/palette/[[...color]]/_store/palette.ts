@@ -2,6 +2,7 @@ import { create } from "zustand"
 
 export enum PaletteSecondInfo {
   Name = "Name",
+  HEX = "HEX",
   RGB = "RGB",
   HSB = "HSB",
   HSL = "HSL",

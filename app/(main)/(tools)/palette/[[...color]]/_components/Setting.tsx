@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { Secondary_Info } from "../_constants"
+import { SecondaryInfo } from "../_constants"
 import { PaletteSecondInfo, usePaletteStore } from "../_store/palette"
 
 const PaletteSetting = memo(() => {
@@ -45,10 +45,10 @@ const PaletteSetting = memo(() => {
               }
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Theme" />
+                <SelectValue placeholder="Color Second info" />
               </SelectTrigger>
               <SelectContent>
-                {Secondary_Info.map((item) => (
+                {SecondaryInfo.map((item) => (
                   <SelectItem key={item} value={item}>
                     {item}
                   </SelectItem>

@@ -1,13 +1,16 @@
 "use client"
 
+import { useMemo } from "react"
 import { DraggableAttributes } from "@dnd-kit/core"
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
+import { match } from "ts-pattern"
 
 import { cn } from "@/lib/utils"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-import { Color } from "@/components/shared/color-picker"
+import { Color, round } from "@/components/shared/color-picker"
+import { colorNames } from "@/components/shared/color-picker/data"
 import { Button } from "@/components/ui/button"
 import {
   Tooltip,
@@ -17,6 +20,7 @@ import {
 } from "@/components/ui/tooltip"
 import { likeColor } from "@/app/_actions/color"
 
+import { PaletteSecondInfo, usePaletteStore } from "../_store/palette"
 import PaletteBlockValue from "./PaletteBlockValue"
 import PlusFloat from "./PlusFloat"
 
@@ -43,6 +47,43 @@ const PaletteBlock = ({
   handleProps,
   ...props
 }: PaletteBlockProps) => {
+  const setting = usePaletteStore((state) => state.setting)
+
+  const secondInfo = useMemo(() => {
+    return match(setting.secondInfo)
+      .with(
+        PaletteSecondInfo.Name,
+        () =>
+          block.color.toName() ||
+          block.color.findClosestColor(colorNames) ||
+          "Unknown"
+      )
+      .with(PaletteSecondInfo.HEX, () => block.color.toHex().toUpperCase())
+      .with(PaletteSecondInfo.RGB, () => {
+        const rgb = block.color.toRgb()
+        return `${rgb.r}, ${rgb.g}, ${rgb.b}`
+      })
+      .with(PaletteSecondInfo.HSB, () => {
+        const hsb = block.color.toHsb()
+        return `${round(hsb.h)}, ${round(hsb.s * 100)}, ${round(hsb.b * 100)}`
+      })
+      .with(PaletteSecondInfo.HSL, () => {
+        const hsl = block.color.toHsl()
+        return `${round(hsl.h)}, ${round(hsl.s * 100)}, ${round(hsl.l * 100)}`
+      })
+      .with(PaletteSecondInfo.CMYK, () => {
+        const cmyk = block.color.toCmyk()
+        return `${round(cmyk.c)}, ${round(cmyk.m)}, ${round(cmyk.y)}, ${round(
+          cmyk.k
+        )}`
+      })
+      .with(PaletteSecondInfo.LAB, () => {
+        const lab = block.color.toLab()
+        return `${round(lab.l)}, ${round(lab.a)}, ${round(lab.b)}`
+      })
+      .exhaustive()
+  }, [setting.secondInfo, block.color])
+
   const { trigger, isMutating } = useSWRMutation("/api/color", likeColor, {
     onError: (err) => {
       toast.error(err.message)
@@ -164,7 +205,7 @@ const PaletteBlock = ({
           color={block.color}
           onChange={onChange}
         />
-        <div className="mt-4">Second info</div>
+        <div className="mt-4">{secondInfo}</div>
       </div>
     </div>
   )
