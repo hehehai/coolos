@@ -380,8 +380,8 @@ export function getTransitionColors(
 
   const result: Color[] = []
 
-  for (let i = 0; i <= steps; i++) {
-    const ratio = i / steps
+  for (let i = 0; i <= steps - 1; i++) {
+    const ratio = i / (steps - 1)
 
     const r = interpolate(Number(startRGB.r), Number(endRGB.r), ratio)
     const g = interpolate(Number(startRGB.g), Number(endRGB.g), ratio)

@@ -1,5 +1,8 @@
 import { create } from "zustand"
 
+import { generateCombinedId } from "@/lib/utils"
+import { Color, generateColor } from "@/components/shared/color-picker"
+
 export enum PaletteSecondInfo {
   Name = "Name",
   HEX = "HEX",
@@ -10,7 +13,13 @@ export enum PaletteSecondInfo {
   LAB = "LAB",
 }
 
+export interface IPaletteBlock {
+  id: string
+  color: Color
+}
+
 export type PaletteStoreState = {
+  palette: IPaletteBlock[]
   setting: {
     secondInfo: PaletteSecondInfo
     isIsolated: boolean
@@ -20,9 +29,14 @@ export type PaletteStoreState = {
 
 export type PaletteStoreActions = {
   setSetting: (val: Partial<PaletteStoreState["setting"]>) => void
+  setPalette: (val: IPaletteBlock[]) => void
 }
 
 const initialState: PaletteStoreState = {
+  palette: ["#2DE1C2", "#6AD5CB", "#7FBEAB", "#7E998A", "#85877C"].map((c) => ({
+    id: generateCombinedId(),
+    color: generateColor(c),
+  })),
   setting: {
     secondInfo: PaletteSecondInfo.Name,
     isIsolated: false,
@@ -41,5 +55,6 @@ export const usePaletteStore = create<
         ...val,
       },
     })),
+  setPalette: (val: IPaletteBlock[]) => set((state) => ({ palette: val })),
   reset: () => set(initialState),
 }))

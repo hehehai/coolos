@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useMemo, useState } from "react"
+import { useCallback, useId, useMemo, useState } from "react"
 import {
   closestCenter,
   DndContext,
@@ -22,42 +22,19 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
+import toast from "react-hot-toast"
 
 import { cn, generateCombinedId } from "@/lib/utils"
-import { Color, generateColor } from "@/components/shared/color-picker"
+import {
+  Color,
+  generateColor,
+  getTransitionColors,
+} from "@/components/shared/color-picker"
 
 import PaletteBlock from "./_components/PaletteBlock"
 import { SortableItem } from "./_components/SortableItem"
 import Toolbar from "./_components/Toolbar"
-import { usePaletteStore } from "./_store/palette"
-
-interface IPaletteBlock {
-  id: string
-  color: Color
-}
-
-const baseColor = [
-  {
-    id: generateCombinedId(),
-    color: generateColor("#2DE1C2"),
-  },
-  {
-    id: generateCombinedId(),
-    color: generateColor("#6AD5CB"),
-  },
-  {
-    id: generateCombinedId(),
-    color: generateColor("#7FBEAB"),
-  },
-  {
-    id: generateCombinedId(),
-    color: generateColor("#7E998A"),
-  },
-  {
-    id: generateCombinedId(),
-    color: generateColor("#85877C"),
-  },
-]
+import { IPaletteBlock, usePaletteStore } from "./_store/palette"
 
 const ColorPalette = () => {
   // 获取路由的参数
@@ -67,19 +44,19 @@ const ColorPalette = () => {
   const setting = usePaletteStore((state) => state.setting)
 
   const [activeId, setActiveId] = useState<string | number | null>(null)
-  const [palette, setPalette] = useState<IPaletteBlock[]>(baseColor)
+  const store = usePaletteStore((state) => state)
   const paletteIds = useMemo(() => {
-    return palette.map((item) => item.id)
-  }, [palette])
+    return store.palette.map((item) => item.id)
+  }, [store.palette])
   const activeBlock = useMemo(() => {
-    return palette.find((item) => item.id === activeId)
+    return store.palette.find((item) => item.id === activeId)
   }, [activeId])
 
   const handleChange = (id: string, color: Color) => {
-    const newPalette = [...palette]
+    const newPalette = [...store.palette]
     const idx = newPalette.findIndex((item) => item.id === id)
     newPalette[idx].color = color
-    setPalette(newPalette)
+    store.setPalette(newPalette)
   }
 
   const sensors = useSensors(
@@ -89,25 +66,57 @@ const ColorPalette = () => {
     })
   )
 
-  function handleDragStart(event: DragStartEvent) {
+  const handleAdd = useCallback(
+    (before: IPaletteBlock, after: IPaletteBlock) => {
+      const newPalette = [...store.palette]
+      const newBlock: IPaletteBlock = {
+        id: generateCombinedId(),
+        color: getTransitionColors(before.color, after.color, 3)[1],
+      }
+      const idx = newPalette.findIndex((item) => item.id === before.id)
+      newPalette.splice(idx + 1, 0, newBlock)
+      store.setPalette(newPalette)
+    },
+    [store.palette]
+  )
+
+  const handleRemove = useCallback(
+    (id: string) => {
+      if (store.palette.length === 1) {
+        toast.error("palette can't be empty")
+        return
+      }
+      const newPalette = [...store.palette]
+      const idx = newPalette.findIndex((item) => item.id === id)
+      newPalette.splice(idx, 1)
+      store.setPalette(newPalette)
+    },
+    [store.palette]
+  )
+
+  const handleDragStart = useCallback((event: DragStartEvent) => {
     const { active } = event
 
     if (active.id) setActiveId(active.id)
-  }
+  }, [])
 
-  function handleDragEnd(event: DragEndEvent) {
-    setActiveId(null)
-    const { active, over } = event
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      setActiveId(null)
+      const { active, over } = event
 
-    if (active.id !== over?.id) {
-      setPalette((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id)
-        const newIndex = items.findIndex((item) => item.id === over?.id)
+      if (active.id !== over?.id) {
+        const oldIndex = store.palette.findIndex(
+          (item) => item.id === active.id
+        )
+        const newIndex = store.palette.findIndex((item) => item.id === over?.id)
 
-        return arrayMove(items, oldIndex, newIndex)
-      })
-    }
-  }
+        const nextPalette = arrayMove(store.palette, oldIndex, newIndex)
+        store.setPalette(nextPalette)
+      }
+    },
+    [store.palette]
+  )
 
   return (
     <div className="flex h-screen w-full flex-col">
@@ -131,22 +140,32 @@ const ColorPalette = () => {
               items={paletteIds}
               strategy={verticalListSortingStrategy}
             >
-              {palette.map((block, idx) => {
+              {store.palette.map((block, idx) => {
                 return (
                   <SortableItem
                     id={block.id}
                     key={block.id}
                     handle
                     className="h-full"
-                    style={{ flexGrow: 1, width: `${100 / palette.length}%` }}
+                    style={{
+                      flexGrow: 1,
+                      width: `${100 / store.palette.length}%`,
+                    }}
                   >
                     {(handleProps) => (
                       <PaletteBlock
                         block={block}
                         onChange={(c) => handleChange(block.id, c)}
                         showLeft={idx !== 0}
-                        showRight={idx !== palette.length - 1}
+                        showRight={idx !== store.palette.length - 1}
                         handleProps={handleProps}
+                        onRemove={() => handleRemove(block.id)}
+                        onAddBefore={() =>
+                          handleAdd(store.palette[idx - 1], block)
+                        }
+                        onAddAfter={() =>
+                          handleAdd(block, store.palette[idx + 1])
+                        }
                       />
                     )}
                   </SortableItem>

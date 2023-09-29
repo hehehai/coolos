@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
+import { isReadable } from "@ctrl/tinycolor"
 import { DraggableAttributes } from "@dnd-kit/core"
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities"
 import toast from "react-hot-toast"
@@ -33,6 +34,9 @@ interface PaletteBlockProps
   onChange?: (color: Color) => void
   showLeft?: boolean
   showRight?: boolean
+  onRemove?: (id: string) => void
+  onAddBefore?: (id: string) => void
+  onAddAfter?: (id: string) => void
   handleProps?: {
     attributes: DraggableAttributes
     listeners?: SyntheticListenerMap
@@ -44,10 +48,17 @@ const PaletteBlock = ({
   onChange,
   showLeft,
   showRight,
+  onRemove,
+  onAddBefore,
+  onAddAfter,
   handleProps,
   ...props
 }: PaletteBlockProps) => {
   const setting = usePaletteStore((state) => state.setting)
+
+  const textIsReadable = useMemo(() => {
+    return isReadable(block.color, "#fff", { level: "AA", size: "large" })
+  }, [block.color])
 
   const secondInfo = useMemo(() => {
     return match(setting.secondInfo)
@@ -110,27 +121,35 @@ const PaletteBlock = ({
       }}
       className={cn(
         "group/block relative flex h-full flex-col items-center justify-end pb-24",
-        props.className
+        props.className,
+        textIsReadable ? "text-white" : "text-slate-900"
       )}
     >
       {showLeft && (
         <div className="group/left absolute inset-y-0 left-0 w-12">
-          <PlusFloat className="invisible absolute -left-1/2 top-1/2 z-10 -translate-y-1/2 group-hover/left:visible" />
+          <PlusFloat
+            className="invisible absolute -left-1/2 top-1/2 z-10 -translate-y-1/2 group-hover/left:visible"
+            onClick={() => onAddBefore?.(block.id)}
+          />
         </div>
       )}
       {showRight && (
         <div className="group/right absolute inset-y-0 right-0 w-12">
-          <PlusFloat className="invisible absolute -right-1/2 top-1/2 z-10 -translate-y-1/2 group-hover/right:visible" />
+          <PlusFloat
+            className="invisible absolute -right-1/2 top-1/2 z-10 -translate-y-1/2 group-hover/right:visible"
+            onClick={() => onAddAfter?.(block.id)}
+          />
         </div>
       )}
       <div className="flex flex-col items-center">
-        <div className="flex flex-col items-center space-y-4">
+        <div className="hidden flex-col items-center space-y-4 group-hover/block:flex">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
                   className="rounded-xl px-3 hover:bg-white/20"
+                  onClick={() => onRemove?.(block.id)}
                 >
                   <span className="i-lucide-x text-xl" />
                 </Button>
