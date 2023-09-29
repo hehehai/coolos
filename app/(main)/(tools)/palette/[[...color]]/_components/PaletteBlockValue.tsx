@@ -2,6 +2,7 @@
 
 import { memo } from "react"
 
+import { cn } from "@/lib/utils"
 import { Color } from "@/components/shared/color-picker"
 import ColorPicker from "@/components/shared/color-picker/ColorPicker"
 import {
@@ -10,12 +11,24 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+export interface PaletteBlockValueProps
+  extends Omit<React.ComponentPropsWithoutRef<"div">, "color" | "onChange"> {
+  color: Color
+  onChange?: (color: Color) => void
+}
+
 const PaletteBlockValue = memo(
-  ({ color, onChange }: { color: Color; onChange: (color: Color) => void }) => {
+  ({ color, onChange, className, ...props }: PaletteBlockValueProps) => {
     return (
       <Popover>
         <PopoverTrigger>
-          <div className="rounded-lg px-3 py-2 text-3xl font-medium uppercase tabular-nums leading-none hover:bg-gray-500/10">
+          <div
+            {...props}
+            className={cn(
+              "rounded-lg px-3 py-2 text-3xl font-medium uppercase tabular-nums leading-none hover:bg-gray-500/10",
+              className
+            )}
+          >
             {color.toHex()}
           </div>
         </PopoverTrigger>

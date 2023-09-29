@@ -48,3 +48,13 @@ export function openSVGinNewTab(svgCode: string) {
 
   return window.open("")?.document.write(svgCode)
 }
+
+const CID_PREFIX = "CID__"
+
+export function generateIdByRandom() {
+  return Math.random().toString(36).substring(2)
+}
+
+export function generateCombinedId() {
+  return `${CID_PREFIX}${Date.now()}${generateIdByRandom()}`
+}
