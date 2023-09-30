@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/tooltip"
 import { likeColor } from "@/app/_actions/color"
 
-import { PaletteSecondInfo, usePaletteStore } from "../_store/palette"
+import { PaletteSecondInfo, useSettingStore } from "../_store/setting"
 import PaletteBlockValue from "./PaletteBlockValue"
 import PlusFloat from "./PlusFloat"
 
@@ -54,7 +54,7 @@ const PaletteBlock = ({
   handleProps,
   ...props
 }: PaletteBlockProps) => {
-  const setting = usePaletteStore((state) => state.setting)
+  const setting = useSettingStore((state) => state)
 
   const textIsReadable = useMemo(() => {
     return isReadable(block.color, "#fff", { level: "AA", size: "large" })

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { iconsPlugin, getIconCollections } = require("@egoist/tailwindcss-icons")
 
 /** @type {import('tailwindcss').Config} */
@@ -69,7 +70,6 @@ module.exports = {
         },
         zoom: {
           "0%": { transform: "scale(1)" },
-          "100%": { transform: "scale(1.1)" },
           "100%": { transform: "scale(1)" },
         },
       },
@@ -102,7 +102,7 @@ module.exports = {
         14: "14",
         15: "15",
         16: "16",
-      },
+      }
     },
   },
   plugins: [

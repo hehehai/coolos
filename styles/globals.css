@@ -96,4 +96,8 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  .rotate-mirror {
+    transform: rotateY(180deg);
+  }
 }

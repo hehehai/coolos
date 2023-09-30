@@ -1,4 +1,7 @@
+import { temporal } from "zundo"
+import type { TemporalState } from "zundo"
 import { create } from "zustand"
+import { useStoreWithEqualityFn } from "zustand/traditional"
 
 import { generateCombinedId } from "@/lib/utils"
 import { Color, generateColor } from "@/components/shared/color-picker"
@@ -20,15 +23,9 @@ export interface IPaletteBlock {
 
 export type PaletteStoreState = {
   palette: IPaletteBlock[]
-  setting: {
-    secondInfo: PaletteSecondInfo
-    isIsolated: boolean
-    isZen: boolean
-  }
 }
 
 export type PaletteStoreActions = {
-  setSetting: (val: Partial<PaletteStoreState["setting"]>) => void
   setPalette: (val: IPaletteBlock[]) => void
 }
 
@@ -37,24 +34,21 @@ const initialState: PaletteStoreState = {
     id: generateCombinedId(),
     color: generateColor(c),
   })),
-  setting: {
-    secondInfo: PaletteSecondInfo.Name,
-    isIsolated: false,
-    isZen: false,
-  },
 }
 
 export const usePaletteStore = create<
   PaletteStoreState & PaletteStoreActions
->()((set) => ({
-  ...initialState,
-  setSetting: (val: Partial<PaletteStoreState["setting"]>) =>
-    set((state) => ({
-      setting: {
-        ...state.setting,
-        ...val,
-      },
-    })),
-  setPalette: (val: IPaletteBlock[]) => set((state) => ({ palette: val })),
-  reset: () => set(initialState),
-}))
+>()(
+  temporal((set) => ({
+    ...initialState,
+    setPalette: (val: IPaletteBlock[]) => set((state) => ({ palette: val })),
+    reset: () => set(initialState),
+  }))
+)
+
+export const usePaletteTemporal = <T>(
+  selector: (
+    state: TemporalState<PaletteStoreState & PaletteStoreActions>
+  ) => T,
+  equality?: (a: T, b: T) => boolean
+) => useStoreWithEqualityFn(usePaletteStore.temporal, selector, equality)

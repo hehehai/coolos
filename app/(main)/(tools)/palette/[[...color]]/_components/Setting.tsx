@@ -20,11 +20,11 @@ import {
 } from "@/components/ui/select"
 
 import { SecondaryInfo } from "../_constants"
-import { PaletteSecondInfo, usePaletteStore } from "../_store/palette"
+import { PaletteSecondInfo, useSettingStore } from "../_store/setting"
 
 const PaletteSetting = memo(() => {
-  const setting = usePaletteStore((state) => state.setting)
-  const setSetting = usePaletteStore((state) => state.setSetting)
+  const setting = useSettingStore((state) => state)
+  const setSetting = useSettingStore((state) => state.setSetting)
 
   return (
     <Dialog>

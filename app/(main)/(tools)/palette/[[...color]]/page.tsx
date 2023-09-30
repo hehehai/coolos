@@ -25,23 +25,20 @@ import {
 import toast from "react-hot-toast"
 
 import { cn, generateCombinedId } from "@/lib/utils"
-import {
-  Color,
-  generateColor,
-  getTransitionColors,
-} from "@/components/shared/color-picker"
+import { Color, getTransitionColors } from "@/components/shared/color-picker"
 
 import PaletteBlock from "./_components/PaletteBlock"
 import { SortableItem } from "./_components/SortableItem"
 import Toolbar from "./_components/Toolbar"
 import { IPaletteBlock, usePaletteStore } from "./_store/palette"
+import { useSettingStore } from "./_store/setting"
 
 const ColorPalette = () => {
   // 获取路由的参数
   // 色板块颜色参数
   const id = useId()
 
-  const setting = usePaletteStore((state) => state.setting)
+  const setting = useSettingStore((state) => state)
 
   const [activeId, setActiveId] = useState<string | number | null>(null)
   const store = usePaletteStore((state) => state)
