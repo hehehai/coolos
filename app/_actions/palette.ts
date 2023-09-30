@@ -1,7 +1,10 @@
-import { UpsetColorDto } from "@/db/dto/color.dto"
+import { UpsetPaletteDto } from "@/db/dto/palette.dto"
 import superjson from "superjson"
 
-export async function likeColor(url: string, { arg }: { arg: UpsetColorDto }) {
+export async function savePalette(
+  url: string,
+  { arg }: { arg: UpsetPaletteDto }
+) {
   const res = await fetch(url, {
     method: "POST",
     body: superjson.stringify(arg),

@@ -29,7 +29,9 @@ const PaletteSetting = memo(() => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">Setting</Button>
+        <Button variant="ghost" size="sm">
+          Setting
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
