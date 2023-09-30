@@ -32,3 +32,13 @@ model Palette {
 
   @@map("palette")
 }
+
+model Subscribe {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  status   Int      @default(1) // normal: 1, cancel: 0
+  createAt DateTime @default(now())
+  cancelId String?
+
+  @@map("subscribe")
+}

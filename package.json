@@ -70,6 +70,7 @@
     "react-hook-form": "^7.45.1",
     "react-hot-toast": "^2.4.1",
     "react-wrap-balancer": "^1.1.0",
+    "resend": "^1.1.0",
     "sass": "^1.63.6",
     "superjson": "^1.13.1",
     "swr": "^2.2.4",

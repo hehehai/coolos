@@ -8,6 +8,7 @@ import ColorNameFloat from "./ColorNameFloat"
 import ColorPickerFloat from "./ColorPickerFloat"
 import ContrastCheckerFloat from "./ContrastCheckerFloat"
 import GradientPaletteFloat from "./GradientPaletteFloat"
+import HomeSubscribe from "./HomeSubscribe"
 
 interface HomeGridCardProps extends React.ComponentPropsWithoutRef<"div"> {
   title: string
@@ -103,7 +104,7 @@ const HomeGrid = () => {
         </div>
         <div className="col-span-8">
           <div className="flex h-[100px] items-center rounded-2xl bg-[#FBFBFB] px-5 shadow-[0px_0px_3px_0px_rgba(0,0,0,0.07)_inset]">
-            Subscribe
+            <HomeSubscribe />
           </div>
         </div>
       </div>

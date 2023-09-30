@@ -38,7 +38,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".eslintrc.cjs",
-    "*.config.cjs"
+    "*.config.cjs",
+    "*.config.mjs"
   ],
   "exclude": [
     "node_modules"
