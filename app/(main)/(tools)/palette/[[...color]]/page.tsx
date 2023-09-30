@@ -1,6 +1,14 @@
 "use client"
 
-import { useCallback, useId, useMemo, useState } from "react"
+import {
+  ElementRef,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import {
   closestCenter,
   DndContext,
@@ -25,6 +33,7 @@ import {
 import toast from "react-hot-toast"
 
 import { cn, generateCombinedId } from "@/lib/utils"
+import { useFullScreen } from "@/hooks/useFullScreen"
 import { Color, getTransitionColors } from "@/components/shared/color-picker"
 
 import PaletteBlock from "./_components/PaletteBlock"
@@ -48,6 +57,8 @@ const ColorPalette = () => {
   const activeBlock = useMemo(() => {
     return store.palette.find((item) => item.id === activeId)
   }, [activeId])
+  const paletteRef = useRef<ElementRef<"div">>(null)
+  const fullMethod = useFullScreen(paletteRef)
 
   const handleChange = (id: string, color: Color) => {
     const newPalette = [...store.palette]
@@ -117,9 +128,10 @@ const ColorPalette = () => {
 
   return (
     <div className="flex h-screen w-full flex-col">
-      <Toolbar />
+      <Toolbar onZen={() => fullMethod.enter()} />
       <div className="w-full grow">
         <div
+          ref={paletteRef}
           className={cn(
             "flex h-full w-full items-stretch justify-between",
             setting.isIsolated && "gap-x-4 p-4"

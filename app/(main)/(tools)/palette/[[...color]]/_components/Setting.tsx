@@ -35,7 +35,7 @@ const PaletteSetting = memo(() => {
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>
-        <div className="space-y-3">
+        <div className="space-y-5">
           <div className="flex items-center justify-between">
             <div>Secondary info</div>
             <Select
@@ -61,13 +61,6 @@ const PaletteSetting = memo(() => {
             <Checkbox
               checked={setting.isIsolated}
               onCheckedChange={(val) => setSetting({ isIsolated: !!val })}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <div>Zen mode</div>
-            <Checkbox
-              checked={setting.isZen}
-              onCheckedChange={(val) => setSetting({ isZen: !!val })}
             />
           </div>
         </div>

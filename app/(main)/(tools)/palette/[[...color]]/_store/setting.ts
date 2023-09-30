@@ -13,7 +13,6 @@ export enum PaletteSecondInfo {
 export type SettingStoreState = {
   secondInfo: PaletteSecondInfo
   isIsolated: boolean
-  isZen: boolean
 }
 
 export type SettingStoreActions = {
@@ -23,7 +22,6 @@ export type SettingStoreActions = {
 const initialState: SettingStoreState = {
   secondInfo: PaletteSecondInfo.Name,
   isIsolated: false,
-  isZen: false,
 }
 
 export const useSettingStore = create<
