@@ -71,7 +71,12 @@ const HexInput = ({ value, onChange, popContent }: HexInputProps) => {
 
   return (
     <div className={"relative"}>
-      <Input value={tmpVal} onChange={handleChange} onBlur={handleBlur}></Input>
+      <Input
+        value={tmpVal}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        spellCheck={false}
+      ></Input>
       {currentBlock}
     </div>
   )
