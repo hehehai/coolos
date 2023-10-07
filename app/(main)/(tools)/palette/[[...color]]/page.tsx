@@ -3,7 +3,6 @@
 import {
   ElementRef,
   useCallback,
-  useEffect,
   useId,
   useMemo,
   useRef,
@@ -76,6 +75,11 @@ const ColorPalette = () => {
 
   const handleAdd = useCallback(
     (before: IPaletteBlock, after: IPaletteBlock) => {
+      if (store.palette.length >= 12) {
+        toast.error("palette can't be more than 12")
+        return
+      }
+
       const newPalette = [...store.palette]
       const newBlock: IPaletteBlock = {
         id: generateCombinedId(),
@@ -90,8 +94,8 @@ const ColorPalette = () => {
 
   const handleRemove = useCallback(
     (id: string) => {
-      if (store.palette.length === 1) {
-        toast.error("palette can't be empty")
+      if (store.palette.length === 2) {
+        toast.error("palette can't be less than 2")
         return
       }
       const newPalette = [...store.palette]

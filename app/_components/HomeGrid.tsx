@@ -36,7 +36,7 @@ const HomeGridCard: FC<HomeGridCardProps> = ({
       )}
     >
       <div className="relative flex h-full flex-col justify-between p-8">
-        <div className="relative z-20 font-medium text-gray-400">{title}</div>
+        <div className="relative font-medium text-gray-400">{title}</div>
         <div>
           <div className="relative z-20 max-w-xs text-3xl font-medium text-slate-900">
             {slug}
@@ -48,7 +48,7 @@ const HomeGridCard: FC<HomeGridCardProps> = ({
             href={link}
             className="group relative z-20 mt-8 inline-flex items-center space-x-1 text-sm"
           >
-            <span>More ablout {title} </span>
+            <span>More about {title} </span>
             <LinkIcon className="transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
