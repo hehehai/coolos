@@ -31,7 +31,8 @@ export const usePaletteStore = create<
 >()(
   temporal((set) => ({
     ...initialState,
-    setPalette: (val: IPaletteBlock[]) => set((state) => ({ palette: val })),
+    setPalette: (val: IPaletteBlock[]) =>
+      set((state) => ({ ...state, palette: val })),
     reset: () => set(initialState),
   }))
 )

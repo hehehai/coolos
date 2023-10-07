@@ -13,12 +13,15 @@ export async function POST(req: NextRequest) {
 
   try {
     const data = await req.json()
-    const { name, colors } = UpsetPaletteDtoSchema.parse(data?.json)
+    const validData = UpsetPaletteDtoSchema.parse(data?.json)
+    if (!validData) {
+      return new Response("Invalid data", { status: 400 })
+    }
 
     const saveData = await prisma.palette.create({
       data: {
-        name,
-        colors: colors.toString(),
+        name: validData.name,
+        colors: validData.colors.toString(),
         userId,
       },
     })
