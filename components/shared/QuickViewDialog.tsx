@@ -92,25 +92,23 @@ const QuickViewDialog = memo(
   ({ color, title, children, palette }: QuickViewDialogProps) => {
     const [activeColor, setActiveColor] = useState(color ?? palette?.[0])
 
-    if (activeColor === undefined) {
-      return null
-    }
-
     return (
       <Dialog>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="gap-0 overflow-hidden border-b-0 p-0 sm:rounded-xl">
+        <DialogContent className="gap-0 overflow-hidden border-0 p-0 shadow-[rgba(0,0,0,0.1)_0_0_20px] sm:rounded-xl">
           <DialogHeader className="flex items-center justify-center border-b border-gray-200 py-4">
             <DialogTitle>{title}</DialogTitle>
           </DialogHeader>
-          <div
-            className="no-scrollbar flex max-h-[420px] flex-col overflow-y-auto p-3"
-            style={{ backgroundColor: activeColor.toHex8String() }}
-          >
-            {colorPalettes.map((model) => (
-              <ViewItem key={model} model={model} color={activeColor} />
-            ))}
-          </div>
+          {activeColor && (
+            <div
+              className="no-scrollbar flex max-h-[420px] flex-col overflow-y-auto p-3"
+              style={{ backgroundColor: activeColor.toHex8String() }}
+            >
+              {colorPalettes.map((model) => (
+                <ViewItem key={model} model={model} color={activeColor} />
+              ))}
+            </div>
+          )}
           {palette?.length && (
             <DialogFooter className="bg-white px-6 py-5">
               <div className="flex h-12 w-full items-center overflow-hidden rounded-xl">

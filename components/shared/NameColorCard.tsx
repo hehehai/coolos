@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import ColorFullScreen from "./ColorFullscreen"
+import QuickViewDialog from "./QuickViewDialog"
 
 interface NameColorCardProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "name" | "color"> {
@@ -140,10 +141,15 @@ const NameColorCard: FC<NameColorCardProps> = ({
                   <span>Copy URL</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="mx-1" />
-                <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
-                  <span className="i-lucide-eye" />
-                  <span>Quick view</span>
-                </DropdownMenuItem>
+                <QuickViewDialog title="Quick view" color={realColor}>
+                  <DropdownMenuItem
+                    onSelect={(e) => e.preventDefault()}
+                    className="cursor-pointer space-x-2 rounded-md"
+                  >
+                    <span className="i-lucide-eye" />
+                    <span>Quick view</span>
+                  </DropdownMenuItem>
+                </QuickViewDialog>
                 <DropdownMenuItem
                   className="cursor-pointer space-x-2 rounded-md"
                   onClick={handleColorFullScreen}
