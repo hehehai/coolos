@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 import { cn } from "@/lib/utils"
 import {
@@ -44,6 +45,7 @@ const ColorTag = ({
 
 const ColorsPage = () => {
   const [filter, setFilter] = useState<ColorCategory | "">("")
+  const [parentRef] = useAutoAnimate()
 
   const showColors = useMemo(() => {
     if (!filter) return colorCollection
@@ -67,7 +69,10 @@ const ColorsPage = () => {
           </ColorTag>
         ))}
       </div>
-      <div className="mx-auto mt-40 grid max-w-7xl grid-cols-4 gap-x-8 gap-y-6">
+      <div
+        ref={parentRef}
+        className="mx-auto mt-40 grid max-w-7xl grid-cols-4 gap-x-8 gap-y-6"
+      >
         {Object.entries(showColors).map(([category, colors]) => {
           return colors.map((color) => (
             <NameColorCard

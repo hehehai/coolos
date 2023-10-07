@@ -23,6 +23,7 @@
     "@dnd-kit/modifiers": "^6.0.1",
     "@dnd-kit/sortable": "^7.0.2",
     "@egoist/tailwindcss-icons": "^1.2.0",
+    "@formkit/auto-animate": "^0.8.0",
     "@hookform/resolvers": "^3.1.1",
     "@prisma/client": "^5.3.1",
     "@radix-ui/react-accordion": "^1.1.2",
