@@ -1,14 +1,6 @@
 import { create } from "zustand"
 
-export enum PaletteSecondInfo {
-  Name = "Name",
-  HEX = "HEX",
-  RGB = "RGB",
-  HSB = "HSB",
-  HSL = "HSL",
-  CMYK = "CMYK",
-  LAB = "LAB",
-}
+import { PaletteSecondInfo } from "@/components/shared/color-picker/interface"
 
 export type SettingStoreState = {
   secondInfo: PaletteSecondInfo

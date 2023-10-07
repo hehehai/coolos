@@ -55,7 +55,7 @@ const ColorPalette = () => {
   }, [store.palette])
   const activeBlock = useMemo(() => {
     return store.palette.find((item) => item.id === activeId)
-  }, [activeId])
+  }, [activeId, store.palette])
   const paletteRef = useRef<ElementRef<"div">>(null)
   const fullMethod = useFullScreen(paletteRef)
 

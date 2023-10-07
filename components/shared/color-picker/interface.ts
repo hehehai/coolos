@@ -102,3 +102,13 @@ export interface CommonPickerPanelProps {
   layerPoints?: Color[]
   onChange?: (color: Color, type: ColorAtomType) => void
 }
+
+export enum PaletteSecondInfo {
+  Name = "Name",
+  HEX = "HEX",
+  RGB = "RGB",
+  HSB = "HSB",
+  HSL = "HSL",
+  CMYK = "CMYK",
+  LAB = "LAB",
+}

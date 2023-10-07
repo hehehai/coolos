@@ -6,16 +6,6 @@ import { useStoreWithEqualityFn } from "zustand/traditional"
 import { generateCombinedId } from "@/lib/utils"
 import { Color, generateColor } from "@/components/shared/color-picker"
 
-export enum PaletteSecondInfo {
-  Name = "Name",
-  HEX = "HEX",
-  RGB = "RGB",
-  HSB = "HSB",
-  HSL = "HSL",
-  CMYK = "CMYK",
-  LAB = "LAB",
-}
-
 export interface IPaletteBlock {
   id: string
   color: Color

@@ -1,9 +1,16 @@
 import { HSV, Numberify, readability } from "@ctrl/tinycolor"
+import { match } from "ts-pattern"
 
 import { adjustValue } from "@/lib/utils"
 
 import { Color } from "./color"
-import type { ColorGenInput, RGB, XYZ } from "./interface"
+import { colorNames } from "./data"
+import {
+  PaletteSecondInfo,
+  type ColorGenInput,
+  type RGB,
+  type XYZ,
+} from "./interface"
 
 export const round = (
   number: number,
@@ -405,4 +412,37 @@ export function getRandomRgb(): RGB {
 // 判断 rgb 颜色是否相同
 export function isSameRgb(m: RGB, n: RGB): boolean {
   return m.r === n.r && m.g === n.g && m.b === n.b
+}
+
+// 获取对应模式下的颜色值
+export function getModeColor(mode: PaletteSecondInfo, color: Color): string {
+  return match(mode)
+    .with(
+      PaletteSecondInfo.Name,
+      () => color.toName() || color.findClosestColor(colorNames) || "Unknown"
+    )
+    .with(PaletteSecondInfo.HEX, () => color.toHex().toUpperCase())
+    .with(PaletteSecondInfo.RGB, () => {
+      const rgb = color.toRgb()
+      return `${rgb.r}, ${rgb.g}, ${rgb.b}`
+    })
+    .with(PaletteSecondInfo.HSB, () => {
+      const hsb = color.toHsb()
+      return `${round(hsb.h)}, ${round(hsb.s * 100)}, ${round(hsb.b * 100)}`
+    })
+    .with(PaletteSecondInfo.HSL, () => {
+      const hsl = color.toHsl()
+      return `${round(hsl.h)}, ${round(hsl.s * 100)}, ${round(hsl.l * 100)}`
+    })
+    .with(PaletteSecondInfo.CMYK, () => {
+      const cmyk = color.toCmyk()
+      return `${round(cmyk.c)}, ${round(cmyk.m)}, ${round(cmyk.y)}, ${round(
+        cmyk.k
+      )}`
+    })
+    .with(PaletteSecondInfo.LAB, () => {
+      const lab = color.toLab()
+      return `${round(lab.l)}, ${round(lab.a)}, ${round(lab.b)}`
+    })
+    .exhaustive()
 }

@@ -2,6 +2,8 @@
 
 import { memo } from "react"
 
+import { colorPalettes } from "@/components/shared/color-picker/constants"
+import { PaletteSecondInfo } from "@/components/shared/color-picker/interface"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -19,8 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { SecondaryInfo } from "../_constants"
-import { PaletteSecondInfo, useSettingStore } from "../_store/setting"
+import { useSettingStore } from "../_store/setting"
 
 const PaletteSetting = memo(() => {
   const setting = useSettingStore((state) => state)
@@ -50,7 +51,7 @@ const PaletteSetting = memo(() => {
                 <SelectValue placeholder="Color Second info" />
               </SelectTrigger>
               <SelectContent>
-                {SecondaryInfo.map((item) => (
+                {colorPalettes.map((item) => (
                   <SelectItem key={item} value={item}>
                     {item}
                   </SelectItem>

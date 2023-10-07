@@ -1,8 +1,11 @@
+"use client"
+
 import { memo } from "react"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
 
 import { cn } from "@/lib/utils"
+import QuickViewDialog from "@/components/shared/QuickViewDialog"
 import { Button } from "@/components/ui/button"
 import { savePalette } from "@/app/_actions/palette"
 
@@ -54,10 +57,15 @@ const Toolbar = memo(({ onZen }: { onZen: () => void }) => {
         </div>
         <div className="h-[1em] w-[1px] bg-slate-300"></div>
         <div className="space-x-1">
-          <Button variant="ghost" size="sm">
-            <span className="i-lucide-view mr-2 text-lg"></span>
-            <span>Quick view</span>
-          </Button>
+          <QuickViewDialog
+            title="Quick view"
+            palette={store.palette.map((c) => c.color)}
+          >
+            <Button variant="ghost" size="sm">
+              <span className="i-lucide-view mr-2 text-lg"></span>
+              <span>Quick view</span>
+            </Button>
+          </QuickViewDialog>
           <Button variant="ghost" size="sm">
             <span className="i-lucide-share-2 mr-2 text-lg"></span>
             <span>Export</span>

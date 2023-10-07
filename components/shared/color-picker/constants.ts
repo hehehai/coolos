@@ -1,11 +1,11 @@
-import { PaletteSecondInfo } from "./_store/palette"
+import { PaletteSecondInfo } from "./interface"
 
-export const SecondaryInfo = [
-  PaletteSecondInfo.Name,
+export const colorPalettes = [
   PaletteSecondInfo.HEX,
   PaletteSecondInfo.RGB,
   PaletteSecondInfo.HSB,
   PaletteSecondInfo.HSL,
   PaletteSecondInfo.CMYK,
   PaletteSecondInfo.LAB,
+  PaletteSecondInfo.Name,
 ]
