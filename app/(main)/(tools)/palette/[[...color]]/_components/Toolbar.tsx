@@ -28,7 +28,7 @@ const Toolbar = memo(({ onZen }: { onZen: () => void }) => {
   })
 
   return (
-    <div className="flex h-16 w-full items-center justify-between border-b border-zinc-100 bg-white px-3">
+    <div className="flex h-[54px] w-full items-center justify-between border-b border-zinc-100 bg-white px-3">
       <div className="text-3xl">🧑‍🎨</div>
       <div className="flex items-center space-x-2">
         <PaletteSetting />

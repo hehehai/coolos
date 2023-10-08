@@ -7,17 +7,19 @@ import HomeNav from "./HomeNav"
 
 const inter = Inter({ subsets: ["latin"] })
 
-const HomeHeader = () => {
+const HomeHeader = ({ className }: { className?: string }) => {
   return (
-    <div className={cn("mx-auto w-full max-w-7xl", inter.className)}>
-      <div className="flex items-center justify-between">
+    <div className={cn("w-full", inter.className, className)}>
+      <div className="flex w-full items-center justify-between">
+        <div className="text-2xl font-bold">
+          <a href="/">Coolos</a>
+        </div>
         <div className="flex items-center">
-          <div className="text-2xl font-bold">Coolos</div>
-          <div className="ml-20">
+          <div className="mr-6">
             <HomeNav />
           </div>
+          <HeaderAuth />
         </div>
-        <HeaderAuth></HeaderAuth>
       </div>
     </div>
   )

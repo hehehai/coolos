@@ -1,27 +1,25 @@
 "use client"
 
-import { useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth, UserButton } from "@clerk/nextjs"
-import { match, P } from "ts-pattern"
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 
 import { Button } from "@/components/ui/button"
 
 const HeaderAuth = () => {
-  const { isSignedIn } = useAuth()
   const router = useRouter()
 
-  const authKit = useMemo(() => {
-    return match(isSignedIn)
-      .with(false, P.nullish, () => (
-        <Button onClick={() => router.replace("/sign-in")} size={"xs"}>
+  return (
+    <div className="flex items-center space-x-3">
+      <SignedIn>
+        <UserButton afterSignOutUrl="/" />
+      </SignedIn>
+      <SignedOut>
+        <Button onClick={() => router.replace("/sign-in")} size={"sm"}>
           Login
         </Button>
-      ))
-      .otherwise(() => <UserButton afterSignOutUrl="/" />)
-  }, [isSignedIn, router])
-
-  return <div className="flex items-center space-x-3">{authKit}</div>
+      </SignedOut>
+    </div>
+  )
 }
 
 export default HeaderAuth

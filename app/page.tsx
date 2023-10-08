@@ -4,7 +4,7 @@ import HomeHeader from "@/app/_components/HomeHeader"
 function Home() {
   return (
     <main className="p-16">
-      <HomeHeader />
+      <HomeHeader className="mx-auto max-w-7xl" />
       <div className="mt-32">
         <HomeGrid />
       </div>

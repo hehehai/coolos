@@ -131,7 +131,7 @@ const ColorPalette = () => {
   )
 
   return (
-    <div className="flex h-screen w-full flex-col">
+    <div className="flex h-[calc(100vh-60px)] w-full flex-col">
       <Toolbar onZen={() => fullMethod.enter()} />
       <div className="w-full grow">
         <div
