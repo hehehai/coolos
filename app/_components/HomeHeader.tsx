@@ -7,7 +7,13 @@ import HomeNav from "./HomeNav"
 
 const inter = Inter({ subsets: ["latin"] })
 
-const HomeHeader = ({ className }: { className?: string }) => {
+const HomeHeader = ({
+  className,
+  showDashboard,
+}: {
+  className?: string
+  showDashboard?: boolean
+}) => {
   return (
     <div className={cn("w-full", inter.className, className)}>
       <div className="flex w-full items-center justify-between">
@@ -16,7 +22,7 @@ const HomeHeader = ({ className }: { className?: string }) => {
         </div>
         <div className="flex items-center">
           <div className="mr-6">
-            <HomeNav />
+            <HomeNav showDashboard={showDashboard} />
           </div>
           <HeaderAuth />
         </div>

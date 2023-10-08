@@ -2,8 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import { SignedIn, useAuth } from "@clerk/nextjs"
-import { match, P } from "ts-pattern"
+import { SignedIn } from "@clerk/nextjs"
 
 import { cn } from "@/lib/utils"
 import {
@@ -77,7 +76,7 @@ const ListItem = React.forwardRef<
 })
 ListItem.displayName = "ListItem"
 
-const HomeNav = () => {
+const HomeNav = ({ showDashboard = false }: { showDashboard?: boolean }) => {
   return (
     <NavigationMenu position="right">
       <NavigationMenuList className="space-x-2">
@@ -127,26 +126,19 @@ const HomeNav = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <SignedIn>
-          <NavigationMenuItem>
-            <Link href="/user" legacyBehavior passHref>
-              <NavigationMenuLink
-                className={navigationMenuTriggerStyle({ size: "sm" })}
-              >
-                Dashboard
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/admin" legacyBehavior passHref>
-              <NavigationMenuLink
-                className={navigationMenuTriggerStyle({ size: "sm" })}
-              >
-                Admin Panel
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-        </SignedIn>
+        {showDashboard && (
+          <SignedIn>
+            <NavigationMenuItem>
+              <Link href="/panel" legacyBehavior passHref>
+                <NavigationMenuLink
+                  className={navigationMenuTriggerStyle({ size: "sm" })}
+                >
+                  Dashboard
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </SignedIn>
+        )}
       </NavigationMenuList>
     </NavigationMenu>
   )
