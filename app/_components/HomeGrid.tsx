@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, Suspense } from "react"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
@@ -53,7 +53,7 @@ const HomeGridCard: FC<HomeGridCardProps> = ({
           </Link>
         </div>
       </div>
-      {float}
+      <Suspense>{float}</Suspense>
     </div>
   )
 }
