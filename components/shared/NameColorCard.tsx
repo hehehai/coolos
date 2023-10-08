@@ -1,13 +1,11 @@
 import { FC, useMemo, useState } from "react"
 import { isReadable } from "@ctrl/tinycolor"
 import toast from "react-hot-toast"
-import useSWRMutation from "swr/mutation"
 import { useLockedBody } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { generateColor } from "@/components/shared/color-picker"
-import { likeColor } from "@/app/_actions/color"
 
 import {
   DropdownMenu,
@@ -17,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import ColorFullScreen from "./ColorFullscreen"
+import ColorSaveDialog from "./ColorSaveDialog"
 import QuickViewDialog from "./QuickViewDialog"
 
 interface NameColorCardProps
@@ -54,15 +53,6 @@ const NameColorCard: FC<NameColorCardProps> = ({
       toast.success(`${title} copy success`)
     }
   }
-
-  const { trigger, isMutating } = useSWRMutation("/api/color", likeColor, {
-    onError: (err) => {
-      toast.error(err.message)
-    },
-    onSuccess: () => {
-      toast.success("color like success")
-    },
-  })
 
   const [isColorFullScreen, setColorFullScreen] = useState(false)
   const [_, setLocked] = useLockedBody(false, "root")
@@ -102,13 +92,13 @@ const NameColorCard: FC<NameColorCardProps> = ({
           <div className="text-sm text-slate-900">{name}</div>
           <div className="flex items-center space-x-2">
             {showLike && (
-              <span
-                className={cn(
-                  "i-lucide-heart cursor-pointer text-sm text-slate-600 hover:text-black",
-                  isMutating && "i-lucide-loader-2 animate-spin"
-                )}
-                onClick={() => trigger({ name, color: realColor.toHex() })}
-              />
+              <ColorSaveDialog
+                defaultValues={{
+                  color: realColor.toHex().toUpperCase(),
+                }}
+              >
+                <span className="i-lucide-heart cursor-pointer text-sm text-slate-600 hover:text-black" />
+              </ColorSaveDialog>
             )}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center justify-center">
@@ -162,18 +152,20 @@ const NameColorCard: FC<NameColorCardProps> = ({
                   <span className="i-lucide-arrow-down-to-line" />
                   <span>Export as image</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="cursor-pointer space-x-2 rounded-md"
-                  onClick={() => trigger({ name, color: realColor.toHex() })}
+                <ColorSaveDialog
+                  triggerClassName="block w-full"
+                  defaultValues={{
+                    color: realColor.toHex().toUpperCase(),
+                  }}
                 >
-                  <span
-                    className={cn(
-                      "i-lucide-heart",
-                      isMutating && "i-lucide-loader-2 animate-spin"
-                    )}
-                  />
-                  <span>Save color</span>
-                </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="w-full cursor-pointer space-x-2 rounded-md"
+                    onSelect={(e) => e.preventDefault()}
+                  >
+                    <span className="i-lucide-heart" />
+                    <span>Save color</span>
+                  </DropdownMenuItem>
+                </ColorSaveDialog>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

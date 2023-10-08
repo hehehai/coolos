@@ -147,7 +147,7 @@ const colorAtomPropsSchema: Record<ColorAtomSchemaType, ColorBoxFloatProps> = {
     }),
     layerGradientClassName:
       "rounded-full shadow-[insert_0_0_0_1px_rgba(0,0,0,0.08)]",
-    float: (color) => <Float color={color.toHex8String()} alphaBackground />,
+    float: (color) => <Float color={color.toHexString()} alphaBackground />,
   },
   [ColorAtomSchemaType.SaturationSlider]: {
     colorToOffset: (

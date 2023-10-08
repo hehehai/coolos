@@ -51,7 +51,7 @@ const DisplayDesk = memo(
     return (
       <div
         className={cn("relative", className)}
-        style={{ backgroundColor: color.toHex8String() }}
+        style={{ backgroundColor: color.toHexString() }}
       >
         {children}
         <div className="absolute right-4 top-4 flex items-center space-x-4">

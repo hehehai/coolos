@@ -95,14 +95,14 @@ const QuickViewDialog = memo(
     return (
       <Dialog>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="gap-0 overflow-hidden border-0 p-0 shadow-[rgba(0,0,0,0.1)_0_0_20px] sm:rounded-xl">
+        <DialogContent className="gap-0 overflow-hidden p-0">
           <DialogHeader className="flex items-center justify-center border-b border-gray-200 py-4">
             <DialogTitle>{title}</DialogTitle>
           </DialogHeader>
           {activeColor && (
             <div
               className="no-scrollbar flex max-h-[420px] flex-col overflow-y-auto p-3"
-              style={{ backgroundColor: activeColor.toHex8String() }}
+              style={{ backgroundColor: activeColor.toHexString() }}
             >
               {colorPalettes.map((model) => (
                 <ViewItem key={model} model={model} color={activeColor} />
@@ -118,7 +118,7 @@ const QuickViewDialog = memo(
                       <TooltipTrigger asChild>
                         <div
                           className="group flex h-full grow cursor-pointer items-center justify-center shadow-[inset_rgba(0,0,0,0.08)_0_1px,inset_rgba(0,0,0,0.08)_0_-1px] first:rounded-l-lg first:shadow-[inset_rgba(0,_0,_0,_0.08)_1px_1px,inset_rgba(0,0,0,0.08)_0_-1px] last:rounded-r-lg last:shadow-[inset_rgba(0,0,0,0.08)_-1px_1px,inset_rgba(0,0,0,0.08)_0_-1px]"
-                          style={{ backgroundColor: color.toHex8String() }}
+                          style={{ backgroundColor: color.toHexString() }}
                           onClick={() => setActiveColor(color)}
                         >
                           <span
