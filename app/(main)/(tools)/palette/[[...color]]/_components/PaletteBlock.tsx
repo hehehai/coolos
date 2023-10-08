@@ -5,11 +5,11 @@ import { isReadable } from "@ctrl/tinycolor"
 import { DraggableAttributes } from "@dnd-kit/core"
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities"
 import toast from "react-hot-toast"
-import useSWRMutation from "swr/mutation"
 
 import { cn } from "@/lib/utils"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { Color, getModeColor } from "@/components/shared/color-picker"
+import ColorSaveDialog from "@/components/shared/ColorSaveDialog"
 import { Button } from "@/components/ui/button"
 import {
   Tooltip,
@@ -17,7 +17,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { likeColor } from "@/app/_actions/color"
 
 import { useSettingStore } from "../_store/setting"
 import PaletteBlockValue from "./PaletteBlockValue"
@@ -62,15 +61,6 @@ const PaletteBlock = memo(
     const secondInfo = useMemo(() => {
       return getModeColor(setting.secondInfo, block.color)
     }, [setting.secondInfo, block.color])
-
-    const { trigger, isMutating } = useSWRMutation("/api/color", likeColor, {
-      onError: (err) => {
-        toast.error(err.message)
-      },
-      onSuccess: () => {
-        toast.success("color like success")
-      },
-    })
 
     const copy = useCopyToClipboard()
 
@@ -127,32 +117,29 @@ const PaletteBlock = memo(
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="rounded-xl px-3 hover:bg-white/20"
-                    onClick={() =>
-                      trigger({
-                        name: block.color.toName() || block.color.toHexString(),
-                        color: block.color.toHex(),
-                      })
-                    }
-                  >
-                    <span
-                      className={cn(
-                        "i-lucide-heart text-xl",
-                        isMutating && "i-lucide-loader-2 animate-spin"
-                      )}
-                    />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent sideOffset={20}>
-                  <span>Save color</span>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <ColorSaveDialog
+              defaultValues={{
+                color: block.color.toHex().toUpperCase(),
+              }}
+            >
+              <div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="rounded-xl px-3 hover:bg-white/20"
+                      >
+                        <span className="i-lucide-heart text-xl" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent sideOffset={20}>
+                      <span>Save color</span>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </ColorSaveDialog>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>

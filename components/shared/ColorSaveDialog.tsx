@@ -64,7 +64,9 @@ const ColorSaveDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className={triggerClassName}>{children}</DialogTrigger>
+      <DialogTrigger className={triggerClassName} asChild>
+        {children}
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Save Color</DialogTitle>
