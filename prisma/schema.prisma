@@ -27,7 +27,7 @@ model Palette {
   id          Int       @id @default(autoincrement())
   name        String
   description String?
-  tag         String?
+  tags        String?
   colors      String
   createdAt   DateTime  @default(now())
   updateAt    DateTime  @updatedAt

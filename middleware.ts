@@ -6,7 +6,7 @@ import { authMiddleware, redirectToSignIn } from "@clerk/nextjs"
 export default authMiddleware({
   publicRoutes: [
     "/",
-    "/(colors|contrast|picker|explore-palette|gradient-palette|palette)(.*)",
+    "/(colors|contrast|picker|explore-palette|gradient-palette|palette|api)(.*)",
   ],
   afterAuth(auth, req, _evt) {
     // handle users who aren't authenticated

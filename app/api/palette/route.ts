@@ -8,16 +8,23 @@ export async function POST(req: NextRequest) {
   const { userId } = auth()
 
   if (!userId) {
-    return new Response("Unauthorized", { status: 401 })
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
   try {
     const data = await req.json()
-    const { name, colors } = UpsetPaletteDtoSchema.parse(data?.json)
+    const {
+      name,
+      colors,
+      description,
+      tags = [],
+    } = UpsetPaletteDtoSchema.parse(data?.json)
 
     const saveData = await prisma.palette.create({
       data: {
         name: name ?? "",
+        description: description ?? "",
+        tags: tags.toString(),
         colors: colors.toString(),
         userId,
       },

@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
 
+import { getFetchAction } from "@/lib/fetch-action"
 import {
   Dialog,
   DialogContent,
@@ -14,7 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { likeColor } from "@/app/_actions/color"
 
 import { Button } from "../ui/button"
 import {
@@ -50,15 +50,19 @@ const ColorSaveDialog = ({
     },
   })
 
-  const { trigger, isMutating } = useSWRMutation("/api/color", likeColor, {
-    onError: (err) => {
-      toast.error(err.message)
-    },
-    onSuccess: () => {
-      setOpen(false)
-      toast.success("color like success")
-    },
-  })
+  const { trigger, isMutating } = useSWRMutation(
+    "/api/color",
+    getFetchAction<UpsetColorDto>(),
+    {
+      onError: (err) => {
+        toast.error(err.message)
+      },
+      onSuccess: () => {
+        setOpen(false)
+        toast.success("color like success")
+      },
+    }
+  )
 
   const onSubmit = async (values: UpsetColorDto) => trigger(values)
 

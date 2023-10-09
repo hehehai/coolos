@@ -1,12 +1,13 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
 import { z } from "zod"
 
+import { getFetchAction } from "@/lib/fetch-action"
 import {
   Dialog,
   DialogContent,
@@ -14,8 +15,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { savePalette } from "@/app/_actions/palette"
 
+import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 import {
   Form,
@@ -26,6 +27,7 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
+import { Textarea } from "../ui/textarea"
 import { Color, generateColor } from "./color-picker"
 import ColorPicker from "./color-picker/ColorPicker"
 import HexInput from "./color-picker/components/HexInput"
@@ -35,7 +37,11 @@ export const UpsetPaletteDtoSchema = z.object({
   name: z
     .string()
     .min(1, { message: "Name is required" })
-    .max(20, { message: "Name is too long" }),
+    .max(20, { message: "Name is max 20 characters" }),
+  description: z
+    .string()
+    .max(200, { message: "Description is max 200 characters" }),
+  tags: z.string().array().max(5, { message: "Maximum 5 tags" }),
   colors: z
     .any()
     .array()
@@ -62,6 +68,12 @@ const PaletteSaveDialog = ({
     palette.map((c) => c.toHexString()).map((c) => generateColor(c))
   )
 
+  useEffect(() => {
+    setCopyPalette(
+      palette.map((c) => c.toHexString()).map((c) => generateColor(c))
+    )
+  }, [palette])
+
   const [activeIdx, setActiveIdx] = useState(0)
   const activeColor = useMemo(() => {
     return copyPalette[activeIdx]
@@ -81,20 +93,28 @@ const PaletteSaveDialog = ({
     resolver: zodResolver(UpsetPaletteDtoSchema),
     values: {
       name: "",
+      description: "",
+      tags: [],
       ...(defaultValues ?? {}),
       colors: copyPalette,
     },
   })
 
-  const { trigger, isMutating } = useSWRMutation("/api/palette", savePalette, {
-    onError: (err) => {
-      toast.error(err.message)
-    },
-    onSuccess: () => {
-      setOpen(false)
-      toast.success("palette save success")
-    },
-  })
+  const { trigger, isMutating } = useSWRMutation(
+    "/api/palette",
+    getFetchAction<UpsetPaletteDto>(),
+    {
+      onError: (err) => {
+        console.log(err)
+        toast.error(err.message)
+      },
+      onSuccess: () => {
+        setOpen(false)
+        form.reset()
+        toast.success("palette save success")
+      },
+    }
+  )
 
   const onSubmit = async (values: UpsetPaletteDto) => {
     return await trigger({
@@ -123,6 +143,48 @@ const PaletteSaveDialog = ({
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tags</FormLabel>
+                  <FormControl>
+                    <Input
+                      spellCheck={false}
+                      {...field}
+                      value={field.value.toString()}
+                      onChange={(event) => {
+                        field.onChange(
+                          event.target.value.split(",").map((t) => t.trim())
+                        )
+                      }}
+                    />
+                  </FormControl>
+                  <div className="mt-1 flex flex-wrap gap-1">
+                    {field.value.map((t, i) => (
+                      <Badge key={i} variant="secondary">
+                        {t}
+                      </Badge>
+                    ))}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

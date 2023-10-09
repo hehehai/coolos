@@ -1,15 +1,16 @@
 "use client"
 
 import { memo, useMemo, useState } from "react"
+import { UpsetColorDto } from "@/db/dto/color.dto"
 import { isReadable } from "@ctrl/tinycolor"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
 import { useLockedBody } from "usehooks-ts"
 
+import { getFetchAction } from "@/lib/fetch-action"
 import { cn } from "@/lib/utils"
 import { Color } from "@/components/shared/color-picker"
 import ColorFullScreen from "@/components/shared/ColorFullscreen"
-import { likeColor } from "@/app/_actions/color"
 
 const DisplayDesk = memo(
   ({
@@ -39,14 +40,18 @@ const DisplayDesk = memo(
       })
     }
 
-    const { trigger, isMutating } = useSWRMutation("/api/color", likeColor, {
-      onError: (err) => {
-        toast.error(err.message)
-      },
-      onSuccess: () => {
-        toast.success("color like success")
-      },
-    })
+    const { trigger, isMutating } = useSWRMutation(
+      "/api/color",
+      getFetchAction<UpsetColorDto>(),
+      {
+        onError: (err) => {
+          toast.error(err.message)
+        },
+        onSuccess: () => {
+          toast.success("color like success")
+        },
+      }
+    )
 
     return (
       <div

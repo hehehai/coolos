@@ -6,6 +6,10 @@ export const UpsetPaletteDtoSchema = z.object({
     .string()
     .min(1, { message: "Name is required" })
     .max(20, { message: "Name is too long" }),
+  description: z
+    .string()
+    .max(200, { message: "Description is max 200 characters" }),
+  tags: z.string().array().max(5, { message: "Maximum 5 tags" }),
   colors: z
     .string()
     .regex(/^[0-9a-f]{6}$/i, { message: "Color is invalid" })
