@@ -1,13 +1,11 @@
 "use client"
 
 import { memo } from "react"
-import toast from "react-hot-toast"
-import useSWRMutation from "swr/mutation"
 
 import { cn } from "@/lib/utils"
+import PaletteSaveDialog from "@/components/shared/PaletteSaveDialog"
 import QuickViewDialog from "@/components/shared/QuickViewDialog"
 import { Button } from "@/components/ui/button"
-import { savePalette } from "@/app/_actions/palette"
 
 import { usePaletteStore, usePaletteTemporal } from "../_store/palette"
 import PaletteSetting from "./Setting"
@@ -17,15 +15,6 @@ const Toolbar = memo(({ onZen }: { onZen: () => void }) => {
   const { pastStates, futureStates, undo, redo } = usePaletteTemporal(
     (state) => state
   )
-
-  const { trigger, isMutating } = useSWRMutation("/api/palette", savePalette, {
-    onError: (err) => {
-      toast.error(err.message)
-    },
-    onSuccess: () => {
-      toast.success("palette save success")
-    },
-  })
 
   return (
     <div className="flex h-[54px] w-full items-center justify-between border-b border-zinc-100 bg-white px-3">
@@ -70,25 +59,12 @@ const Toolbar = memo(({ onZen }: { onZen: () => void }) => {
             <span className="i-lucide-share-2 mr-2 text-lg"></span>
             <span>Export</span>
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            disabled={isMutating}
-            onClick={() =>
-              trigger({
-                name: Date.now().toString(),
-                colors: store.palette.map((c) => c.color.toHex()),
-              })
-            }
-          >
-            <span
-              className={cn(
-                "i-lucide-heart mr-2 text-lg",
-                isMutating && "i-lucide-loader-2 animate-spin"
-              )}
-            />
-            <span>Save</span>
-          </Button>
+          <PaletteSaveDialog palette={store.palette.map((c) => c.color)}>
+            <Button variant="ghost" size="sm">
+              <span className={cn("i-lucide-heart mr-2 text-lg")} />
+              <span>Save</span>
+            </Button>
+          </PaletteSaveDialog>
         </div>
       </div>
     </div>

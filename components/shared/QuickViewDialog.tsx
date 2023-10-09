@@ -15,15 +15,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip"
 import { Color, getModeColor } from "./color-picker"
 import { colorPalettes } from "./color-picker/constants"
 import { PaletteSecondInfo } from "./color-picker/interface"
+import PaletteGroup from "./PaletteGroup"
 
 const ViewItem = memo(
   ({ color, model }: { color: Color; model: PaletteSecondInfo }) => {
@@ -111,39 +106,11 @@ const QuickViewDialog = memo(
           )}
           {palette?.length && (
             <DialogFooter className="bg-white px-6 py-5">
-              <div className="flex h-12 w-full items-center overflow-hidden rounded-xl">
-                {palette?.map((color, idx) => (
-                  <TooltipProvider key={idx}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div
-                          className="group flex h-full grow cursor-pointer items-center justify-center shadow-[inset_rgba(0,0,0,0.08)_0_1px,inset_rgba(0,0,0,0.08)_0_-1px] first:rounded-l-lg first:shadow-[inset_rgba(0,_0,_0,_0.08)_1px_1px,inset_rgba(0,0,0,0.08)_0_-1px] last:rounded-r-lg last:shadow-[inset_rgba(0,0,0,0.08)_-1px_1px,inset_rgba(0,0,0,0.08)_0_-1px]"
-                          style={{ backgroundColor: color.toHexString() }}
-                          onClick={() => setActiveColor(color)}
-                        >
-                          <span
-                            className={cn(
-                              "invisible h-2 w-2 rounded-full group-hover:visible",
-                              color === activeColor ? "visible" : null,
-                              [
-                                isReadable(color, "#fff", {
-                                  level: "AA",
-                                  size: "small",
-                                })
-                                  ? "bg-white"
-                                  : "bg-black/80",
-                              ]
-                            )}
-                          />
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{color.toHex().toUpperCase()}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                ))}
-              </div>
+              <PaletteGroup
+                palette={palette}
+                active={activeColor}
+                onChange={setActiveColor}
+              />
             </DialogFooter>
           )}
         </DialogContent>
