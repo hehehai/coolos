@@ -16,6 +16,7 @@ model Color {
   name      String
   color     String
   createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
 
   userId String
 
@@ -23,10 +24,16 @@ model Color {
 }
 
 model Palette {
-  id        Int      @id @default(autoincrement())
-  name      String
-  colors    String
-  createdAt DateTime @default(now())
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  tag         String?
+  colors      String
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
+  deleteAt    DateTime?
+  public      Boolean   @default(false)
+  likes       Int       @default(0)
 
   userId String
 
