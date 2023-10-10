@@ -1,16 +1,14 @@
 "use client"
 
-import { memo, useMemo, useState } from "react"
-import { UpsetColorDto } from "@/db/dto/color.dto"
 import { isReadable } from "@ctrl/tinycolor"
-import toast from "react-hot-toast"
-import useSWRMutation from "swr/mutation"
+import { memo, useMemo, useState } from "react"
 import { useLockedBody } from "usehooks-ts"
 
-import { getFetchAction } from "@/lib/fetch-action"
-import { cn } from "@/lib/utils"
-import { Color } from "@/components/shared/color-picker"
 import ColorFullScreen from "@/components/shared/ColorFullscreen"
+import { Color } from "@/components/shared/color-picker"
+import { cn } from "@/lib/utils"
+
+import ColorSaveDialog from "./ColorSaveDialog"
 
 const DisplayDesk = memo(
   ({
@@ -40,19 +38,6 @@ const DisplayDesk = memo(
       })
     }
 
-    const { trigger, isMutating } = useSWRMutation(
-      "/api/color",
-      getFetchAction<UpsetColorDto>(),
-      {
-        onError: (err) => {
-          toast.error(err.message)
-        },
-        onSuccess: () => {
-          toast.success("color like success")
-        },
-      }
-    )
-
     return (
       <div
         className={cn("relative", className)}
@@ -61,21 +46,16 @@ const DisplayDesk = memo(
         {children}
         <div className="absolute right-4 top-4 flex items-center space-x-4">
           {showLike && (
-            <span
-              className={cn(
-                boardTextIsReadable
-                  ? "text-white/50 hover:text-white"
-                  : "text-black/50 hover:text-black",
-                "i-lucide-heart hover:animate-zoom cursor-pointer text-xl",
-                isMutating && "i-lucide-loader-2 animate-spin"
-              )}
-              onClick={() =>
-                trigger({
-                  name: color.toName() || color.toHex(),
-                  color: color.toHex(),
-                })
-              }
-            />
+            <ColorSaveDialog defaultValues={{ color: color.toHexString() }}>
+              <span
+                className={cn(
+                  boardTextIsReadable
+                    ? "text-white/50 hover:text-white"
+                    : "text-black/50 hover:text-black",
+                  "i-lucide-heart hover:animate-zoom cursor-pointer text-xl"
+                )}
+              />
+            </ColorSaveDialog>
           )}
           <span
             className={cn(

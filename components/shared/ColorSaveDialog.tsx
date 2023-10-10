@@ -1,13 +1,14 @@
 "use client"
 
-import { useState } from "react"
 import { UpsetColorDto, UpsetColorDtoSchema } from "@/db/dto/color.dto"
+import { useAuth } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
 
-import { getFetchAction } from "@/lib/fetch-action"
 import {
   Dialog,
   DialogContent,
@@ -15,6 +16,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { UnauthorizedError } from "@/lib/error"
+import { getFetchAction } from "@/lib/fetch-action"
+import { appEnv } from "@/lib/utils"
 
 import { Button } from "../ui/button"
 import {
@@ -40,6 +44,8 @@ const ColorSaveDialog = ({
   children,
 }: ColorSaveDialogProps) => {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const { isSignedIn } = useAuth()
 
   const form = useForm<UpsetColorDto>({
     resolver: zodResolver(UpsetColorDtoSchema),
@@ -50,12 +56,24 @@ const ColorSaveDialog = ({
     },
   })
 
+  const handleOpen = (val: boolean) => {
+    if (!isSignedIn) {
+      router.push(appEnv.NEXT_PUBLIC_CLERK_SIGN_IN_URL)
+    } else {
+      setOpen(val)
+    }
+  }
+
   const { trigger, isMutating } = useSWRMutation(
     "/api/color",
     getFetchAction<UpsetColorDto>(),
     {
       onError: (err) => {
-        toast.error(err.message)
+        if (err instanceof UnauthorizedError) {
+          router.replace(appEnv.NEXT_PUBLIC_CLERK_SIGN_IN_URL)
+        } else {
+          toast.error(err.message)
+        }
       },
       onSuccess: () => {
         setOpen(false)
@@ -67,7 +85,7 @@ const ColorSaveDialog = ({
   const onSubmit = async (values: UpsetColorDto) => trigger(values)
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpen}>
       <DialogTrigger className={triggerClassName} asChild>
         {children}
       </DialogTrigger>

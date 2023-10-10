@@ -1,13 +1,13 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
 import { z } from "zod"
 
-import { getFetchAction } from "@/lib/fetch-action"
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { UnauthorizedError } from "@/lib/error"
+import { getFetchAction } from "@/lib/fetch-action"
+import { appEnv } from "@/lib/utils"
 
+import { useAuth } from "@clerk/nextjs"
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 import {
@@ -63,6 +67,8 @@ const PaletteSaveDialog = ({
   children,
 }: PaletteSaveDialogProps) => {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const { isSignedIn } = useAuth()
 
   const [copyPalette, setCopyPalette] = useState(
     palette.map((c) => c.toHexString()).map((c) => generateColor(c))
@@ -100,13 +106,24 @@ const PaletteSaveDialog = ({
     },
   })
 
+  const handleOpen = (val: boolean) => {
+    if (!isSignedIn) {
+      router.push(appEnv.NEXT_PUBLIC_CLERK_SIGN_IN_URL)
+    } else {
+      setOpen(val)
+    }
+  }
+
   const { trigger, isMutating } = useSWRMutation(
     "/api/palette",
     getFetchAction<UpsetPaletteDto>(),
     {
       onError: (err) => {
-        console.log(err)
-        toast.error(err.message)
+        if (err instanceof UnauthorizedError) {
+          router.replace(appEnv.NEXT_PUBLIC_CLERK_SIGN_IN_URL)
+        } else {
+          toast.error(err.message)
+        }
       },
       onSuccess: () => {
         setOpen(false)
@@ -124,7 +141,7 @@ const PaletteSaveDialog = ({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpen}>
       <DialogTrigger className={triggerClassName} asChild>
         {children}
       </DialogTrigger>
