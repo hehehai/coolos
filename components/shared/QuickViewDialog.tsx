@@ -1,6 +1,6 @@
 "use client"
 
-import { memo, useMemo, useState } from "react"
+import { memo, useEffect, useMemo, useState } from "react"
 import { isReadable } from "@ctrl/tinycolor"
 import toast from "react-hot-toast"
 
@@ -86,6 +86,10 @@ interface QuickViewDialogProps extends React.PropsWithChildren {
 const QuickViewDialog = memo(
   ({ color, title, children, palette }: QuickViewDialogProps) => {
     const [activeColor, setActiveColor] = useState(color ?? palette?.[0])
+
+    useEffect(() => {
+      setActiveColor(color ?? palette?.[0])
+    }, [color, palette])
 
     return (
       <Dialog>
