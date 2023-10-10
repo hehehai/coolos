@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/db"
-import { UpsetPaletteDtoSchema } from "@/db/dto/palette.dto"
+import { upsetPaletteDtoSchema } from "@/db/dto/palette.dto"
 import { auth } from "@clerk/nextjs"
 import { ZodError } from "zod"
 
+// save palette
 export async function POST(req: NextRequest) {
   const { userId } = auth()
 
@@ -14,19 +15,21 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json()
     const {
-      name,
-      colors,
+      name = "",
+      colors = [],
       description,
       tags = [],
-    } = UpsetPaletteDtoSchema.parse(data?.json)
+      public: isPublic,
+    } = upsetPaletteDtoSchema.parse(data?.json)
 
     const saveData = await prisma.palette.create({
       data: {
-        name: name ?? "",
-        description: description ?? "",
-        tags: tags.toString(),
-        colors: colors.toString(),
+        name,
+        description,
+        tags,
+        colors,
         userId,
+        public: isPublic,
       },
     })
 

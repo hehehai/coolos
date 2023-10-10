@@ -1,7 +1,7 @@
-import { prisma } from "@/db"
-import { UpsetColorDtoSchema } from "@/db/dto/color.dto"
-import { auth } from "@clerk/nextjs"
 import { NextRequest, NextResponse } from "next/server"
+import { prisma } from "@/db"
+import { upsetColorDtoSchema } from "@/db/dto/color.dto"
+import { auth } from "@clerk/nextjs"
 import { ZodError } from "zod"
 
 export async function POST(req: NextRequest) {
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const data = await req.json()
-    const { name, color } = UpsetColorDtoSchema.parse(data?.json)
+    const { name, color } = upsetColorDtoSchema.parse(data?.json)
 
     const saveData = await prisma.color.create({
       data: {

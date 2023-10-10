@@ -1,16 +1,13 @@
 import { memo } from "react"
+import { Palette } from "@prisma/client"
 import { MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { generateColor } from "@/components/shared/color-picker"
 
 import PaletteColorItem from "./PaletteColorItem"
 
 interface PaletteCardProps extends React.ComponentPropsWithoutRef<"div"> {
-  palette: {
-    colors: string[]
-    likes: number
-  }
+  palette: Palette
   paletteClassname?: string
 }
 
@@ -22,13 +19,13 @@ const PaletteCard = memo(
           {palette.colors.map((color, idx) => (
             <PaletteColorItem
               key={idx}
-              color={generateColor(color)}
+              hexString={color}
               className="first:rounded-l-xl last:rounded-r-xl"
             />
           ))}
         </div>
         <div className="flex items-center justify-between space-x-2 py-1">
-          <div className="text-sm text-slate-900">{palette.likes}</div>
+          <div className="text-sm text-slate-900">{palette.name}</div>
           <div>
             <MoreHorizontal />
           </div>

@@ -89,7 +89,7 @@ const ColorPalette = () => {
       newPalette.splice(idx + 1, 0, newBlock)
       store.setPalette(newPalette)
     },
-    [store.palette]
+    [store]
   )
 
   const handleRemove = useCallback(
@@ -103,7 +103,7 @@ const ColorPalette = () => {
       newPalette.splice(idx, 1)
       store.setPalette(newPalette)
     },
-    [store.palette]
+    [store]
   )
 
   const handleDragStart = useCallback((event: DragStartEvent) => {

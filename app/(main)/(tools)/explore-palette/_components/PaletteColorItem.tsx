@@ -6,48 +6,52 @@ import toast from "react-hot-toast"
 
 import { cn } from "@/lib/utils"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-import { Color } from "@/components/shared/color-picker"
+import { generateColor } from "@/components/shared/color-picker"
 
 interface PaletteColorItemProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "color"> {
-  color: Color
+  hexString: string
 }
 
-const PaletteColorItem = memo(({ color, ...props }: PaletteColorItemProps) => {
-  const textIsReadable = useMemo(() => {
-    return isReadable(color, "#fff", { level: "AA", size: "large" })
-  }, [color])
+const PaletteColorItem = memo(
+  ({ hexString, ...props }: PaletteColorItemProps) => {
+    const color = useMemo(() => generateColor(hexString), [hexString])
 
-  const copy = useCopyToClipboard()
+    const textIsReadable = useMemo(() => {
+      return isReadable(color, "#fff", { level: "AA", size: "large" })
+    }, [color])
 
-  const handleCopyColor = async (val: string) => {
-    const success = await copy(val)
-    if (success) {
-      toast.success("color copy success")
+    const copy = useCopyToClipboard()
+
+    const handleCopyColor = async (val: string) => {
+      const success = await copy(val)
+      if (success) {
+        toast.success("color copy success")
+      }
     }
-  }
 
-  return (
-    <div
-      {...props}
-      className={cn(
-        "group flex h-full grow basis-1 cursor-pointer items-center justify-center shadow-[inset_rgba(0,_0,_0,_0.05)_0_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] first:shadow-[inset_rgba(0,_0,_0,_0.05)_1px_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] last:shadow-[inset_rgba(0,_0,_0,_0.05)_-1px_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px]",
-        props.className
-      )}
-      style={{ backgroundColor: color.toHexString() }}
-      onClick={() => handleCopyColor(color.toHex().toUpperCase())}
-    >
+    return (
       <div
+        {...props}
         className={cn(
-          "hidden px-5 group-hover:block",
-          textIsReadable ? "text-white" : "text-black"
+          "group flex h-full grow basis-1 cursor-pointer items-center justify-center shadow-[inset_rgba(0,_0,_0,_0.05)_0_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] first:shadow-[inset_rgba(0,_0,_0,_0.05)_1px_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] last:shadow-[inset_rgba(0,_0,_0,_0.05)_-1px_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px]",
+          props.className
         )}
+        style={{ backgroundColor: color.toHexString() }}
+        onClick={() => handleCopyColor(color.toHex().toUpperCase())}
       >
-        {color.toHex()}
+        <div
+          className={cn(
+            "hidden px-5 group-hover:block",
+            textIsReadable ? "text-white" : "text-black"
+          )}
+        >
+          {color.toHex()}
+        </div>
       </div>
-    </div>
-  )
-})
+    )
+  }
+)
 
 PaletteColorItem.displayName = "PaletteColorItem"
 

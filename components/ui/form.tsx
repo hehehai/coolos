@@ -72,13 +72,22 @@ const FormItemContext = React.createContext<FormItemContextValue>(
 
 const FormItem = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+  React.HTMLAttributes<HTMLDivElement> & {
+    direction?: "vertical" | "horizontal"
+  }
+>(({ className, direction = "vertical", ...props }, ref) => {
   const id = React.useId()
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn("space-y-2", className)} {...props} />
+      <div
+        ref={ref}
+        className={cn(
+          direction === "horizontal" ? "space-x-2" : "space-y-2",
+          className
+        )}
+        {...props}
+      />
     </FormItemContext.Provider>
   )
 })

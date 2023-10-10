@@ -1,3 +1,4 @@
+import { ReadonlyURLSearchParams } from "next/navigation"
 import { env } from "@/env.mjs"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -10,6 +11,16 @@ export function absoluteUrl(path: string) {
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export const createUrl = (
+  pathname: string,
+  params: URLSearchParams | ReadonlyURLSearchParams
+) => {
+  const paramsString = params.toString()
+  const queryString = `${paramsString.length ? "?" : ""}${paramsString}`
+
+  return `${pathname}${queryString}`
 }
 
 // 调整数值到限定范围内（环）
@@ -59,4 +70,8 @@ export function generateIdByRandom() {
 
 export function generateCombinedId() {
   return `${CID_PREFIX}${Date.now()}${generateIdByRandom()}`
+}
+
+export function firstCharUpper(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }

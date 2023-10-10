@@ -1,7 +1,7 @@
 import Hashids from "hashids"
 import { z } from "zod"
 
-export const UpsetColorDtoSchema = z.object({
+export const upsetColorDtoSchema = z.object({
   name: z
     .string()
     .min(1, { message: "Name is required" })
@@ -10,6 +10,6 @@ export const UpsetColorDtoSchema = z.object({
     .string()
     .regex(/^#?([0-9a-f]{6})$/i, { message: "Color is invalid" }),
 })
-export type UpsetColorDto = z.infer<typeof UpsetColorDtoSchema>
+export type UpsetColorDto = z.infer<typeof upsetColorDtoSchema>
 
 export const ColorHashids = new Hashids("xx_color")

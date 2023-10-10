@@ -13,8 +13,8 @@ datasource db {
 
 model Color {
   id        Int      @id @default(autoincrement())
-  name      String
-  color     String
+  name      String   @db.Char(255)
+  color     String   @db.Char(100)
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
 
@@ -25,10 +25,10 @@ model Color {
 
 model Palette {
   id          Int       @id @default(autoincrement())
-  name        String
-  description String?
-  tags        String?
-  colors      String
+  name        String    @db.Char(255)
+  description String?   @db.Char(500)
+  tags        String[]  @db.Char(2000)
+  colors      String[]  @db.Char(500)
   createdAt   DateTime  @default(now())
   updateAt    DateTime  @updatedAt
   deleteAt    DateTime?
@@ -42,10 +42,10 @@ model Palette {
 
 model Subscribe {
   id       Int      @id @default(autoincrement())
-  email    String   @unique
+  email    String   @unique @db.Char(500)
   status   Int      @default(1) // normal: 1, cancel: 0
   createAt DateTime @default(now())
-  cancelId String?
+  cancelId String?  @db.Char(255)
 
   @@map("subscribe")
 }

@@ -1,13 +1,17 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@clerk/nextjs"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
 import { z } from "zod"
 
+import { UnauthorizedError } from "@/lib/error"
+import { getFetchAction } from "@/lib/fetch-action"
+import { appEnv } from "@/lib/utils"
 import {
   Dialog,
   DialogContent,
@@ -15,11 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { UnauthorizedError } from "@/lib/error"
-import { getFetchAction } from "@/lib/fetch-action"
-import { appEnv } from "@/lib/utils"
 
-import { useAuth } from "@clerk/nextjs"
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 import {
@@ -31,13 +31,14 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
+import { Switch } from "../ui/switch"
 import { Textarea } from "../ui/textarea"
 import { Color, generateColor } from "./color-picker"
 import ColorPicker from "./color-picker/ColorPicker"
 import HexInput from "./color-picker/components/HexInput"
 import PaletteGroup from "./PaletteGroup"
 
-export const UpsetPaletteDtoSchema = z.object({
+export const upsetPaletteDtoSchema = z.object({
   name: z
     .string()
     .min(1, { message: "Name is required" })
@@ -51,8 +52,9 @@ export const UpsetPaletteDtoSchema = z.object({
     .array()
     .min(2, { message: "Minimum 2 colors" })
     .max(12, { message: "Maximum 12 colors" }),
+  public: z.boolean().default(false),
 })
-export type UpsetPaletteDto = z.infer<typeof UpsetPaletteDtoSchema>
+export type UpsetPaletteDto = z.infer<typeof upsetPaletteDtoSchema>
 
 interface PaletteSaveDialogProps extends React.PropsWithChildren {
   triggerClassName?: string
@@ -96,13 +98,14 @@ const PaletteSaveDialog = ({
   )
 
   const form = useForm<UpsetPaletteDto>({
-    resolver: zodResolver(UpsetPaletteDtoSchema),
+    resolver: zodResolver(upsetPaletteDtoSchema),
     values: {
       name: "",
       description: "",
       tags: [],
       ...(defaultValues ?? {}),
       colors: copyPalette,
+      public: false,
     },
   })
 
@@ -196,9 +199,9 @@ const PaletteSaveDialog = ({
                     />
                   </FormControl>
                   <div className="mt-1 flex flex-wrap gap-1">
-                    {field.value.map((t, i) => (
-                      <Badge key={i} variant="secondary">
-                        {t}
+                    {field.value.map((tag: string, idx) => (
+                      <Badge key={idx} variant="secondary">
+                        {tag}
                       </Badge>
                     ))}
                   </div>
@@ -230,12 +233,32 @@ const PaletteSaveDialog = ({
                 onChange={(_, idx) => setActiveIdx(idx)}
               />
             </div>
-            <Button type="submit" disabled={isMutating}>
-              {isMutating && (
-                <span className="i-lucide-loader-2 mr-2 animate-spin" />
-              )}
-              Submit
-            </Button>
+            <div className="flex items-center space-x-4">
+              <Button type="submit" disabled={isMutating}>
+                {isMutating && (
+                  <span className="i-lucide-loader-2 mr-2 animate-spin" />
+                )}
+                Submit
+              </Button>
+              <FormField
+                control={form.control}
+                name="public"
+                render={({ field }) => (
+                  <FormItem
+                    className="flex items-center"
+                    direction="horizontal"
+                  >
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel>Public</FormLabel>
+                  </FormItem>
+                )}
+              />
+            </div>
           </form>
         </Form>
       </DialogContent>

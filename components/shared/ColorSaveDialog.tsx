@@ -1,14 +1,17 @@
 "use client"
 
-import { UpsetColorDto, UpsetColorDtoSchema } from "@/db/dto/color.dto"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { UpsetColorDto, upsetColorDtoSchema } from "@/db/dto/color.dto"
 import { useAuth } from "@clerk/nextjs"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
 
+import { UnauthorizedError } from "@/lib/error"
+import { getFetchAction } from "@/lib/fetch-action"
+import { appEnv } from "@/lib/utils"
 import {
   Dialog,
   DialogContent,
@@ -16,9 +19,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { UnauthorizedError } from "@/lib/error"
-import { getFetchAction } from "@/lib/fetch-action"
-import { appEnv } from "@/lib/utils"
 
 import { Button } from "../ui/button"
 import {
@@ -48,7 +48,7 @@ const ColorSaveDialog = ({
   const { isSignedIn } = useAuth()
 
   const form = useForm<UpsetColorDto>({
-    resolver: zodResolver(UpsetColorDtoSchema),
+    resolver: zodResolver(upsetColorDtoSchema),
     values: {
       name: "",
       color: "",
