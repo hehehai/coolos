@@ -199,7 +199,7 @@ const PaletteSaveDialog = ({
                     />
                   </FormControl>
                   <div className="mt-1 flex flex-wrap gap-1">
-                    {field.value.map((tag: string, idx) => (
+                    {field.value.map((tag: string, idx: number) => (
                       <Badge key={idx} variant="secondary">
                         {tag}
                       </Badge>
