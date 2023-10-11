@@ -20,7 +20,12 @@ const PaletteCard = memo(
             <PaletteColorItem
               key={idx}
               hexString={color}
-              className="first:rounded-l-xl last:rounded-r-xl"
+              style={
+                {
+                  "--item-width": `calc(100% / ${palette.colors.length})`,
+                } as React.CSSProperties
+              }
+              className="first:rounded-l-xl first:shadow-[inset_rgba(0,_0,_0,_0.05)_1px_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] last:rounded-r-xl last:shadow-[inset_rgba(0,_0,_0,_0.05)_-1px_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] hover:w-[128px]"
             />
           ))}
         </div>

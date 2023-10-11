@@ -34,10 +34,10 @@ const PaletteColorItem = memo(
       <div
         {...props}
         className={cn(
-          "group flex h-full grow basis-1 cursor-pointer items-center justify-center shadow-[inset_rgba(0,_0,_0,_0.05)_0_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] first:shadow-[inset_rgba(0,_0,_0,_0.05)_1px_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] last:shadow-[inset_rgba(0,_0,_0,_0.05)_-1px_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px]",
+          "group flex h-full w-[var(--item-width)] grow-0 cursor-pointer items-center justify-center overflow-visible shadow-[inset_rgba(0,_0,_0,_0.05)_0_1px,_inset_rgba(0,_0,_0,_0.05)_0_-1px] transition-all hover:w-32",
           props.className
         )}
-        style={{ backgroundColor: color.toHexString() }}
+        style={{ backgroundColor: color.toHexString(), ...props.style }}
         onClick={() => handleCopyColor(color.toHex().toUpperCase())}
       >
         <div
