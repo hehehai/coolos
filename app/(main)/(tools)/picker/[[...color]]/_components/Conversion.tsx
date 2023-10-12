@@ -1,8 +1,8 @@
 import { memo } from "react"
 import toast from "react-hot-toast"
 
+import { copyText } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { IconCopy } from "@/components/icons"
 import { Color } from "@/components/shared/color-picker"
 
@@ -93,10 +93,8 @@ const conversionMap: {
 ]
 
 const Conversion = memo(({ color }: { color: Color }) => {
-  const copy = useCopyToClipboard()
-
   const handleCopyColor = async (val: string) => {
-    const success = await copy(val)
+    const success = await copyText(val)
     if (success) {
       toast.success("color copy success")
     }

@@ -3,8 +3,8 @@
 import { forwardRef, Ref, useMemo, useState } from "react"
 import { toast } from "react-hot-toast"
 
+import { copyText } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { useEyeDropper } from "@/hooks/useEyeDropper"
 import { IconChevronDown, IconChevronUp, IconCopy } from "@/components/icons"
 import { IconEyeDropper } from "@/components/icons/EyeDropper"
@@ -83,7 +83,6 @@ const BaseColorPicker = (
     PickerMethod.Picker
   )
   const { isSupport, onOpenDropper } = useEyeDropper()
-  const copy = useCopyToClipboard()
 
   const PickerPanelComponent = useMemo(() => {
     return pickerMethodPanel[pickerMethod]
@@ -111,7 +110,7 @@ const BaseColorPicker = (
   }
 
   const handleCopyColor = async () => {
-    const success = await copy(color.toHex())
+    const success = await copyText(color.toHex())
     if (success) {
       toast.success("color copy success")
     }

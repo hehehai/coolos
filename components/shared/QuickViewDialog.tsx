@@ -4,8 +4,8 @@ import { memo, useEffect, useMemo, useState } from "react"
 import { isReadable } from "@ctrl/tinycolor"
 import toast from "react-hot-toast"
 
+import { copyText } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import {
   Dialog,
   DialogContent,
@@ -30,10 +30,8 @@ const ViewItem = memo(
       return isReadable(color, "#fff", { level: "AA", size: "large" })
     }, [color])
 
-    const copy = useCopyToClipboard()
-
     const handleCopy = async () => {
-      const success = await copy(colorVal)
+      const success = await copyText(colorVal)
       if (success) {
         toast.success(`Color copy success`)
       }

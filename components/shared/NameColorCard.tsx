@@ -3,8 +3,8 @@ import { isReadable } from "@ctrl/tinycolor"
 import toast from "react-hot-toast"
 import { useLockedBody } from "usehooks-ts"
 
+import { copyText } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { generateColor } from "@/components/shared/color-picker"
 
 import {
@@ -45,10 +45,8 @@ const NameColorCard: FC<NameColorCardProps> = ({
     return isReadable(realColor, "#fff", { level: "AA", size: "large" })
   }, [realColor])
 
-  const copy = useCopyToClipboard()
-
   const handleCopy = async (val: string, title: "link" | "color") => {
-    const success = await copy(val)
+    const success = await copyText(val)
     if (success) {
       toast.success(`${title} copy success`)
     }

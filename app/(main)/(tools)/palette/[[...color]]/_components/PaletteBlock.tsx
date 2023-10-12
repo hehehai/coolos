@@ -6,8 +6,8 @@ import { DraggableAttributes } from "@dnd-kit/core"
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities"
 import toast from "react-hot-toast"
 
+import { copyText } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 import { Color, getModeColor } from "@/components/shared/color-picker"
 import ColorSaveDialog from "@/components/shared/ColorSaveDialog"
 import { Button } from "@/components/ui/button"
@@ -62,10 +62,8 @@ const PaletteBlock = memo(
       return getModeColor(setting.secondInfo, block.color)
     }, [setting.secondInfo, block.color])
 
-    const copy = useCopyToClipboard()
-
     const handleCopy = async (val: string) => {
-      const success = await copy(val)
+      const success = await copyText(val)
       if (success) {
         toast.success(`Color copy success`)
       }

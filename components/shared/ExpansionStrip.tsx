@@ -2,8 +2,8 @@ import { memo } from "react"
 import { isReadable } from "@ctrl/tinycolor"
 import toast from "react-hot-toast"
 
+import { copyText } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
 
 interface ExpansionStripProps extends React.ComponentPropsWithoutRef<"div"> {
   colors: string[]
@@ -12,10 +12,8 @@ interface ExpansionStripProps extends React.ComponentPropsWithoutRef<"div"> {
 const ExpansionStrip = memo((props: ExpansionStripProps) => {
   const { colors, ...otherProps } = props
 
-  const copy = useCopyToClipboard()
-
   const handleCopyColor = async (val: string) => {
-    const success = await copy(val)
+    const success = await copyText(val)
     if (success) {
       toast.success("color copy success")
     }
