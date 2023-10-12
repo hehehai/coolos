@@ -2,9 +2,8 @@
 
 import { memo, useMemo } from "react"
 import { isReadable } from "@ctrl/tinycolor"
-import toast from "react-hot-toast"
 
-import { copyText } from "@/lib/copy-text"
+import { copyTextHasToast } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
 import { generateColor } from "@/components/shared/color-picker"
 
@@ -21,13 +20,6 @@ const PaletteColorItem = memo(
       return isReadable(color, "#fff", { level: "AA", size: "large" })
     }, [color])
 
-    const handleCopyColor = async (val: string) => {
-      const success = await copyText(val)
-      if (success) {
-        toast.success("color copy success")
-      }
-    }
-
     return (
       <div
         {...props}
@@ -36,7 +28,7 @@ const PaletteColorItem = memo(
           props.className
         )}
         style={{ backgroundColor: color.toHexString(), ...props.style }}
-        onClick={() => handleCopyColor(color.toHex().toUpperCase())}
+        onClick={() => copyTextHasToast(color.toHex().toUpperCase())}
       >
         <div
           className={cn(

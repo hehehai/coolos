@@ -1,9 +1,8 @@
 import { FC, useMemo, useState } from "react"
 import { isReadable } from "@ctrl/tinycolor"
-import toast from "react-hot-toast"
 import { useLockedBody } from "usehooks-ts"
 
-import { copyText } from "@/lib/copy-text"
+import { copyTextHasToast } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
 import { generateColor } from "@/components/shared/color-picker"
 
@@ -45,13 +44,6 @@ const NameColorCard: FC<NameColorCardProps> = ({
     return isReadable(realColor, "#fff", { level: "AA", size: "large" })
   }, [realColor])
 
-  const handleCopy = async (val: string, title: "link" | "color") => {
-    const success = await copyText(val)
-    if (success) {
-      toast.success(`${title} copy success`)
-    }
-  }
-
   const [isColorFullScreen, setColorFullScreen] = useState(false)
   const [_, setLocked] = useLockedBody(false, "root")
 
@@ -74,7 +66,7 @@ const NameColorCard: FC<NameColorCardProps> = ({
           colorCardClassName
         )}
         style={{ backgroundColor: realColor.toHexString() }}
-        onClick={() => handleCopy(realColor.toHex().toUpperCase(), "color")}
+        onClick={() => copyTextHasToast(realColor.toHex().toUpperCase())}
       >
         <span
           className={cn(
@@ -119,9 +111,9 @@ const NameColorCard: FC<NameColorCardProps> = ({
                 <DropdownMenuItem
                   className="cursor-pointer space-x-2 rounded-md"
                   onClick={() => {
-                    handleCopy(
+                    copyTextHasToast(
                       `${window.location.origin}/picker/${realColor.toHex()}`,
-                      "link"
+                      "Link copy success"
                     )
                   }}
                 >

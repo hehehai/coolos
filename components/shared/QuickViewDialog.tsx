@@ -2,9 +2,8 @@
 
 import { memo, useEffect, useMemo, useState } from "react"
 import { isReadable } from "@ctrl/tinycolor"
-import toast from "react-hot-toast"
 
-import { copyText } from "@/lib/copy-text"
+import { copyTextHasToast } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
 import {
   Dialog,
@@ -29,13 +28,6 @@ const ViewItem = memo(
     const textIsReadable = useMemo(() => {
       return isReadable(color, "#fff", { level: "AA", size: "large" })
     }, [color])
-
-    const handleCopy = async () => {
-      const success = await copyText(colorVal)
-      if (success) {
-        toast.success(`Color copy success`)
-      }
-    }
 
     return (
       <div
@@ -64,7 +56,7 @@ const ViewItem = memo(
               ? "text-white/60 hover:text-white/80"
               : "text-black/40 hover:text-black/60"
           )}
-          onClick={handleCopy}
+          onClick={(val) => copyTextHasToast(colorVal)}
         >
           Copy
         </div>

@@ -4,9 +4,8 @@ import { memo, useMemo } from "react"
 import { isReadable } from "@ctrl/tinycolor"
 import { DraggableAttributes } from "@dnd-kit/core"
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities"
-import toast from "react-hot-toast"
 
-import { copyText } from "@/lib/copy-text"
+import { copyTextHasToast } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
 import { Color, getModeColor } from "@/components/shared/color-picker"
 import ColorSaveDialog from "@/components/shared/ColorSaveDialog"
@@ -61,13 +60,6 @@ const PaletteBlock = memo(
     const secondInfo = useMemo(() => {
       return getModeColor(setting.secondInfo, block.color)
     }, [setting.secondInfo, block.color])
-
-    const handleCopy = async (val: string) => {
-      const success = await copyText(val)
-      if (success) {
-        toast.success(`Color copy success`)
-      }
-    }
 
     return (
       <div
@@ -162,7 +154,7 @@ const PaletteBlock = memo(
                     variant="ghost"
                     className="rounded-xl px-3 hover:bg-white/20"
                     onClick={() =>
-                      handleCopy(block.color.toHex().toUpperCase())
+                      copyTextHasToast(block.color.toHex().toUpperCase())
                     }
                   >
                     <span className="i-lucide-copy text-xl" />

@@ -1,7 +1,6 @@
 import { memo } from "react"
-import toast from "react-hot-toast"
 
-import { copyText } from "@/lib/copy-text"
+import { copyTextHasToast } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
 import { IconCopy } from "@/components/icons"
 import { Color } from "@/components/shared/color-picker"
@@ -93,13 +92,6 @@ const conversionMap: {
 ]
 
 const Conversion = memo(({ color }: { color: Color }) => {
-  const handleCopyColor = async (val: string) => {
-    const success = await copyText(val)
-    if (success) {
-      toast.success("color copy success")
-    }
-  }
-
   return (
     <div className="columns-2 gap-10">
       {conversionMap.map((item) => (
@@ -108,7 +100,7 @@ const Conversion = memo(({ color }: { color: Color }) => {
           className={item.bg}
           label={item.key}
           colorStr={item.get(color)}
-          onClick={() => handleCopyColor(item.get(color))}
+          onClick={() => copyTextHasToast(item.get(color))}
         />
       ))}
     </div>

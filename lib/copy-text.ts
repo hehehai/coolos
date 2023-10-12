@@ -1,3 +1,5 @@
+import toast from "react-hot-toast"
+
 export async function copyText(text: string | number) {
   if (!navigator?.clipboard) {
     console.warn("Clipboard not supported")
@@ -11,5 +13,19 @@ export async function copyText(text: string | number) {
   } catch (error) {
     console.warn("Copy failed", error)
     return false
+  }
+}
+
+export async function copyTextHasToast(
+  text: string | number,
+  msg = "Copy success"
+) {
+  const success = await copyText(text)
+  if (success) {
+    if (msg) {
+      toast.success(msg)
+    }
+  } else {
+    toast.error("Copy failed")
   }
 }

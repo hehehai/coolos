@@ -1,9 +1,8 @@
 "use client"
 
 import { forwardRef, Ref, useMemo, useState } from "react"
-import { toast } from "react-hot-toast"
 
-import { copyText } from "@/lib/copy-text"
+import { copyTextHasToast } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
 import { useEyeDropper } from "@/hooks/useEyeDropper"
 import { IconChevronDown, IconChevronUp, IconCopy } from "@/components/icons"
@@ -109,13 +108,6 @@ const BaseColorPicker = (
     }
   }
 
-  const handleCopyColor = async () => {
-    const success = await copyText(color.toHex())
-    if (success) {
-      toast.success("color copy success")
-    }
-  }
-
   return (
     <div
       ref={ref}
@@ -176,7 +168,7 @@ const BaseColorPicker = (
           )}
           <IconCopy
             className="cursor-pointer text-gray-500 hover:text-slate-900"
-            onClick={handleCopyColor}
+            onClick={() => copyTextHasToast(color.toHex().toUpperCase())}
           />
         </div>
       </div>

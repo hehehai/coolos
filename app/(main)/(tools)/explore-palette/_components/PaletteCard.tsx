@@ -15,7 +15,12 @@ const PaletteCard = memo(
   ({ palette, className, paletteClassname }: PaletteCardProps) => {
     return (
       <div className={cn(className)}>
-        <div className={cn("flex h-full items-stretch", paletteClassname)}>
+        <div
+          className={cn(
+            "flex h-full items-stretch overflow-hidden",
+            paletteClassname
+          )}
+        >
           {palette.colors.map((color, idx) => (
             <PaletteColorItem
               key={idx}
