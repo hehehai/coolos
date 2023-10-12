@@ -110,7 +110,7 @@ module.exports = {
     require("@tailwindcss/aspect-ratio"),
     iconsPlugin({
       // Select the icon collections you want to use
-      collections: getIconCollections(["ic", "lucide"]),
+      collections: getIconCollections(["ic", "lucide", 'ph']),
     }),
   ],
 }

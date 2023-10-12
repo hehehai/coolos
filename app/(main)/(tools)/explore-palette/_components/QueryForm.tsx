@@ -45,7 +45,7 @@ const QueryForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto mb-12 flex max-w-3xl items-center space-x-4"
+      className="mx-auto flex max-w-3xl items-center space-x-4"
     >
       <Input
         name="keyword"

@@ -90,7 +90,7 @@ const PaletteBlock = memo(
           </div>
         )}
         <div className="flex flex-col items-center">
-          <div className="hidden flex-col items-center space-y-4 group-hover/block:flex">
+          <div className="mb-12 hidden flex-col items-center space-y-4 group-hover/block:flex">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -120,10 +120,10 @@ const PaletteBlock = memo(
                         variant="ghost"
                         className="rounded-xl px-3 hover:bg-white/20"
                       >
-                        <span className="i-lucide-heart text-xl" />
+                        <span className="i-ic-round-favorite-border text-xl" />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent sideOffset={20}>
+                    <TooltipContent sideOffset={4}>
                       <span>Save color</span>
                     </TooltipContent>
                   </Tooltip>
@@ -166,11 +166,7 @@ const PaletteBlock = memo(
               </Tooltip>
             </TooltipProvider>
           </div>
-          <PaletteBlockValue
-            className="mt-12"
-            color={block.color}
-            onChange={onChange}
-          />
+          <PaletteBlockValue color={block.color} onChange={onChange} />
           <div className="mt-4">{secondInfo}</div>
         </div>
       </div>

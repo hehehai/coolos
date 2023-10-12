@@ -87,7 +87,7 @@ const NameColorCard: FC<NameColorCardProps> = ({
                   color: realColor.toHex().toUpperCase(),
                 }}
               >
-                <span className="i-lucide-heart cursor-pointer text-sm text-slate-600 hover:text-black" />
+                <span className="i-ph-heart-bold cursor-pointer text-sm text-slate-600 hover:text-black" />
               </ColorSaveDialog>
             )}
             <DropdownMenu>
@@ -149,10 +149,10 @@ const NameColorCard: FC<NameColorCardProps> = ({
                   }}
                 >
                   <DropdownMenuItem
-                    className="w-full cursor-pointer space-x-2 rounded-md"
+                    className="item-center flex w-full cursor-pointer space-x-2 rounded-md"
                     onSelect={(e) => e.preventDefault()}
                   >
-                    <span className="i-lucide-heart" />
+                    <span className="i-ph-heart-bold" />
                     <span>Save color</span>
                   </DropdownMenuItem>
                 </ColorSaveDialog>

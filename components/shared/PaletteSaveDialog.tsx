@@ -33,6 +33,12 @@ import {
 import { Input } from "../ui/input"
 import { Switch } from "../ui/switch"
 import { Textarea } from "../ui/textarea"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip"
 import { Color, generateColor } from "./color-picker"
 import ColorPicker from "./color-picker/ColorPicker"
 import HexInput from "./color-picker/components/HexInput"
@@ -60,6 +66,7 @@ interface PaletteSaveDialogProps extends React.PropsWithChildren {
   triggerClassName?: string
   defaultValues?: Partial<Omit<UpsetPaletteDto, "colors">>
   palette: Color[]
+  tips?: string
 }
 
 const PaletteSaveDialog = ({
@@ -67,6 +74,7 @@ const PaletteSaveDialog = ({
   defaultValues,
   palette,
   children,
+  tips,
 }: PaletteSaveDialogProps) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -143,10 +151,29 @@ const PaletteSaveDialog = ({
     })
   }
 
+  const renderTips = useMemo(() => {
+    if (!tips) {
+      return children
+    }
+
+    return (
+      <div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>{children}</TooltipTrigger>
+            <TooltipContent>
+              <p>{tips}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+    )
+  }, [tips, children])
+
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
       <DialogTrigger className={triggerClassName} asChild>
-        {children}
+        {renderTips}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

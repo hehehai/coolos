@@ -75,3 +75,11 @@ export function generateCombinedId() {
 export function firstCharUpper(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+export function convertToShortFormat(num: number): string {
+  if (num >= 10000) {
+    const roundedNum = Math.round((num / 1000) * 10) / 10
+    return `${roundedNum}K`
+  }
+  return num.toString()
+}

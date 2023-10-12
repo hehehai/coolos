@@ -78,6 +78,11 @@ const HexInput = React.forwardRef<HTMLInputElement, HexInputProps>(
           onChange={handleChange}
           onBlur={handleBlur}
           spellCheck={false}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleBlur(e)
+            }
+          }}
         />
         {currentBlock}
       </div>

@@ -19,14 +19,14 @@ const ExplorePalettePage = async ({
   })
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <div className="mx-16">
       <QueryForm />
-      <div className="grid grid-cols-4 gap-x-8 gap-y-6">
+      <div className="mt-20 grid grid-cols-5 gap-x-10 gap-y-8 lg:grid-cols-3 2xl:grid-cols-4">
         {palettes.map((palette) => (
           <PaletteCard
             palette={palette}
             key={palette.id}
-            paletteClassname="h-32"
+            paletteClassname="h-[138px]"
           />
         ))}
       </div>

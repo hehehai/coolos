@@ -4,6 +4,7 @@ import { MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+import LikeButton from "./LikesButton"
 import PaletteColorItem from "./PaletteColorItem"
 
 interface PaletteCardProps extends React.ComponentPropsWithoutRef<"div"> {
@@ -35,8 +36,9 @@ const PaletteCard = memo(
           ))}
         </div>
         <div className="flex items-center justify-between space-x-2 py-1">
-          <div className="text-sm text-slate-900">{palette.name}</div>
-          <div>
+          <div className="text-sm text-zinc-500">{palette.name}</div>
+          <div className="flex items-center space-x-2">
+            <LikeButton colors={palette.colors} likes={palette.likes} />
             <MoreHorizontal />
           </div>
         </div>

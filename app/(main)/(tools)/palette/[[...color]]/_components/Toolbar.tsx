@@ -60,7 +60,7 @@ const Toolbar = memo(({ onZen }: { onZen: () => void }) => {
           </Button>
           <PaletteSaveDialog palette={store.palette.map((c) => c.color)}>
             <Button variant="ghost" size="sm">
-              <span className={cn("i-lucide-heart mr-2 text-lg")} />
+              <span className={cn("i-ph-heart-bold mr-2 text-lg")} />
               <span>Save</span>
             </Button>
           </PaletteSaveDialog>

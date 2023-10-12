@@ -1,12 +1,12 @@
 "use client"
 
-import { isReadable } from "@ctrl/tinycolor"
 import { memo, useMemo, useState } from "react"
+import { isReadable } from "@ctrl/tinycolor"
 import { useLockedBody } from "usehooks-ts"
 
-import ColorFullScreen from "@/components/shared/ColorFullscreen"
-import { Color } from "@/components/shared/color-picker"
 import { cn } from "@/lib/utils"
+import { Color } from "@/components/shared/color-picker"
+import ColorFullScreen from "@/components/shared/ColorFullscreen"
 
 import ColorSaveDialog from "./ColorSaveDialog"
 
@@ -52,7 +52,7 @@ const DisplayDesk = memo(
                   boardTextIsReadable
                     ? "text-white/50 hover:text-white"
                     : "text-black/50 hover:text-black",
-                  "i-lucide-heart hover:animate-zoom cursor-pointer text-xl"
+                  "i-ph-heart-bold hover:animate-zoom cursor-pointer text-xl"
                 )}
               />
             </ColorSaveDialog>
