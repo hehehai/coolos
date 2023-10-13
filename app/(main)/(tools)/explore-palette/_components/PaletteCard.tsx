@@ -1,11 +1,11 @@
 import { memo } from "react"
 import { Palette } from "@prisma/client"
-import { MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
 import LikeButton from "./LikesButton"
 import PaletteColorItem from "./PaletteColorItem"
+import PaletteMore from "./PaletteMore"
 
 interface PaletteCardProps extends React.ComponentPropsWithoutRef<"div"> {
   palette: Palette
@@ -37,10 +37,16 @@ const PaletteCard = memo(
         </div>
         <div className="flex items-center justify-between space-x-2 py-1">
           <div className="text-sm text-zinc-500">{palette.name}</div>
-          <div className="flex items-center space-x-2">
-            <LikeButton colors={palette.colors} likes={palette.likes} />
-            <MoreHorizontal />
-          </div>
+          {palette.colors?.length && (
+            <div className="flex items-center space-x-2">
+              <LikeButton
+                colors={palette.colors}
+                likes={palette.likes}
+                id={palette.id}
+              />
+              <PaletteMore colors={palette.colors} id={palette.id} />
+            </div>
+          )}
         </div>
       </div>
     )

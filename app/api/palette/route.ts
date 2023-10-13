@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
       description,
       tags = [],
       public: isPublic,
+      saveById,
     } = upsetPaletteDtoSchema.parse(data?.json)
 
     const saveData = await prisma.palette.create({
@@ -32,6 +33,19 @@ export async function POST(req: NextRequest) {
         public: isPublic,
       },
     })
+
+    if (saveById) {
+      await prisma.palette.update({
+        where: {
+          id: saveById,
+        },
+        data: {
+          likes: {
+            increment: 1,
+          },
+        },
+      })
+    }
 
     return NextResponse.json({ saveData }, { status: 201 })
   } catch (error) {

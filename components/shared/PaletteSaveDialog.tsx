@@ -59,6 +59,7 @@ export const upsetPaletteDtoSchema = z.object({
     .min(2, { message: "Minimum 2 colors" })
     .max(12, { message: "Maximum 12 colors" }),
   public: z.boolean().default(false),
+  saveById: z.number().nullish().optional(),
 })
 export type UpsetPaletteDto = z.infer<typeof upsetPaletteDtoSchema>
 
@@ -111,9 +112,9 @@ const PaletteSaveDialog = ({
       name: "",
       description: "",
       tags: [],
+      public: false,
       ...(defaultValues ?? {}),
       colors: copyPalette,
-      public: false,
     },
   })
 

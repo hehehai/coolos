@@ -30,6 +30,7 @@ export const upsetPaletteDtoSchema = z.object({
     .min(2, { message: "Minimum 2 colors" })
     .max(12, { message: "Maximum 12 colors" }),
   public: z.boolean().default(false).optional(),
+  saveById: z.number().nullish().optional(),
 })
 export type UpsetPaletteDto = z.infer<typeof upsetPaletteDtoSchema>
 

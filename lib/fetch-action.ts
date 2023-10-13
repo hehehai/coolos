@@ -2,7 +2,6 @@ import superjson from "superjson"
 import { match } from "ts-pattern"
 
 import {
-  BadRequestError,
   NoPermissionError,
   NotFoundError,
   ServerError,
@@ -15,6 +14,7 @@ export function getFetchAction<T>() {
       method: "POST",
       body: superjson.stringify(arg),
     })
+    const data = await res.json()
     if (!res.ok) {
       match(res.status)
         .with(401, () => {
@@ -23,9 +23,6 @@ export function getFetchAction<T>() {
         .with(403, () => {
           throw new NoPermissionError()
         })
-        .with(400, () => {
-          throw new BadRequestError()
-        })
         .with(404, () => {
           throw new NotFoundError()
         })
@@ -33,12 +30,11 @@ export function getFetchAction<T>() {
           throw new ServerError()
         })
         .otherwise(() => {
-          throw new Error(`${res.statusText}: ${res.statusText}`)
+          throw new Error(`${res.statusText}: ${data?.error}`)
         })
-      return
     }
 
-    return res.json()
+    return data
   }
 
   return fetchAction
