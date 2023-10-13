@@ -4,9 +4,8 @@ import { Metadata } from "next"
 import PageWrapper from "@/components/shared/PageWrapper"
 
 const pageMeta = {
-  title: "Trending Color Palettes",
-  description:
-    "Get inspired by thousands of beautiful color schemes and make something cool!",
+  title: "Color Palette view",
+  description: "View the specific color values of the swatch",
 }
 
 export const metadata: Metadata = {

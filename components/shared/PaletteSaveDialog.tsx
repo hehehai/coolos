@@ -68,6 +68,8 @@ interface PaletteSaveDialogProps extends React.PropsWithChildren {
   defaultValues?: Partial<Omit<UpsetPaletteDto, "colors">>
   palette: Color[]
   tips?: string
+
+  onSuccess?: () => void
 }
 
 const PaletteSaveDialog = ({
@@ -76,6 +78,7 @@ const PaletteSaveDialog = ({
   palette,
   children,
   tips,
+  onSuccess,
 }: PaletteSaveDialogProps) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -141,6 +144,7 @@ const PaletteSaveDialog = ({
         setOpen(false)
         form.reset()
         toast.success("palette save success")
+        onSuccess?.()
       },
     }
   )

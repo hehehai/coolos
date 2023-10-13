@@ -76,10 +76,19 @@ export function firstCharUpper(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
+export function numDigitsSeparation(num: number, digits: number = 3) {
+  return new Intl.NumberFormat("en-IN", {
+    maximumSignificantDigits: digits,
+  }).format(num)
+}
+// 123000 -> 123K, 39400 -> 39.4K, 3200 -> 3,200, 240 -> 240
 export function convertToShortFormat(num: number): string {
-  if (num >= 10000) {
-    const roundedNum = Math.round((num / 1000) * 10) / 10
-    return `${roundedNum}K`
+  if (num >= 1000000) {
+    return `${(num / 1000000).toFixed(1)}M`
+  } else if (num >= 10000 && num < 1000000) {
+    return `${(num / 1000).toFixed(1)}K`
+  } else if (num >= 1000 && num < 10000) {
+    return numDigitsSeparation(num)
   }
   return num.toString()
 }
