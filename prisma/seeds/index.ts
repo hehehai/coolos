@@ -1,7 +1,10 @@
 import prisma from "@/db"
 
+import { savePalettes } from "./palette"
+
 async function main() {
   // empty
+  await savePalettes()
 }
 
 try {

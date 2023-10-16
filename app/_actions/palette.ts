@@ -7,7 +7,7 @@ import { match } from "ts-pattern"
 export async function queryExplorePalette(query: QueryPaletteDto) {
   "use server"
 
-  const { keyword, sortBy } = query
+  const { keyword, sortBy, page = 0, pageSize = 24 } = query
 
   const whereIs: Partial<Prisma.PaletteWhereInput> = {
     deleteAt: null,
@@ -65,6 +65,8 @@ export async function queryExplorePalette(query: QueryPaletteDto) {
   const data = await prisma.palette.findMany({
     where: whereIs,
     orderBy: orderByIs,
+    skip: page * pageSize,
+    take: pageSize,
   })
 
   return data

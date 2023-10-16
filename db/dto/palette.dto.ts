@@ -6,6 +6,8 @@ export const sortByOptions = ["trending", "latest", "popular"] as const
 export const queryPaletteDtoSchema = z.object({
   keyword: z.string().optional(),
   sortBy: z.enum(sortByOptions).default("trending").optional(),
+  page: z.number().default(1).optional(),
+  pageSize: z.number().default(24).optional(),
 })
 export type QueryPaletteDto = z.infer<typeof queryPaletteDtoSchema>
 

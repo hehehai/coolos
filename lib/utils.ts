@@ -92,3 +92,17 @@ export function convertToShortFormat(num: number): string {
   }
   return num.toString()
 }
+
+export function queryStringToObject<T = Record<string, string>>(url: string) {
+  return [...new URLSearchParams(url.split("?")[1])].reduce(
+    (a, [k, v]) => {
+      a[k as keyof T] = v as string
+      return a
+    },
+    {} as { [K in keyof T]: string }
+  )
+}
+
+export function getRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}

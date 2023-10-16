@@ -2,6 +2,7 @@ import { QueryPaletteDto, sortByOptions } from "@/db/dto/palette.dto"
 
 import { queryExplorePalette } from "@/app/_actions/palette"
 
+import LoadMore from "./_components/LoadMore"
 import PaletteCard from "./_components/PaletteCard"
 import QueryForm from "./_components/QueryForm"
 
@@ -29,6 +30,12 @@ const ExplorePalettePage = async ({
             paletteClassname="h-[138px]"
           />
         ))}
+        <LoadMore
+          fetchParams={{
+            keyword,
+            sortBy,
+          }}
+        />
       </div>
     </div>
   )

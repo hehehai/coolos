@@ -1,5 +1,5 @@
-export const PaletteView = () => {
+export const PaletteViewPage = () => {
   return <div>Palette view</div>
 }
 
-export default PaletteView
+export default PaletteViewPage

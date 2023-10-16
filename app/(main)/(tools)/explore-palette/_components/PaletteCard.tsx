@@ -1,3 +1,5 @@
+"use client"
+
 import { memo } from "react"
 import { Palette } from "@prisma/client"
 
@@ -22,7 +24,7 @@ const PaletteCard = memo(
             paletteClassname
           )}
         >
-          {palette.colors.map((color, idx) => (
+          {palette.colors?.map((color, idx) => (
             <PaletteColorItem
               key={idx}
               hexString={color}
@@ -35,8 +37,7 @@ const PaletteCard = memo(
             />
           ))}
         </div>
-        <div className="flex items-center justify-between space-x-2 py-1">
-          <div className="text-sm text-zinc-500">{palette.name}</div>
+        <div className="flex items-center justify-end space-x-2 py-1">
           {palette.colors?.length && (
             <div className="flex items-center space-x-2">
               <LikeButton

@@ -1,8 +1,36 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/db"
-import { upsetPaletteDtoSchema } from "@/db/dto/palette.dto"
+import {
+  queryPaletteDtoSchema,
+  upsetPaletteDtoSchema,
+} from "@/db/dto/palette.dto"
 import { auth } from "@clerk/nextjs"
 import { ZodError } from "zod"
+
+import { queryStringToObject } from "@/lib/utils"
+import { queryExplorePalette } from "@/app/_actions/palette"
+
+export async function GET(req: NextRequest) {
+  try {
+    const data = queryStringToObject(req.url)
+    const params = queryPaletteDtoSchema.parse({
+      ...data,
+      page: data.page ? Number(data.page) : 0,
+      pageSize: data.pageSize ? Number(data.pageSize) : 24,
+    })
+
+    const palettes = await queryExplorePalette(params)
+
+    return NextResponse.json(palettes)
+  } catch (error) {
+    let message = "Something went wrong"
+    if (error instanceof ZodError) {
+      message = error.issues.at(0)?.message || message
+    }
+    console.log(error)
+    return NextResponse.json({ error: message }, { status: 400 })
+  }
+}
 
 // save palette
 export async function POST(req: NextRequest) {

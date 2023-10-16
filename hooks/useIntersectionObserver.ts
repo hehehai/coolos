@@ -7,6 +7,8 @@ export const useIntersectionObserver = <T extends HTMLElement | null>(
   options: {
     threshold?: number | number[]
     logicFn?: (entry: IntersectionObserverEntry) => boolean
+  } = {
+    threshold: 0,
   }
 ) => {
   const [isIntersecting, setIsIntersecting] = React.useState(false)
