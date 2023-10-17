@@ -18,7 +18,7 @@ function createPalette(palette: string[]): Prisma.PaletteCreateManyInput {
     colors: palette,
     public: true,
     tags: [],
-    likes: getRandomNumber(100, 1000000),
+    likes: getRandomNumber(5000, 80000),
   }
 }
 

@@ -1,4 +1,4 @@
-export const PaletteViewPage = () => {
+const PaletteViewPage = () => {
   return <div>Palette view</div>
 }
 
