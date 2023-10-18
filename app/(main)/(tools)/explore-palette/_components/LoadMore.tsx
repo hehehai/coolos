@@ -5,7 +5,7 @@ import { QueryPaletteDto } from "@/db/dto/palette.dto"
 import { Palette } from "@prisma/client"
 import useSWRInfinite from "swr/infinite"
 
-import { getFetchAction, handleRes } from "@/lib/fetch-action"
+import { getFetchAction } from "@/lib/fetch-action"
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver"
 import { SvgSpinners90RingWithBg } from "@/components/icons/Loading"
 
@@ -44,9 +44,9 @@ const LoadMore = ({ fetchParams }: LoadMoreProps) => {
 
   useEffect(() => {
     if (inView) {
-      setSize(size + 1)
+      setSize((prev) => prev + 1)
     }
-  }, [inView])
+  }, [inView, setSize])
 
   if (isLoading) {
     return <div>Loading...</div>

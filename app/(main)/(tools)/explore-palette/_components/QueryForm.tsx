@@ -23,7 +23,7 @@ const QueryForm = () => {
 
     Object.entries(values).forEach(([key, val]) => {
       if (val) {
-        params.set(key, val)
+        params.set(key, val.toString())
       } else {
         params.delete(key)
       }
