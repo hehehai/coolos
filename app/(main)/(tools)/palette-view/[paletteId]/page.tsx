@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import prisma from "@/db"
 
-import ColorTag from "@/components/shared/ColorTag"
 import { Badge } from "@/components/ui/badge"
 
 import ColorBlock from "./_components/ColorBlock"

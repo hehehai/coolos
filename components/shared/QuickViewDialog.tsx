@@ -56,7 +56,7 @@ const ViewItem = memo(
               ? "text-white/60 hover:text-white/80"
               : "text-black/40 hover:text-black/60"
           )}
-          onClick={(val) => copyTextHasToast(colorVal)}
+          onClick={() => copyTextHasToast(colorVal)}
         >
           Copy
         </div>

@@ -28,7 +28,7 @@ const HeaderAuth = () => {
         afterSignOutUrl={appEnv.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL}
       />
     )
-  }, [isLoaded, isSignedIn])
+  }, [isLoaded, isSignedIn, router])
 
   return <div className="flex items-center space-x-3">{authStatusC}</div>
 }
