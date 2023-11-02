@@ -37,7 +37,7 @@ const LoadMore = ({ fetchParams }: LoadMoreProps) => {
   const bottomTriggerRef = useRef(null)
   const inView = useIntersectionObserver(bottomTriggerRef)
 
-  const { data, size, setSize, isLoading, error } = useSWRInfinite<Palette[]>(
+  const { data, setSize, error } = useSWRInfinite<Palette[]>(
     getKey(fetchParams),
     getFetchAction({ method: "GET" })
   )
@@ -47,10 +47,6 @@ const LoadMore = ({ fetchParams }: LoadMoreProps) => {
       setSize((prev) => prev + 1)
     }
   }, [inView, setSize])
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
 
   if (error) {
     return <div>Error: {error.message}</div>

@@ -3,45 +3,14 @@
 import { useMemo, useState } from "react"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 
-import { cn } from "@/lib/utils"
 import {
   ColorCategory,
   colorCollection,
 } from "@/components/shared/color-picker/data"
+import ColorTag from "@/components/shared/ColorTag"
 import NameColorCard from "@/components/shared/NameColorCard"
 
 const colorCategories = Object.keys(colorCollection) as ColorCategory[]
-
-interface ColorTagProps extends React.ComponentPropsWithoutRef<"div"> {
-  color?: string
-  active?: boolean
-}
-
-const ColorTag = ({
-  color,
-  active,
-  children,
-  ...otherProps
-}: ColorTagProps) => {
-  return (
-    <div
-      {...otherProps}
-      className={cn(
-        "flex cursor-pointer items-center space-x-2 rounded-lg bg-zinc-100 px-4 py-2 hover:bg-zinc-200",
-        { "text-blue-600 bg-blue-100": active },
-        otherProps.className
-      )}
-    >
-      {color && (
-        <div
-          className="h-3 w-3 rounded-full shadow-[inset_rgba(0,0,0,0.08)_0_0_0_1px]"
-          style={{ backgroundColor: color }}
-        />
-      )}
-      <div className="text-sm">{children}</div>
-    </div>
-  )
-}
 
 const ColorsPage = () => {
   const [filter, setFilter] = useState<ColorCategory | "">("")

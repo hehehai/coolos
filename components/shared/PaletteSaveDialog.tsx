@@ -165,7 +165,7 @@ const PaletteSaveDialog = ({
       <div>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>{children}</TooltipTrigger>
+            <TooltipTrigger asChild>{children}</TooltipTrigger>
             <TooltipContent>
               <p>{tips}</p>
             </TooltipContent>

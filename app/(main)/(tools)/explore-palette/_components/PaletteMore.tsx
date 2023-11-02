@@ -25,8 +25,13 @@ const PaletteMore = ({ colors, id }: { colors: string[]; id: number }) => {
         <div className="i-lucide-more-horizontal cursor-pointer text-slate-600 hover:text-black" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="space-y-1 rounded-xl p-3">
-        <DropdownMenuItem className="cursor-pointer space-x-2 rounded-md">
-          <span className="i-lucide-pipette" />
+        <DropdownMenuItem
+          className="cursor-pointer space-x-2 rounded-md"
+          onClick={() => {
+            window.open(`/palette-view/${id}`, "_blank", "noopener,noreferrer")
+          }}
+        >
+          <span className="i-lucide-mouse-pointer-square" />
           <span>Open palette</span>
         </DropdownMenuItem>
         <DropdownMenuItem
