@@ -72,7 +72,7 @@ bun dev
 [github-stars-link]: https://github.com/hehehai/coolos/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/hehehai/coolos?color=ffcb47&labelColor=black&style=flat-square
 [github-issues-link]: https://github.com/hehehai/coolos/issues
-[github-issues-shield]: https://img.shields.io/github/issues/hehehai/lcoolos?color=ff80eb&labelColor=black&style=flat-square
+[github-issues-shield]: https://img.shields.io/github/issues/hehehai/coolos?color=ff80eb&labelColor=black&style=flat-square
 [github-license-link]: https://github.com/hehehai/coolos/blob/main/LICENSE
 [github-license-shield]: https://img.shields.io/github/license/hehehai/coolos?color=white&labelColor=black&style=flat-square
 [vercel-link]: https://coolos.vercel.app
