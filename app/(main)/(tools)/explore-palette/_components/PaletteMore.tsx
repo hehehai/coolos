@@ -51,9 +51,7 @@ const PaletteMore = ({ colors, id }: { colors: string[]; id: number }) => {
           className="cursor-pointer space-x-2 rounded-md"
           onClick={() => {
             copyTextHasToast(
-              `${window.location.origin}/picker/${palette
-                .map((c) => c.toHex())
-                .join("-")}`,
+              `${window.location.origin}/palette-view/${id}`,
               "Link copy success"
             )
           }}
