@@ -17,3 +17,8 @@ interface EyeDropperConstructor {
 interface Window {
   EyeDropper?: EyeDropperConstructor | undefined
 }
+
+// Clerk user meta
+interface UserPublicMetadata {
+  role?: "admin" | "user"
+}

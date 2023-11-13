@@ -103,6 +103,17 @@ export function queryStringToObject<T = Record<string, string>>(url: string) {
   )
 }
 
+export function objectToQueryString(obj: object): string {
+  const searchParams = new URLSearchParams()
+  Object.entries(obj).forEach(([key, value]) => {
+    if (value != null) {
+      searchParams.append(key, value)
+    }
+  })
+
+  return searchParams.toString()
+}
+
 export function getRandomNumber(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }

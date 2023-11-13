@@ -7,7 +7,7 @@ import useSWRInfinite from "swr/infinite"
 
 import { getFetchAction } from "@/lib/fetch-action"
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver"
-import { SvgSpinners90RingWithBg } from "@/components/icons/Loading"
+import { Spinners } from "@/components/icons"
 
 import PaletteCard from "./PaletteCard"
 
@@ -68,7 +68,7 @@ const LoadMore = ({ fetchParams }: LoadMoreProps) => {
         className="col-span-5 lg:col-span-3 2xl:col-span-4"
       >
         <div className="flex h-80 w-full items-center justify-center text-4xl">
-          <SvgSpinners90RingWithBg className="animate-spin" />
+          <Spinners className="animate-spin" />
         </div>
       </div>
     </>

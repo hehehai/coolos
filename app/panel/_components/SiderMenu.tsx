@@ -1,8 +1,10 @@
 "use client"
 
+import { useMemo } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+import { isAdmin } from "@/lib/user"
 import { cn } from "@/lib/utils"
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 
@@ -26,16 +28,23 @@ const menus = [
   {
     name: "Palettes",
     href: "/panel/palettes",
-    icon: "i-lucide-candy",
+    icon: "i-ic-outline-palette",
   },
 ]
 
-const SideMenu = () => {
+const SideMenu = ({ role }: { role?: string }) => {
   const path = usePathname()
+
+  const visibleMenus = useMemo(() => {
+    if (isAdmin(role)) {
+      return menus
+    }
+    return menus.filter((menu) => !menu.admin)
+  }, [role])
 
   return (
     <div className="flex flex-col space-y-4 p-4">
-      {menus.map((menu) => (
+      {visibleMenus.map((menu) => (
         <Link key={menu.name} href={menu.href} legacyBehavior passHref>
           <div
             className={cn(
