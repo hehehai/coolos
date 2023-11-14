@@ -2,7 +2,6 @@ import { notFound } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
 import { isAdmin } from "@/lib/user"
-import { Button } from "@/components/ui/button"
 
 import { DataTable } from "./_components/DataTable"
 

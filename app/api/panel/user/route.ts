@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/db"
-import { upsetColorDtoSchema } from "@/db/dto/color.dto"
 import {
-  CreateUserDto,
   createUserDtoSchema,
   getUserVO,
   queryUserDtoSchema,
@@ -12,7 +9,6 @@ import {
 } from "@/db/dto/user.dto"
 import { auth, clerkClient, currentUser } from "@clerk/nextjs"
 import { User } from "@clerk/nextjs/server"
-import SuperJSON from "superjson"
 import { ZodError } from "zod"
 
 import { pagination } from "@/lib/pagination"

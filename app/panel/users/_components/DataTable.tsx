@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { QueryUserVO, UserVO } from "@/db/dto/user.dto"
 import {
   ColumnDef,
@@ -17,7 +17,6 @@ import useSWR, { useSWRConfig } from "swr"
 
 import { getFetchAction } from "@/lib/fetch-action"
 import { objectToQueryString } from "@/lib/utils"
-import { useKeyLoading } from "@/hooks/userKeyLoading"
 import { Spinners } from "@/components/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -42,8 +41,6 @@ import { DeleteConfirmDialog } from "./DeleteConfirmDialog"
 import UpsetUserFormDialog from "./UpsetFormDialog"
 
 export function DataTable() {
-  const { isLoading, startLoading, stopLoading } = useKeyLoading()
-
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -78,6 +75,28 @@ export function DataTable() {
       toast.error(err.message)
     },
   })
+
+  const handleEditSuccess = useCallback(
+    (data?: UserVO) => {
+      if (!data) {
+        mutate(fetchKey)
+      } else {
+        mutateData((prev) => {
+          if (!prev) return prev
+          return {
+            ...prev,
+            data: prev.data.map((user) => {
+              if (user.id === data.id) {
+                return data
+              }
+              return user
+            }),
+          }
+        })
+      }
+    },
+    [fetchKey, mutate, mutateData]
+  )
 
   const columns: ColumnDef<UserVO>[] = useMemo(
     () => [
@@ -183,7 +202,7 @@ export function DataTable() {
         },
       },
     ],
-    [isLoading]
+    [handleEditSuccess]
   )
 
   const defaultData = useMemo(() => [], [])
@@ -217,25 +236,6 @@ export function DataTable() {
       columnVisibility,
     },
   })
-
-  const handleEditSuccess = (data?: UserVO) => {
-    if (!data) {
-      mutate(fetchKey)
-    } else {
-      mutateData((prev) => {
-        if (!prev) return prev
-        return {
-          ...prev,
-          data: prev.data.map((user) => {
-            if (user.id === data.id) {
-              return data
-            }
-            return user
-          }),
-        }
-      })
-    }
-  }
 
   return (
     <div>
