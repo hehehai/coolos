@@ -39,7 +39,7 @@ export function getFetchAction<T>(init: RequestInit = {}) {
       body: arg ? superjson.stringify(arg) : null,
       ...init,
     })
-    return await handleRes(res)
+    return handleRes(res)
   }
 
   return fetchAction
