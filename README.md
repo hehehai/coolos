@@ -51,7 +51,7 @@ Coolos is a color picker website developed using the Next.js technology stack, i
 - [x] 🌈 **Color Scheme Suggestions**: Users can receive color scheme suggestions based on their selected colors or preferences, assisting them in creating harmonious and visually appealing designs.
 
 > \[!IMPORTANT]
-> 
+>
 > **Star Us**, You will receive all release notifications from GitHub without any delay \~ ⭐️
 
 <div align="right">
@@ -95,7 +95,8 @@ If you want to deploy this service yourself on Vercel, you can follow these step
 </div>
 
 > \[!TIP]
-> If you are a Chinese user, you can configure vercel China Resolution address [CNAME]: cname-china.vercel-dns.com
+> If you are a Chinese user, you can configure vercel China Resolution address
+> [CNAME]: cname-china.vercel-dns.com
 
 <br/>
 

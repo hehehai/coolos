@@ -71,7 +71,9 @@ export async function queryExplorePalette(query: QueryPaletteDto) {
   }
 
   const data = await prisma.palette.findMany(queryParams)
-  const count = await prisma.palette.count(queryParams)
+  const count = await prisma.palette.count({
+    where: whereIs,
+  })
 
   return {
     data,
