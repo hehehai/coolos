@@ -7,11 +7,12 @@ import { match } from "ts-pattern"
 export async function queryExplorePalette(query: QueryPaletteDto) {
   "use server"
 
-  const { keyword, sortBy, page = 0, pageSize = 24 } = query
+  const { keyword, sortBy, page = 0, pageSize = 24, userId } = query
 
   const whereIs: Partial<Prisma.PaletteWhereInput> = {
     deleteAt: null,
-    public: true,
+    userId,
+    public: query.public,
   }
 
   if (keyword?.trim()) {
@@ -62,12 +63,18 @@ export async function queryExplorePalette(query: QueryPaletteDto) {
       .exhaustive()
   }
 
-  const data = await prisma.palette.findMany({
+  const queryParams = {
     where: whereIs,
     orderBy: orderByIs,
     skip: page * pageSize,
     take: pageSize,
-  })
+  }
 
-  return data
+  const data = await prisma.palette.findMany(queryParams)
+  const count = await prisma.palette.count(queryParams)
+
+  return {
+    data,
+    count,
+  }
 }

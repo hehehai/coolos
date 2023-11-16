@@ -13,15 +13,11 @@ import { queryExplorePalette } from "@/app/_actions/palette"
 export async function GET(req: NextRequest) {
   try {
     const data = queryStringToObject(req.url)
-    const params = queryPaletteDtoSchema.parse({
-      ...data,
-      page: data.page ? Number(data.page) : 0,
-      pageSize: data.pageSize ? Number(data.pageSize) : 24,
-    })
+    const params = queryPaletteDtoSchema.parse(data)
 
-    const palettes = await queryExplorePalette(params)
+    const platte = await queryExplorePalette(params)
 
-    return NextResponse.json(palettes)
+    return NextResponse.json(platte.data)
   } catch (error) {
     let message = "Something went wrong"
     if (error instanceof ZodError) {
@@ -75,7 +71,7 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    return NextResponse.json({ saveData }, { status: 201 })
+    return NextResponse.json({ data: saveData }, { status: 201 })
   } catch (error) {
     let message = "Something went wrong"
     if (error instanceof ZodError) {

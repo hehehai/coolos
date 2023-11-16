@@ -8,9 +8,10 @@ const PanelColorsPage = async () => {
         <div className="text-3xl font-bold text-slate-800">Colors</div>
         <div className="flex items-center space-x-2">
           <Input type="text" placeholder="Search name or hex" />
-          <Button className="shrink-0">搜索</Button>
+          <Button className="shrink-0">搜索 name | hex</Button>
         </div>
       </div>
+      <div>Card(update | delete)</div>
     </div>
   )
 }

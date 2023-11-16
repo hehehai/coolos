@@ -103,13 +103,14 @@ export function DataTable() {
       {
         id: "user",
         header: "User",
+        size: 440,
         cell({ row }) {
           const user = row.original
           const username = user.username ?? ""
           const avatarFallbackChars = username.slice(0, 2).toUpperCase()
 
           return (
-            <div className="flex min-w-0 gap-x-4">
+            <div className="flex gap-x-4">
               <Avatar>
                 {user.avatar && (
                   <AvatarImage src={user.avatar} alt={`@${username}`} />
@@ -229,6 +230,11 @@ export function DataTable() {
     onGlobalFilterChange: setGlobalFilter,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
+    defaultColumn: {
+      minSize: 0,
+      size: Number.MAX_SAFE_INTEGER,
+      maxSize: Number.MAX_SAFE_INTEGER,
+    },
     state: {
       pagination,
       globalFilter,
@@ -288,7 +294,15 @@ export function DataTable() {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      style={{
+                        width:
+                          header.getSize() === Number.MAX_SAFE_INTEGER
+                            ? "auto"
+                            : header.getSize(),
+                      }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -318,7 +332,15 @@ export function DataTable() {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      style={{
+                        width:
+                          cell.column.getSize() === Number.MAX_SAFE_INTEGER
+                            ? "auto"
+                            : cell.column.getSize(),
+                      }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -341,7 +363,7 @@ export function DataTable() {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <span className="flex items-center gap-1">
+        <span className="flex items-center gap-1 text-sm">
           <div>Page</div>
           <strong>
             {table.getState().pagination.pageIndex + 1} of{" "}

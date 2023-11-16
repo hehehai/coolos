@@ -6,6 +6,7 @@ import { Palette } from "@prisma/client"
 import useSWRInfinite from "swr/infinite"
 
 import { getFetchAction } from "@/lib/fetch-action"
+import { objectToQueryString } from "@/lib/utils"
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver"
 import { Spinners } from "@/components/icons"
 
@@ -15,18 +16,13 @@ const getKey =
   ({ pageSize, keyword, sortBy }: QueryPaletteDto) =>
   (pageIndex: number, previousPageData: Palette[]) => {
     if (previousPageData && !previousPageData.length) return null // 已经到最后一页
-    const params = new URLSearchParams()
-    if (pageSize) {
-      params.set("pageSize", pageSize.toString())
-    }
-    if (keyword) {
-      params.set("keyword", keyword)
-    }
-    if (sortBy) {
-      params.set("sortBy", sortBy)
-    }
-    params.set("page", pageIndex.toString())
-    return `/api/palette?${params.toString()}` // SWR key
+    const queryString = objectToQueryString({
+      pageSize,
+      keyword,
+      sortBy,
+      page: pageIndex,
+    })
+    return `/api/palette?${queryString}` // SWR key
   }
 
 interface LoadMoreProps {

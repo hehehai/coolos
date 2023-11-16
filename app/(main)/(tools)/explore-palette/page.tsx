@@ -14,7 +14,7 @@ const ExplorePalettePage = async ({
   const keyword = searchParams["keyword"]
   const sortBy = searchParams["sortBy"] ?? sortByOptions[0]
 
-  const palettes = await queryExplorePalette({
+  const palette = await queryExplorePalette({
     keyword,
     sortBy,
   })
@@ -23,7 +23,7 @@ const ExplorePalettePage = async ({
     <div className="mx-16">
       <QueryForm />
       <div className="mt-20 grid grid-cols-5 gap-x-10 gap-y-8 lg:grid-cols-3 2xl:grid-cols-4">
-        {palettes.map((palette) => (
+        {palette.data.map((palette) => (
           <PaletteCard
             palette={palette}
             key={palette.id}

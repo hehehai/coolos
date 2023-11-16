@@ -37,7 +37,7 @@ const QueryForm = () => {
 
     const values = Object.fromEntries(
       new FormData(e.currentTarget)
-    ) as QueryPaletteDto
+    ) as Partial<QueryPaletteDto>
 
     handleChangeQuery(values)
   }
