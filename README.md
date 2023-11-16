@@ -5,6 +5,8 @@
 <img height="100" src="https://user-images.githubusercontent.com/12692552/283310014-07f094f2-7662-4e32-a44a-9b2dd6117761.png">
 <h1>Coolos</h1>
 
+Discover Colors with Speed and Ease: Your Quick and Simple Color Companion!
+<br/>
 Coolos is a color picker website developed using the Next.js technology stack, inspired by [Coolors](https://coolors.co/).
 
 [![][vercel-shield]][vercel-link]
@@ -24,8 +26,8 @@ Coolos is a color picker website developed using the Next.js technology stack, i
 - [✨ Features](#-features)
 - [🛠️ Technology stack](#-technology-stack)
 - [📸 Snapshot](#-snapshot)
-- [🛳 Steup](#-self-hosting)
-  - [`A` Deploying with Vercel](#a-deploying-with-vercel)
+- [🛳 Self Hosting](#-self-hosting)
+  - [Deploying with Vercel](#deploying-with-vercel)
   - [Environment Variable](#environment-variable)
 - [⌨️ Local Development](#️-local-development)
 - [🤝 Contributing](#-contributing)
@@ -75,15 +77,94 @@ Coolos is a color picker website developed using the Next.js technology stack, i
 
 ## 📸 Snapshot
 
-## 🛳 Steup
+## 🛳 Self Hosting
 
-### `A` Deploying with Vercel
+### Deploying with Vercel
+
+If you want to deploy this service yourself on Vercel, you can follow these steps:
+
+- Config env [Environment Variable](#environment-variable)
+- After deployment, you can start using it.
+- Bind a custom domain (optional): The DNS of the domain assigned by Vercel is polluted in some areas; binding a custom domain can connect directly.
+
+<div align="center">
+
+[![][deploy-button-image]][deploy-link]
+
+</div>
+
+> **Note**\
+> If you are a Chinese user, you can configure vercel China Resolution address [CNAME]: cname-china.vercel-dns.com
+
+<br/>
 
 ### Environment Variable
 
+This project provides some additional configuration items set with environment variables:
+
+| Environment Variable                  | Required | Description                                                                                                                     | Example                 |
+| ------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `NEXT_PUBLIC_APP_URL`                 | Yes      | This is the absolute address of the application URL.                                                                            | `http://localhost:3000` |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`   | Yes      | Clerk Auth [doc](https://clerk.com/docs/quickstarts/nextjs#set-environment-keys)                                                | `pk_test_xxxxx`         |
+| `CLERK_SECRET_KEY`                    | Yes      | Clerk Auth [doc](https://clerk.com/docs/quickstarts/nextjs#set-environment-keys)                                                | `sk_test_xxxxx`         |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL`       | Yes      | Clerk After SignIn [doc](https://clerk.com/docs/references/nextjs/custom-signup-signin-pages#update-your-environment-variables) | `/sign-in`              |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_URL`       | Yes      | Clerk After SignIn [doc](https://clerk.com/docs/references/nextjs/custom-signup-signin-pages#update-your-environment-variables) | `/sign-up`              |
+| `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` | Yes      | Clerk After SignIn [doc](https://clerk.com/docs/references/nextjs/custom-signup-signin-pages#update-your-environment-variables) | `/`                     |
+| `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` | Yes      | Clerk After SignIn [doc](https://clerk.com/docs/references/nextjs/custom-signup-signin-pages#update-your-environment-variables) | `/`                     |
+| `POSTGRES_URL`                        | Yes      | Vercel Postgres [doc](https://vercel.com/docs/storage/vercel-postgres/quickstart#review-what-was-created)                       | `xxxxx`                 |
+| `POSTGRES_PRISMA_URL`                 | Yes      | Vercel Postgres [doc](https://vercel.com/docs/storage/vercel-postgres/quickstart#review-what-was-created)                       | `xxxxx`                 |
+| `POSTGRES_URL_NON_POOLING`            | Yes      | Vercel Postgres [doc](https://vercel.com/docs/storage/vercel-postgres/quickstart#review-what-was-created)                       | `xxxxx`                 |
+| `POSTGRES_USER`                       | Yes      | Vercel Postgres [doc](https://vercel.com/docs/storage/vercel-postgres/quickstart#review-what-was-created)                       | `xxxxx`                 |
+| `POSTGRES_HOST`                       | Yes      | Vercel Postgres [doc](https://vercel.com/docs/storage/vercel-postgres/quickstart#review-what-was-created)                       | `xxxxx`                 |
+| `POSTGRES_PASSWORD`                   | Yes      | Vercel Postgres [doc](https://vercel.com/docs/storage/vercel-postgres/quickstart#review-what-was-created)                       | `xxxxx`                 |
+| `POSTGRES_DATABASE`                   | Yes      | Vercel Postgres [doc](https://vercel.com/docs/storage/vercel-postgres/quickstart#review-what-was-created)                       | `xxxxx`                 |
+| `RESEND_API_KEY`                      | Yes      | Resend API key                                                                                                                  | `xxxxx`                 |
+
+- [Vercel Postgres SQL](https://vercel.com/docs/storage/vercel-postgres)
+- [Vercel Postgres Prisma config](https://vercel.com/docs/storage/vercel-postgres/using-an-orm#prisma)
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
 ## ⌨️ Local Development
 
+You can use GitHub Codespaces for online development:
+
+[![][codespaces-shield]][codespaces-link]
+
+Or clone it for local development:
+
+[![][bun-shield]][bun-link]
+
+```fish
+git clone https://github.com/hehehai/coolos.git
+cd coolos
+bun install
+bun dev
+```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
 ## 🤝 Contributing
+
+Contributions of all types are more than welcome; if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
+
+[![][pr-welcome-shield]][pr-welcome-link]
+
+[![][contributors-contrib]][contributors-link]
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
 
 ---
 
@@ -93,41 +174,20 @@ Coolos is a color picker website developed using the Next.js technology stack, i
 
 </details>
 
-Copyright © 2023 [LobeHub][profile-link]. <br />
+Copyright © 2023 [Coolos][profile-link]. <br />
 This project is [MIT](./LICENSE) licensed.
-
-- intro
-- stack
-- run
-- liense
-
-## run
-
-on root create `.env.local` file by template `.env.example`
-
-```env
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=ClerkAppKey
-CLERK_SECRET_KEY=ClerkAppSecret
-
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
-```
-
-please use bun <https://bun.sh>
-
-```bash
-bun i
-bun dev
-```
 
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+[bun-link]: https://bun.sh
+[codespaces-link]: https://codespaces.new/hehehai/coolos
+[deploy-button-image]: https://vercel.com/button
+[deploy-link]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhehehai%2Fcoolos&project-name=coolos&repository-name=coolos
 [profile-link]: https://github.com/hehehai/coolos
+[pr-welcome-link]: https://github.com/hehehai/coolos/pulls
+[pr-welcome-shield]: https://img.shields.io/badge/🌈_pr_welcome-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
+[contributors-link]: https://github.com/hehehai/coolos/graphs/contributors
 [github-stars-link]: https://github.com/hehehai/coolos/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/hehehai/coolos?color=ffcb47&labelColor=black&style=flat-square
 [github-issues-link]: https://github.com/hehehai/coolos/issues
