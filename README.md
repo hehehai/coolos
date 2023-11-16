@@ -89,7 +89,7 @@ Coolos is a color picker website developed using the Next.js technology stack, i
 
 <details><summary><h4>📝 License</h4></summary>
 
-[![][fossa-license-shield]][fossa-license-link]
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fhehehai%2Fcoolos.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fhehehai%2Fcoolos?ref=badge_large&issueType=license)
 
 </details>
 
@@ -126,7 +126,7 @@ bun dev
 
 <!-- LINK GROUP -->
 
-[fossa-license-link]: https://app.fossa.com/projects/git%2Bgithub.com%2Fhehehai%2coolos
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
 [profile-link]: https://github.com/hehehai/coolos
 [github-stars-link]: https://github.com/hehehai/coolos/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/hehehai/coolos?color=ffcb47&labelColor=black&style=flat-square
