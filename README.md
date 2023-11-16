@@ -14,7 +14,7 @@ Coolos is a color picker website developed using the Next.js technology stack, i
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-![](https://user-images.githubusercontent.com/12692552/280527804-aa8ac288-5302-4371-b737-9a96f26a33bd.jpg)
+![](https://user-images.githubusercontent.com/12692552/283363370-8847eb3f-dd4e-498e-986d-ac881e2d296f.png)
 
 </div>
 
@@ -50,7 +50,8 @@ Coolos is a color picker website developed using the Next.js technology stack, i
 - [x] 🎨 \*\*Color Editing: The website provides tools for modifying and adjusting colors, including brightness, saturation, and hue, allowing users to fine-tune their color choices.
 - [x] 🌈 **Color Scheme Suggestions**: Users can receive color scheme suggestions based on their selected colors or preferences, assisting them in creating harmonious and visually appealing designs.
 
-> **Important**\
+> \[!IMPORTANT]
+> 
 > **Star Us**, You will receive all release notifications from GitHub without any delay \~ ⭐️
 
 <div align="right">
@@ -93,7 +94,7 @@ If you want to deploy this service yourself on Vercel, you can follow these step
 
 </div>
 
-> **Note**\
+> \[!TIP]
 > If you are a Chinese user, you can configure vercel China Resolution address [CNAME]: cname-china.vercel-dns.com
 
 <br/>
@@ -181,6 +182,8 @@ This project is [MIT](./LICENSE) licensed.
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
 [bun-link]: https://bun.sh
+[bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
+[codespaces-shield]: https://github.com/codespaces/badge.svg
 [codespaces-link]: https://codespaces.new/hehehai/coolos
 [deploy-button-image]: https://vercel.com/button
 [deploy-link]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhehehai%2Fcoolos&project-name=coolos&repository-name=coolos
@@ -188,11 +191,12 @@ This project is [MIT](./LICENSE) licensed.
 [pr-welcome-link]: https://github.com/hehehai/coolos/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/🌈_pr_welcome-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [contributors-link]: https://github.com/hehehai/coolos/graphs/contributors
+[contributors-contrib]: https://contrib.rocks/image?repo=hehehai/coolos
 [github-stars-link]: https://github.com/hehehai/coolos/network/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/hehehai/coolos?color=ffcb47&labelColor=black&style=flat-square
 [github-issues-link]: https://github.com/hehehai/coolos/issues
 [github-issues-shield]: https://img.shields.io/github/issues/hehehai/coolos?color=ff80eb&labelColor=black&style=flat-square
 [github-license-link]: https://github.com/hehehai/coolos/blob/main/LICENSE
-[github-license-shield]: https://img.shields.io/github/license/hehehai/coolos?color=white&labelColor=black&style=flat-square
+[github-license-shield]: https://img.shields.io/github/license/hehehai/coolos?color=8ae8ff&labelColor=black&style=flat-square
 [vercel-link]: https://coolos.vercel.app
 [vercel-shield]: https://img.shields.io/website?down_message=offline&label=vercel&labelColor=black&logo=vercel&style=flat-square&up_message=online&url=https%3A%2F%2Fcoolos.vercel.app
