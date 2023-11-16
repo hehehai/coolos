@@ -1,12 +1,10 @@
 import "@/styles/globals.css"
 
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import { zhCN } from "@clerk/localizations"
 import { ClerkProvider } from "@clerk/nextjs"
+import { GeistSans } from "geist/font/sans"
 import { Toaster } from "react-hot-toast"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Coolos",
@@ -21,7 +19,7 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={zhCN}>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={GeistSans.className}>
           <main>{children}</main>
           <Toaster
             toastOptions={{

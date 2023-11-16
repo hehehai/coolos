@@ -61,6 +61,7 @@
     "date-fns": "^2.30.0",
     "framer-motion": "^10.16.4",
     "fuse.js": "^6.6.2",
+    "geist": "^1.1.0",
     "hashids": "^2.3.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
