@@ -46,7 +46,7 @@ const PickerPage = ({ params }: { params: { color?: string[] } }) => {
                 boardTextIsReadable ? "text-white/50" : "text-black/50"
               )}
             >
-              {color.toHex()}
+              {color.toHex().toUpperCase()}
             </p>
             <p className="text-4xl font-bold">
               {color.findClosestColor(colorNames)}

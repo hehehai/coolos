@@ -74,7 +74,8 @@ const HexInput = React.forwardRef<HTMLInputElement, HexInputProps>(
       <div className={"relative"}>
         <Input
           ref={ref}
-          value={tmpVal}
+          className="lining-nums"
+          value={tmpVal.toUpperCase()}
           onChange={handleChange}
           onBlur={handleBlur}
           spellCheck={false}
