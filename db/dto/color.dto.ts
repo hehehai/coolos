@@ -1,12 +1,24 @@
 import Hashids from "hashids"
 import { z } from "zod"
 
+export const sortByOptions = ["trending", "latest", "popular"] as const
+
+export const queryColorDtoSchema = z.object({
+  userId: z.coerce.string().optional(),
+  keyword: z.coerce.string().optional(),
+  sortBy: z.enum(sortByOptions).default("trending").optional(),
+  page: z.coerce.number().default(1),
+  pageSize: z.coerce.number().default(24),
+})
+export type QueryColorDto = z.input<typeof queryColorDtoSchema>
+
 export const upsetColorDtoSchema = z.object({
-  name: z
+  id: z.coerce.number().optional(),
+  name: z.coerce
     .string()
     .min(1, { message: "Name is required" })
     .max(20, { message: "Name is too long" }),
-  color: z
+  color: z.coerce
     .string()
     .regex(/^#?([0-9a-f]{6})$/i, { message: "Color is invalid" }),
 })

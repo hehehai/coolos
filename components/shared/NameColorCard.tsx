@@ -1,5 +1,6 @@
 import { FC, useMemo } from "react"
 import { isReadable } from "@ctrl/tinycolor"
+import { isString } from "lodash"
 
 import { copyTextHasToast } from "@/lib/copy-text"
 import { cn } from "@/lib/utils"
@@ -11,7 +12,7 @@ import ColorSaveDialog from "./ColorSaveDialog"
 interface NameColorCardProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "name" | "color"> {
   name: string
-  color: number[]
+  color: number[] | string
   colorCardClassName?: string
   showInfo?: boolean
   showLike?: boolean
@@ -26,6 +27,9 @@ const NameColorCard: FC<NameColorCardProps> = ({
   ...otherProps
 }) => {
   const realColor = useMemo(() => {
+    if (isString(color)) {
+      return generateColor(color)
+    }
     const [r, g, b] = color
 
     return generateColor({ r, g, b })

@@ -12,11 +12,12 @@ datasource db {
 }
 
 model Color {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.Char(255)
-  color     String   @db.Char(100)
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String    @db.Char(255)
+  color     String    @db.Char(100)
+  createdAt DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+  deleteAt  DateTime?
 
   userId String
 

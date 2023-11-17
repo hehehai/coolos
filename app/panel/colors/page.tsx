@@ -1,19 +1,17 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import DataCards from "./_components/DataCards"
 
-const PanelColorsPage = async () => {
+const PanelColorPage = () => {
   return (
     <div className="h-full w-full bg-slate-50 p-4">
       <div className="flex items-center justify-between">
-        <div className="text-3xl font-bold text-slate-800">Colors</div>
-        <div className="flex items-center space-x-2">
-          <Input type="text" placeholder="Search name or hex" />
-          <Button className="shrink-0">搜索 name | hex</Button>
-        </div>
+        <div className="text-xl font-bold">Colors</div>
       </div>
-      <div>Card(update | delete)</div>
+
+      <div className="mt-4 rounded-lg bg-white p-4">
+        <DataCards></DataCards>
+      </div>
     </div>
   )
 }
 
-export default PanelColorsPage
+export default PanelColorPage

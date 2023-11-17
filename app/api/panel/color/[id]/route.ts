@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/db"
-import { upsetPaletteDtoSchema } from "@/db/dto/palette.dto"
+import { upsetColorDtoSchema } from "@/db/dto/color.dto"
 import { auth } from "@clerk/nextjs"
 import { ZodError } from "zod"
 
-// edit palette
+// edit color
 export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -24,31 +24,25 @@ export async function POST(
     const {
       id,
       name = "",
-      colors = [],
-      description,
-      tags = [],
-      public: isPublic,
-    } = upsetPaletteDtoSchema.parse({
+      color,
+    } = upsetColorDtoSchema.parse({
       ...data?.json,
       id: params.id,
     })
 
-    const palette = await prisma.palette.findUnique({ where: { id, userId } })
-    if (!palette) {
-      return NextResponse.json({ error: "Palette not found" }, { status: 404 })
+    const hasColor = await prisma.color.findUnique({ where: { id, userId } })
+    if (!hasColor) {
+      return NextResponse.json({ error: "Color not found" }, { status: 404 })
     }
 
-    const saveData = await prisma.palette.update({
+    const saveData = await prisma.color.update({
       where: {
         id,
       },
       data: {
         name,
-        description,
-        tags,
-        colors,
+        color,
         userId,
-        public: isPublic,
       },
     })
 
@@ -79,14 +73,11 @@ export async function DELETE(
   const id = Number(params.id)
 
   try {
-    const palette = await prisma.palette.findUnique({ where: { id, userId } })
-    if (!palette) {
-      return NextResponse.json({ error: "Palette not found" }, { status: 404 })
+    const hasColor = await prisma.color.findUnique({ where: { id, userId } })
+    if (!hasColor) {
+      return NextResponse.json({ error: "Color not found" }, { status: 404 })
     }
-    await prisma.palette.update({
-      where: { id },
-      data: { deleteAt: new Date() },
-    })
+    await prisma.color.update({ where: { id }, data: { deleteAt: new Date() } })
 
     return NextResponse.json({}, { status: 200 })
   } catch (error) {
