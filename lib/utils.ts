@@ -1,6 +1,8 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 import { env } from "@/env.mjs"
+import { JsonValue } from "@prisma/client/runtime/library"
 import { clsx, type ClassValue } from "clsx"
+import SuperJSON from "superjson"
 import { twMerge } from "tailwind-merge"
 
 export const appEnv = env
@@ -116,4 +118,20 @@ export function objectToQueryString(obj: object): string {
 
 export function getRandomNumber(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+export function getStatisticDataByJSON<T>(val?: JsonValue): T | null {
+  if (!val) {
+    return null
+  }
+  try {
+    if (typeof val !== "string") {
+      return null
+    }
+    const data = SuperJSON.parse(val)
+
+    return data as T
+  } catch (err) {
+    return null
+  }
 }

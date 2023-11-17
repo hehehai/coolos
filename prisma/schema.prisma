@@ -50,3 +50,12 @@ model Subscribe {
 
   @@map("subscribe")
 }
+
+model Statistic {
+  id       Int      @id @default(autoincrement())
+  createAt DateTime @default(now())
+  dayDate  DateTime
+  data     Json
+
+  @@map("statistic")
+}
