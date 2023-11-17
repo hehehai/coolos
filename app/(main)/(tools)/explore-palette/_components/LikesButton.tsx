@@ -10,10 +10,12 @@ const LikeButton = ({
   colors,
   likes,
   id,
+  disabled = false,
 }: {
   colors: string[]
   likes: number
   id: number
+  disabled?: boolean
 }) => {
   const [likeNum, setLikeNum] = useState(likes)
 
@@ -29,6 +31,19 @@ const LikeButton = ({
     setLikeNum((prev) => prev + 1)
   }
 
+  const saveButton = useMemo(() => {
+    return (
+      <div className="flex cursor-pointer items-center space-x-1 text-sm text-slate-500 hover:text-slate-800">
+        <span className="i-ph-heart-bold" />
+        <span>{convertToShortFormat(likeNum)}</span>
+      </div>
+    )
+  }, [likeNum])
+
+  if (disabled) {
+    return saveButton
+  }
+
   return (
     <PaletteSaveDialog
       palette={palette}
@@ -38,10 +53,7 @@ const LikeButton = ({
       }}
       onSuccess={handleSuccess}
     >
-      <div className="flex cursor-pointer items-center space-x-1 text-sm text-slate-500 hover:text-slate-800">
-        <span className="i-ph-heart-bold" />
-        <span>{convertToShortFormat(likeNum)}</span>
-      </div>
+      {saveButton}
     </PaletteSaveDialog>
   )
 }

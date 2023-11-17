@@ -14,7 +14,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-const PaletteMore = ({ colors, id }: { colors: string[]; id: number }) => {
+const PaletteMore = ({
+  colors,
+  id,
+  isEdit = false,
+}: {
+  colors: string[]
+  id: number
+  isEdit?: boolean
+}) => {
   const palette = useMemo(() => {
     return colors.map((c) => generateColor(c))
   }, [colors])
@@ -47,18 +55,20 @@ const PaletteMore = ({ colors, id }: { colors: string[]; id: number }) => {
           <span className="i-lucide-pipette" />
           <span> Open in the generator</span>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer space-x-2 rounded-md"
-          onClick={() => {
-            copyTextHasToast(
-              `${window.location.origin}/palette-view/${id}`,
-              "Link copy success"
-            )
-          }}
-        >
-          <span className="i-lucide-link" />
-          <span>Copy URL</span>
-        </DropdownMenuItem>
+        {!isEdit && (
+          <DropdownMenuItem
+            className="cursor-pointer space-x-2 rounded-md"
+            onClick={() => {
+              copyTextHasToast(
+                `${window.location.origin}/palette-view/${id}`,
+                "Link copy success"
+              )
+            }}
+          >
+            <span className="i-lucide-link" />
+            <span>Copy URL</span>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator className="mx-1" />
         <QuickViewDialog title="Quick view" palette={palette}>
           <DropdownMenuItem
@@ -78,20 +88,22 @@ const PaletteMore = ({ colors, id }: { colors: string[]; id: number }) => {
           <span className="i-lucide-arrow-down-to-line" />
           <span>Export as image</span>
         </DropdownMenuItem>
-        <PaletteSaveDialog
-          palette={palette}
-          defaultValues={{
-            saveById: id,
-          }}
-        >
-          <DropdownMenuItem
-            className="item-center flex w-full cursor-pointer space-x-2 rounded-md"
-            onSelect={(e) => e.preventDefault()}
+        {!isEdit && (
+          <PaletteSaveDialog
+            palette={palette}
+            defaultValues={{
+              saveById: id,
+            }}
           >
-            <span className="i-ph-heart-bold" />
-            <span>Save palette</span>
-          </DropdownMenuItem>
-        </PaletteSaveDialog>
+            <DropdownMenuItem
+              className="item-center flex w-full cursor-pointer space-x-2 rounded-md"
+              onSelect={(e) => e.preventDefault()}
+            >
+              <span className="i-ph-heart-bold" />
+              <span>Save palette</span>
+            </DropdownMenuItem>
+          </PaletteSaveDialog>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

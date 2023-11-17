@@ -29,6 +29,7 @@ const DataCards = () => {
       page: pageIndex,
       pageSize,
       query: globalFilter,
+      sortBy: "latest",
     }
     return `/api/panel/palette?${objectToQueryString(query)}`
   }, [globalFilter, pageIndex, pageSize])
@@ -85,6 +86,7 @@ const DataCards = () => {
             palette={palette}
             key={palette.id}
             paletteClassname="h-[138px]"
+            isEdit={true}
           />
         ))}
       </div>

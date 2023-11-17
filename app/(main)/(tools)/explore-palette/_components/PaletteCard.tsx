@@ -12,10 +12,16 @@ import PaletteMore from "./PaletteMore"
 interface PaletteCardProps extends React.ComponentPropsWithoutRef<"div"> {
   palette: Palette
   paletteClassname?: string
+  isEdit?: boolean
 }
 
 const PaletteCard = memo(
-  ({ palette, className, paletteClassname }: PaletteCardProps) => {
+  ({
+    palette,
+    className,
+    paletteClassname,
+    isEdit = false,
+  }: PaletteCardProps) => {
     return (
       <div className={cn(className)}>
         <div
@@ -37,15 +43,21 @@ const PaletteCard = memo(
             />
           ))}
         </div>
-        <div className="flex items-center justify-end space-x-2 py-1">
+        <div className="flex items-center justify-between space-x-2 py-1">
+          <div className="text-sm text-slate-900">{palette.name}</div>
           {palette.colors?.length && (
             <div className="flex items-center space-x-2">
               <LikeButton
                 colors={palette.colors}
                 likes={palette.likes}
                 id={palette.id}
+                disabled={isEdit}
               />
-              <PaletteMore colors={palette.colors} id={palette.id} />
+              <PaletteMore
+                colors={palette.colors}
+                id={palette.id}
+                isEdit={isEdit}
+              />
             </div>
           )}
         </div>
