@@ -84,7 +84,7 @@ const DataCards = () => {
         <span>Create Palette</span>
       </Button>
     )
-  }, [])
+  }, [router])
 
   const cards = useMemo(() => {
     if (dataLoading) {
@@ -146,7 +146,7 @@ const DataCards = () => {
         ))}
       </div>
     )
-  }, [data, dataLoading])
+  }, [data, dataLoading, createButton, handleEditSuccess])
 
   return (
     <div>

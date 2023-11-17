@@ -34,7 +34,7 @@ export const DeleteConfirmDialog = ({
       onError: (err) => {
         toast.error(err.message)
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         setOpen(false)
         toast.success("Color deleted")
         onSuccess?.()
