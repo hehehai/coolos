@@ -1,8 +1,9 @@
 import prisma from "@/db"
+import { StatisticDto } from "@/db/dto/statistic.dto"
 import { clerkClient } from "@clerk/nextjs"
 
 export async function querySiteStatistic(): Promise<
-  Record<string, number> | undefined
+  Pick<StatisticDto, "userCount" | "colorCount" | "paletteCount"> | undefined
 > {
   "use server"
 

@@ -1,11 +1,15 @@
 import { redirect } from "next/navigation"
+import { StatisticDto } from "@/db/dto/statistic.dto"
 import { currentUser } from "@clerk/nextjs"
 
 import { isAdmin } from "@/lib/user"
 
 import { querySiteStatistic } from "../_actions/statistic"
 
-const statisticMap = [
+const statisticMap: {
+  id: keyof Pick<StatisticDto, "userCount" | "colorCount" | "paletteCount">
+  name: string
+}[] = [
   {
     id: "userCount",
     name: "Total Users",
