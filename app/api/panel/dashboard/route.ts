@@ -1,11 +1,10 @@
-import { NextRequest, NextResponse } from "next/server"
-import prisma from "@/db"
-import { auth, clerkClient, currentUser } from "@clerk/nextjs"
+import { NextResponse } from "next/server"
+import { auth, currentUser } from "@clerk/nextjs"
 
 import { isAdmin } from "@/lib/user"
 import { querySiteStatistic } from "@/app/_actions/statistic"
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const { userId } = auth()
 
   if (!userId) {

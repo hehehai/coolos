@@ -2,7 +2,7 @@ import prisma from "@/db"
 import { clerkClient } from "@clerk/nextjs"
 
 export async function querySiteStatistic() {
-  "user server"
+  "use server"
 
   try {
     const userCount = await clerkClient.users.getCount()

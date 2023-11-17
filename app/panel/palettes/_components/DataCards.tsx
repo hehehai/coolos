@@ -146,7 +146,7 @@ const DataCards = () => {
         ))}
       </div>
     )
-  }, [data, dataLoading, createButton, handleEditSuccess])
+  }, [data, dataLoading, createButton, handleEditSuccess, pageSize])
 
   return (
     <div>
