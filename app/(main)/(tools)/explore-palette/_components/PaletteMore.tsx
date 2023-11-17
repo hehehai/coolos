@@ -18,10 +18,12 @@ const PaletteMore = ({
   colors,
   id,
   isEdit = false,
+  editActions,
 }: {
   colors: string[]
   id: number
   isEdit?: boolean
+  editActions?: React.ReactNode
 }) => {
   const palette = useMemo(() => {
     return colors.map((c) => generateColor(c))
@@ -33,6 +35,12 @@ const PaletteMore = ({
         <div className="i-lucide-more-horizontal cursor-pointer text-slate-600 hover:text-black" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="space-y-1 rounded-xl p-3">
+        {editActions && (
+          <>
+            {editActions}
+            <DropdownMenuSeparator className="mx-1" />
+          </>
+        )}
         <DropdownMenuItem
           className="cursor-pointer space-x-2 rounded-md"
           onClick={() => {

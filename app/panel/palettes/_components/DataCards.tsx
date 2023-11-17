@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Palette } from "@prisma/client"
 import { PaginationState } from "@tanstack/react-table"
@@ -11,9 +11,13 @@ import { PaginationData } from "@/types/common"
 import { getFetchAction } from "@/lib/fetch-action"
 import { objectToQueryString } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import PaletteCard from "@/app/(main)/(tools)/explore-palette/_components/PaletteCard"
+
+import { DeleteConfirmDialog } from "./DeleteConfirmDialog"
+import UpdateFormDialog from "./UpsetFormDialog"
 
 const DataCards = () => {
   const router = useRouter()
@@ -48,6 +52,28 @@ const DataCards = () => {
         toast.error(err.message)
       },
     }
+  )
+
+  const handleEditSuccess = useCallback(
+    (data?: Palette) => {
+      if (!data) {
+        mutate(fetchKey)
+      } else {
+        mutateData((prev) => {
+          if (!prev) return prev
+          return {
+            ...prev,
+            data: prev.data.map((item) => {
+              if (item.id === data.id) {
+                return data
+              }
+              return item
+            }),
+          }
+        })
+      }
+    },
+    [fetchKey, mutate, mutateData]
   )
 
   const createButton = useMemo(() => {
@@ -87,6 +113,34 @@ const DataCards = () => {
             key={palette.id}
             paletteClassname="h-[138px]"
             isEdit={true}
+            editActions={
+              <>
+                <UpdateFormDialog
+                  palette={palette}
+                  onSuccess={(data) => handleEditSuccess(data)}
+                >
+                  <DropdownMenuItem
+                    className="space-x-2"
+                    onSelect={(e) => e.preventDefault()}
+                  >
+                    <span className="i-lucide-clipboard-edit"></span>
+                    <span>Edit Palette</span>
+                  </DropdownMenuItem>
+                </UpdateFormDialog>
+                <DeleteConfirmDialog
+                  id={palette.id}
+                  onSuccess={() => handleEditSuccess()}
+                >
+                  <DropdownMenuItem
+                    className="space-x-2 text-red-600"
+                    onSelect={(e) => e.preventDefault()}
+                  >
+                    <span className="i-lucide-trash-2"></span>
+                    <span>Delete Palette</span>
+                  </DropdownMenuItem>
+                </DeleteConfirmDialog>
+              </>
+            }
           />
         ))}
       </div>

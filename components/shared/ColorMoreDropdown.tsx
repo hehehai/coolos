@@ -21,9 +21,13 @@ export const ColorMoreDropdown = memo(
   ({
     color,
     children,
+    isEdit = false,
+    editActions,
   }: {
     color: string | Color
     children: React.ReactNode
+    isEdit?: boolean
+    editActions?: React.ReactNode
   }) => {
     const colorInstance = useMemo(() => {
       return generateColor(color)
@@ -50,6 +54,12 @@ export const ColorMoreDropdown = memo(
             {children}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="space-y-1 rounded-xl p-3">
+            {editActions && (
+              <>
+                {editActions}
+                <DropdownMenuSeparator className="mx-1" />
+              </>
+            )}
             <DropdownMenuItem
               className="cursor-pointer space-x-2 rounded-md"
               onClick={() => {
@@ -63,18 +73,20 @@ export const ColorMoreDropdown = memo(
               <span className="i-lucide-pipette" />
               <span> Open in the Color Picker</span>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer space-x-2 rounded-md"
-              onClick={() => {
-                copyTextHasToast(
-                  `${window.location.origin}/picker/${colorInstance.toHex()}`,
-                  "Link copy success"
-                )
-              }}
-            >
-              <span className="i-lucide-link" />
-              <span>Copy URL</span>
-            </DropdownMenuItem>
+            {!isEdit && (
+              <DropdownMenuItem
+                className="cursor-pointer space-x-2 rounded-md"
+                onClick={() => {
+                  copyTextHasToast(
+                    `${window.location.origin}/picker/${colorInstance.toHex()}`,
+                    "Link copy success"
+                  )
+                }}
+              >
+                <span className="i-lucide-link" />
+                <span>Copy URL</span>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator className="mx-1" />
             <QuickViewDialog title="Quick view" color={colorInstance}>
               <DropdownMenuItem
@@ -97,20 +109,22 @@ export const ColorMoreDropdown = memo(
               <span className="i-lucide-arrow-down-to-line" />
               <span>Export as image</span>
             </DropdownMenuItem>
-            <ColorSaveDialog
-              triggerClassName="block w-full"
-              defaultValues={{
-                color: colorInstance.toHex().toUpperCase(),
-              }}
-            >
-              <DropdownMenuItem
-                className="item-center flex w-full cursor-pointer space-x-2 rounded-md"
-                onSelect={(e) => e.preventDefault()}
+            {!isEdit && (
+              <ColorSaveDialog
+                triggerClassName="block w-full"
+                defaultValues={{
+                  color: colorInstance.toHex().toUpperCase(),
+                }}
               >
-                <span className="i-ph-heart-bold" />
-                <span>Save color</span>
-              </DropdownMenuItem>
-            </ColorSaveDialog>
+                <DropdownMenuItem
+                  className="item-center flex w-full cursor-pointer space-x-2 rounded-md"
+                  onSelect={(e) => e.preventDefault()}
+                >
+                  <span className="i-ph-heart-bold" />
+                  <span>Save color</span>
+                </DropdownMenuItem>
+              </ColorSaveDialog>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
 

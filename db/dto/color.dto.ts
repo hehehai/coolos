@@ -16,6 +16,7 @@ export const upsetColorDtoSchema = z.object({
   id: z.coerce.number().optional(),
   name: z.coerce
     .string()
+    .trim()
     .min(1, { message: "Name is required" })
     .max(20, { message: "Name is too long" }),
   color: z.coerce

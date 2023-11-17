@@ -22,6 +22,7 @@ export const createUserDtoSchema = z.object({
     .email({ message: "Invalid email" }),
   username: z
     .string()
+    .trim()
     .min(1, { message: "Username is required" })
     .max(30, { message: "Username is too long" }),
   password: z
@@ -35,6 +36,7 @@ export const updateUserDtoSchema = z.object({
   id: z.string(),
   username: z
     .string()
+    .trim()
     .min(1, { message: "Username is required" })
     .max(30, { message: "Username is too long" }),
   password: z

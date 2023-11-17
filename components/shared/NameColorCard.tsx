@@ -16,6 +16,8 @@ interface NameColorCardProps
   colorCardClassName?: string
   showInfo?: boolean
   showLike?: boolean
+  isEdit?: boolean
+  editActions?: React.ReactNode
 }
 
 const NameColorCard: FC<NameColorCardProps> = ({
@@ -24,6 +26,8 @@ const NameColorCard: FC<NameColorCardProps> = ({
   colorCardClassName,
   showInfo = false,
   showLike = false,
+  isEdit = false,
+  editActions,
   ...otherProps
 }) => {
   const realColor = useMemo(() => {
@@ -65,7 +69,7 @@ const NameColorCard: FC<NameColorCardProps> = ({
         <div className="flex items-center justify-between px-1 py-2">
           <div className="text-sm text-slate-900">{name}</div>
           <div className="flex items-center">
-            {showLike && (
+            {showLike && !isEdit && (
               <ColorSaveDialog
                 defaultValues={{
                   color: realColor.toHex().toUpperCase(),
@@ -74,7 +78,11 @@ const NameColorCard: FC<NameColorCardProps> = ({
                 <span className="i-ph-heart-bold mr-2 cursor-pointer text-sm text-slate-600 hover:text-black" />
               </ColorSaveDialog>
             )}
-            <ColorMoreDropdown color={realColor}>
+            <ColorMoreDropdown
+              color={realColor}
+              isEdit={isEdit}
+              editActions={editActions}
+            >
               <div className="i-lucide-more-horizontal cursor-pointer text-slate-600 hover:text-black" />
             </ColorMoreDropdown>
           </div>

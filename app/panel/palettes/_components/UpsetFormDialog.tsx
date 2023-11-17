@@ -1,17 +1,20 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
-import { useRouter } from "next/navigation"
-import { useAuth } from "@clerk/nextjs"
+import { useCallback, useMemo, useState } from "react"
+import { UpsetPaletteDto, upsetPaletteDtoSchema } from "@/db/dto/palette.dto"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Palette } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
-import { z } from "zod"
 
-import { UnauthorizedError } from "@/lib/error"
 import { getFetchAction } from "@/lib/fetch-action"
-import { appEnv } from "@/lib/utils"
+import { Color, generateColor } from "@/components/shared/color-picker"
+import ColorPicker from "@/components/shared/color-picker/ColorPicker"
+import HexInput from "@/components/shared/color-picker/components/HexInput"
+import PaletteGroup from "@/components/shared/PaletteGroup"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -19,9 +22,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
-import { Badge } from "../ui/badge"
-import { Button } from "../ui/button"
 import {
   Form,
   FormControl,
@@ -29,70 +29,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
-import { Switch } from "../ui/switch"
-import { Textarea } from "../ui/textarea"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip"
-import { Color, generateColor } from "./color-picker"
-import ColorPicker from "./color-picker/ColorPicker"
-import HexInput from "./color-picker/components/HexInput"
-import PaletteGroup from "./PaletteGroup"
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Switch } from "@/components/ui/switch"
+import { Textarea } from "@/components/ui/textarea"
 
-export const upsetPaletteDtoSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "Name is required" })
-    .max(20, { message: "Name is max 20 characters" }),
-  description: z
-    .string()
-    .max(200, { message: "Description is max 200 characters" }),
-  tags: z.string().array().max(5, { message: "Maximum 5 tags" }),
-  colors: z
-    .any()
-    .array()
-    .min(2, { message: "Minimum 2 colors" })
-    .max(12, { message: "Maximum 12 colors" }),
-  public: z.boolean().default(false),
-  saveById: z.number().nullish().optional(),
-})
-export type UpsetPaletteDto = z.infer<typeof upsetPaletteDtoSchema>
-
-interface PaletteSaveDialogProps extends React.PropsWithChildren {
-  triggerClassName?: string
-  defaultValues?: Partial<Omit<UpsetPaletteDto, "colors">>
-  palette: Color[]
-  tips?: string
-
-  onSuccess?: () => void
+interface UpdateFormDialogProps {
+  palette: Palette
+  children: React.ReactNode
+  onSuccess?: (data?: Palette) => void
 }
 
-const PaletteSaveDialog = ({
-  triggerClassName,
-  defaultValues,
+export const UpdateFormDialog = ({
   palette,
   children,
-  tips,
   onSuccess,
-}: PaletteSaveDialogProps) => {
+}: UpdateFormDialogProps) => {
   const [open, setOpen] = useState(false)
-  const router = useRouter()
-  const { isSignedIn } = useAuth()
 
   const [copyPalette, setCopyPalette] = useState(
-    palette.map((c) => c.toHexString()).map((c) => generateColor(c))
+    palette.colors.map((c) => generateColor(c))
   )
-
-  useEffect(() => {
-    setCopyPalette(
-      palette.map((c) => c.toHexString()).map((c) => generateColor(c))
-    )
-  }, [palette])
 
   const [activeIdx, setActiveIdx] = useState(0)
   const activeColor = useMemo(() => {
@@ -111,40 +68,27 @@ const PaletteSaveDialog = ({
 
   const form = useForm<UpsetPaletteDto>({
     resolver: zodResolver(upsetPaletteDtoSchema),
-    values: {
-      name: "",
-      description: "",
-      tags: [],
-      public: false,
-      ...(defaultValues ?? {}),
-      colors: copyPalette,
+    defaultValues: {
+      id: palette.id,
+      name: palette.name.trim(),
+      description: palette.description ?? "",
+      colors: palette.colors ?? [],
+      public: palette.public,
+      tags: palette.tags ?? [],
     },
   })
 
-  const handleOpen = (val: boolean) => {
-    if (!isSignedIn) {
-      router.push(appEnv.NEXT_PUBLIC_CLERK_SIGN_IN_URL)
-    } else {
-      setOpen(val)
-    }
-  }
-
   const { trigger, isMutating } = useSWRMutation(
-    "/api/palette",
+    `/api/panel/palette/${palette.id}`,
     getFetchAction<UpsetPaletteDto>(),
     {
       onError: (err) => {
-        if (err instanceof UnauthorizedError) {
-          router.replace(appEnv.NEXT_PUBLIC_CLERK_SIGN_IN_URL)
-        } else {
-          toast.error(err.message)
-        }
+        toast.error(err.message)
       },
-      onSuccess: () => {
+      onSuccess: (data) => {
         setOpen(false)
-        form.reset()
-        toast.success("palette save success")
-        onSuccess?.()
+        toast.success("Palette updated")
+        onSuccess?.(data?.data)
       },
     }
   )
@@ -156,33 +100,12 @@ const PaletteSaveDialog = ({
     })
   }
 
-  const renderTips = useMemo(() => {
-    if (!tips) {
-      return children
-    }
-
-    return (
-      <div>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>{children}</TooltipTrigger>
-            <TooltipContent>
-              <p>{tips}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
-    )
-  }, [tips, children])
-
   return (
-    <Dialog open={open} onOpenChange={handleOpen}>
-      <DialogTrigger className={triggerClassName} asChild>
-        {renderTips}
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Save Palette</DialogTitle>
+          <DialogTitle>Edit Palette</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -300,4 +223,4 @@ const PaletteSaveDialog = ({
   )
 }
 
-export default PaletteSaveDialog
+export default UpdateFormDialog

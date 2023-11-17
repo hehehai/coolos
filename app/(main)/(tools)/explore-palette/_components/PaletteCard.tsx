@@ -13,6 +13,7 @@ interface PaletteCardProps extends React.ComponentPropsWithoutRef<"div"> {
   palette: Palette
   paletteClassname?: string
   isEdit?: boolean
+  editActions?: React.ReactNode
 }
 
 const PaletteCard = memo(
@@ -21,6 +22,7 @@ const PaletteCard = memo(
     className,
     paletteClassname,
     isEdit = false,
+    editActions,
   }: PaletteCardProps) => {
     return (
       <div className={cn(className)}>
@@ -57,6 +59,7 @@ const PaletteCard = memo(
                 colors={palette.colors}
                 id={palette.id}
                 isEdit={isEdit}
+                editActions={editActions}
               />
             </div>
           )}

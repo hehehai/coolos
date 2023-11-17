@@ -17,11 +17,13 @@ export const upsetPaletteDtoSchema = z.object({
   id: z.coerce.number().optional(),
   name: z.coerce
     .string()
+    .trim()
     .min(1, { message: "Name is required" })
     .max(20, { message: "Name is max 20 characters" }),
   description: z.coerce
     .string()
-    .max(200, { message: "Description is max 200 characters" }),
+    .max(200, { message: "Description is max 200 characters" })
+    .optional(),
   tags: z.coerce
     .string()
     .min(1, { message: "Tags is required" })
