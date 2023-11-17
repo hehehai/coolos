@@ -74,7 +74,12 @@ const PaletteBlock = memo(
         )}
       >
         {showLeft && (
-          <div className="group/left absolute inset-y-0 left-0 w-12">
+          <div
+            className={cn(
+              "group/left absolute inset-y-0 left-0 w-12",
+              setting.isIsolated && "-left-2"
+            )}
+          >
             <PlusFloat
               className="invisible absolute -left-1/2 top-1/2 z-10 -translate-y-1/2 group-hover/left:visible"
               onClick={() => onAddBefore?.(block.id)}
@@ -82,7 +87,12 @@ const PaletteBlock = memo(
           </div>
         )}
         {showRight && (
-          <div className="group/right absolute inset-y-0 right-0 w-12">
+          <div
+            className={cn(
+              "group/right absolute inset-y-0 right-0 w-12",
+              setting.isIsolated && "-right-2"
+            )}
+          >
             <PlusFloat
               className="invisible absolute -right-1/2 top-1/2 z-10 -translate-y-1/2 group-hover/right:visible"
               onClick={() => onAddAfter?.(block.id)}
