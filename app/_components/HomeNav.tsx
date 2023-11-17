@@ -81,7 +81,9 @@ const HomeNav = ({ showDashboard = false }: { showDashboard?: boolean }) => {
     <NavigationMenu position="right">
       <NavigationMenuList className="space-x-2">
         <NavigationMenuItem>
-          <NavigationMenuTrigger size={"sm"}>Tools</NavigationMenuTrigger>
+          <NavigationMenuTrigger size={"sm"} className="bg-transparent">
+            Tools
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {tools.map((tool) => (
@@ -93,7 +95,9 @@ const HomeNav = ({ showDashboard = false }: { showDashboard?: boolean }) => {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger size={"sm"}>Go Pro</NavigationMenuTrigger>
+          <NavigationMenuTrigger size={"sm"} className="bg-transparent">
+            Go Pro
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
@@ -131,7 +135,10 @@ const HomeNav = ({ showDashboard = false }: { showDashboard?: boolean }) => {
             <NavigationMenuItem>
               <Link href="/panel" legacyBehavior passHref>
                 <NavigationMenuLink
-                  className={navigationMenuTriggerStyle({ size: "sm" })}
+                  className={cn(
+                    navigationMenuTriggerStyle({ size: "sm" }),
+                    "bg-transparent"
+                  )}
                 >
                   Dashboard
                 </NavigationMenuLink>

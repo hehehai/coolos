@@ -20,7 +20,9 @@ export default function RootLayout({
     <ClerkProvider localization={zhCN}>
       <html lang="en">
         <body className={GeistSans.className}>
-          <main>{children}</main>
+          <main className="relative flex min-h-screen flex-col">
+            {children}
+          </main>
           <Toaster
             toastOptions={{
               style: { borderRadius: "22.4px", padding: "8px 14px" },
