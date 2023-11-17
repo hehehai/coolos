@@ -1,7 +1,9 @@
 import prisma from "@/db"
 import { clerkClient } from "@clerk/nextjs"
 
-export async function querySiteStatistic() {
+export async function querySiteStatistic(): Promise<
+  Record<string, number> | undefined
+> {
   "use server"
 
   try {

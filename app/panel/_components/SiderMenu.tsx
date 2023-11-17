@@ -13,6 +13,7 @@ const menus = [
     name: "Home",
     href: "/panel",
     icon: "i-lucide-home",
+    admin: true,
   },
   {
     name: "Users",
