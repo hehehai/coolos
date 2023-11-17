@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
+import { QueryColorDto } from "@/db/dto/color.dto"
 import { Color } from "@prisma/client"
 import { PaginationState } from "@tanstack/react-table"
 import toast from "react-hot-toast"
@@ -29,10 +30,11 @@ const DataCards = () => {
   const [globalFilter, setGlobalFilter] = useState("")
 
   const fetchKey = useMemo(() => {
-    const query: Record<string, string | number> = {
+    const query: QueryColorDto = {
       page: pageIndex,
       pageSize,
-      query: globalFilter,
+      keyword: globalFilter,
+      sortBy: "latest",
     }
     return `/api/panel/color?${objectToQueryString(query)}`
   }, [globalFilter, pageIndex, pageSize])

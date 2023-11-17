@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
+import { QueryPaletteDto } from "@/db/dto/palette.dto"
 import { Palette } from "@prisma/client"
 import { PaginationState } from "@tanstack/react-table"
 import toast from "react-hot-toast"
@@ -29,10 +30,10 @@ const DataCards = () => {
   const [globalFilter, setGlobalFilter] = useState("")
 
   const fetchKey = useMemo(() => {
-    const query: Record<string, string | number> = {
+    const query: QueryPaletteDto = {
       page: pageIndex,
       pageSize,
-      query: globalFilter,
+      keyword: globalFilter,
       sortBy: "latest",
     }
     return `/api/panel/palette?${objectToQueryString(query)}`

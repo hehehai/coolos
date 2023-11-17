@@ -7,6 +7,7 @@ import { Palette } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import useSWRMutation from "swr/mutation"
+import { z } from "zod"
 
 import { getFetchAction } from "@/lib/fetch-action"
 import { Color, generateColor } from "@/components/shared/color-picker"
@@ -33,6 +34,17 @@ import {
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
+
+export const updatePaletteDtoSchema = upsetPaletteDtoSchema.merge(
+  z.object({
+    colors: z
+      .any()
+      .array()
+      .min(2, { message: "Minimum 2 colors" })
+      .max(12, { message: "Maximum 12 colors" }),
+  })
+)
+export type UpdatePaletteDto = z.infer<typeof updatePaletteDtoSchema>
 
 interface UpdateFormDialogProps {
   palette: Palette
@@ -66,13 +78,13 @@ export const UpdateFormDialog = ({
     [activeIdx]
   )
 
-  const form = useForm<UpsetPaletteDto>({
-    resolver: zodResolver(upsetPaletteDtoSchema),
+  const form = useForm<UpdatePaletteDto>({
+    resolver: zodResolver(updatePaletteDtoSchema),
     defaultValues: {
       id: palette.id,
       name: palette.name.trim(),
       description: palette.description ?? "",
-      colors: palette.colors ?? [],
+      colors: copyPalette,
       public: palette.public,
       tags: palette.tags ?? [],
     },

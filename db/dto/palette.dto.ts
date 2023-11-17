@@ -26,13 +26,13 @@ export const upsetPaletteDtoSchema = z.object({
     .optional(),
   tags: z.coerce
     .string()
-    .min(1, { message: "Tags is required" })
-    .max(12, { message: "tag is max 12 characters" })
+    .min(1, { message: "Tag is required" })
+    .max(12, { message: "Tag is max 12 characters" })
     .array()
     .max(5, { message: "Maximum 5 tags" }),
   colors: z.coerce
     .string()
-    .regex(/^[0-9a-f]{6}$/i, { message: "Color is invalid" })
+    .regex(/^#?[0-9a-f]{6}$/i, { message: "Color is invalid" })
     .array()
     .min(2, { message: "Minimum 2 colors" })
     .max(12, { message: "Maximum 12 colors" }),
