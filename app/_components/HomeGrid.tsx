@@ -1,6 +1,7 @@
 import { FC, Suspense } from "react"
 import Link from "next/link"
 
+import { toolIntro } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { LinkIcon } from "@/components/icons"
 
@@ -64,9 +65,9 @@ const HomeGrid = () => {
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-8">
           <HomeGridCard
-            title="Color Picker"
-            slug="Get useful color information"
-            description="like conversion, combinations, blindness simulation and more."
+            title={toolIntro["color-picker"].name}
+            slug={toolIntro["color-picker"].slug}
+            description={toolIntro["color-picker"].description}
             link="/picker"
             className="h-[360px]"
             float={<ColorPickerFloat />}
@@ -74,9 +75,9 @@ const HomeGrid = () => {
         </div>
         <div className="col-span-4">
           <HomeGridCard
-            title="Color Names"
-            slug="Find distinctions"
-            description="Browse our library of more than 500 color names."
+            title={toolIntro["color-names"].name}
+            slug={toolIntro["color-names"].slug}
+            description={toolIntro["color-names"].description}
             link="/colors"
             className="h-[360px] overflow-hidden"
             float={<ColorNameFloat />}
@@ -84,9 +85,9 @@ const HomeGrid = () => {
         </div>
         <div className="col-span-4 row-span-3">
           <HomeGridCard
-            title="Contrast Checker"
-            slug="Easier to convey"
-            description="Calculate the contrast ratio of text and background colors."
+            title={toolIntro["contrast-checker"].name}
+            slug={toolIntro["contrast-checker"].slug}
+            description={toolIntro["contrast-checker"].description}
             link="/contrast"
             className="h-full"
             float={<ContrastCheckerFloat />}
@@ -94,9 +95,9 @@ const HomeGrid = () => {
         </div>
         <div className="col-span-8 row-span-2">
           <HomeGridCard
-            title="Gradient Palette"
-            slug="Create a gradient palette between two colors"
-            description="Custom ladder length, fine-tuned transition algorithm to generate a harmonious swatch."
+            title={toolIntro["gradient-palette"].name}
+            slug={toolIntro["gradient-palette"].slug}
+            description={toolIntro["gradient-palette"].description}
             link="/gradient-palette"
             className="h-[360px]"
             float={<GradientPaletteFloat />}

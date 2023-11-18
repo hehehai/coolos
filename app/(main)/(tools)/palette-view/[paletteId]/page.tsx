@@ -7,13 +7,8 @@ import { Badge } from "@/components/ui/badge"
 import ColorBlock from "./_components/ColorBlock"
 import LikeButton from "./_components/LikeButton"
 
-const pageMeta = {
-  title: "Color Palette view",
-  description: "View the specific color values of the swatch",
-}
-
 export const metadata: Metadata = {
-  title: pageMeta.title + " - Coolos",
+  title: "Palette view",
 }
 
 const PaletteViewPage = async ({

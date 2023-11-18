@@ -1,22 +1,22 @@
 import { FC } from "react"
 import { Metadata } from "next"
 
+import { toolIntro } from "@/config/site"
 import PageWrapper from "@/components/shared/PageWrapper"
 
-const pageMeta = {
-  title: "Gradient Palette",
-  description: "Create a gradient palette between two colors.",
-}
-
 export const metadata: Metadata = {
-  title: pageMeta.title + " - Coolos",
+  title: toolIntro["gradient-palette"].name,
+  description: toolIntro["gradient-palette"].description,
 }
 
 const ContrastPageLayout: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   return (
-    <PageWrapper title={pageMeta.title} description={pageMeta.description}>
+    <PageWrapper
+      title={toolIntro["gradient-palette"].name}
+      description={toolIntro["gradient-palette"].description}
+    >
       {children}
     </PageWrapper>
   )

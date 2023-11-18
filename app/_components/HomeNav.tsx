@@ -4,6 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { SignedIn } from "@clerk/nextjs"
 
+import { toolIntro } from "@/config/site"
 import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
@@ -17,36 +18,34 @@ import {
 
 const tools: { title: string; href: string; description: string }[] = [
   {
-    title: "Palette Generator",
+    title: toolIntro["palette-generator"].name,
     href: "/palette",
-    description: "Create a visually appealing color palette.",
+    description: toolIntro["palette-generator"].slug,
   },
   {
-    title: "Explore Palettes",
+    title: toolIntro["explore-palette"].name,
     href: "/explore-palette",
-    description:
-      "Explore the most popular color palettes and discover new ones.",
+    description: toolIntro["explore-palette"].slug,
   },
   {
-    title: "Contrast",
+    title: toolIntro["contrast-checker"].name,
     href: "/contrast",
-    description: "Calculate the contrast ratio of text and background colors.",
+    description: toolIntro["contrast-checker"].slug,
   },
   {
-    title: "Color Picker",
+    title: toolIntro["color-picker"].name,
     href: "/picker",
-    description:
-      "Get useful color information like conversion, combinations, blindness simulation and more.",
+    description: toolIntro["color-picker"].slug,
   },
   {
-    title: "Gradient Palette",
+    title: toolIntro["gradient-palette"].name,
     href: "/gradient-palette",
-    description: "Generate a gradient palette from a list of colors.",
+    description: toolIntro["gradient-palette"].slug,
   },
   {
-    title: "Color Names",
+    title: toolIntro["color-names"].name,
     href: "/colors",
-    description: "Browse our library of more than 500 color names.",
+    description: toolIntro["color-names"].slug,
   },
 ]
 

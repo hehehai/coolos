@@ -1,21 +1,20 @@
 import { FC } from "react"
 import { Metadata } from "next"
 
+import { toolIntro } from "@/config/site"
 import PageWrapper from "@/components/shared/PageWrapper"
 
-const pageMeta = {
-  title: "Color Picker",
-  description:
-    "Get useful color information like conversion, combinations, blindness simulation and more",
-}
-
 export const metadata: Metadata = {
-  title: pageMeta.title + " - Coolos",
+  title: toolIntro["color-picker"].name,
+  description: toolIntro["color-picker"].description,
 }
 
 const PickerPageLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <PageWrapper title={pageMeta.title} description={pageMeta.description}>
+    <PageWrapper
+      title={toolIntro["color-picker"].name}
+      description={toolIntro["color-picker"].description}
+    >
       {children}
     </PageWrapper>
   )

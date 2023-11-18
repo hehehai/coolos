@@ -1,13 +1,11 @@
 import { FC } from "react"
 import { Metadata } from "next"
 
-const pageMeta = {
-  title: "Generator Color Palette",
-  description: "Generate perfect color combinations for your designs.",
-}
+import { toolIntro } from "@/config/site"
 
 export const metadata: Metadata = {
-  title: pageMeta.title + " - Coolos",
+  title: toolIntro["palette-generator"].name,
+  description: toolIntro["palette-generator"].description,
 }
 
 const PickerPageLayout: FC<{ children: React.ReactNode }> = ({ children }) => {

@@ -34,7 +34,7 @@ const ColorPaletteChartCard = () => {
           const statistic = getStatisticDataByJSON<StatisticDto>(item?.data)
           return {
             ...statistic,
-            dayDate: format(item.dayDate, "yy/MM/dd"),
+            dayDate: format(new Date(item.dayDate), "yy/MM/dd"),
           }
         })
       }

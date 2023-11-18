@@ -20,7 +20,7 @@ const PageWrapper = forwardRef<HTMLDivElement, PageWrapperProps>(
         <div className="py-28 text-center">
           <div className="mb-8 text-5xl font-bold text-slate-800">{title}</div>
           {description && (
-            <div className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-500">
+            <div className="mx-auto max-w-4xl text-xl leading-relaxed text-gray-500">
               <Balancer>{description}</Balancer>
             </div>
           )}

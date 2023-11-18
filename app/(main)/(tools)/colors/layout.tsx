@@ -1,20 +1,20 @@
 import { FC } from "react"
 import { Metadata } from "next"
 
+import { toolIntro } from "@/config/site"
 import PageWrapper from "@/components/shared/PageWrapper"
 
-const pageMeta = {
-  title: "Colors",
-  description: "Browse our library of more than 500 color names.",
-}
-
 export const metadata: Metadata = {
-  title: pageMeta.title + " - Coolos",
+  title: toolIntro["color-names"].name,
+  description: toolIntro["color-names"].description,
 }
 
 const ColorsPageLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <PageWrapper title={pageMeta.title} description={pageMeta.description}>
+    <PageWrapper
+      title={toolIntro["color-names"].name}
+      description={toolIntro["color-names"].description}
+    >
       {children}
     </PageWrapper>
   )
