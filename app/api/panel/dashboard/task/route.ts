@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 import { auth, currentUser } from "@clerk/nextjs"
 
 import { cronTask } from "@/lib/cron-task"
