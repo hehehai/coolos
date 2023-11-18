@@ -32,7 +32,7 @@ export async function handleRes(res: Response) {
   return data
 }
 
-export function getFetchAction<T, R>(
+export function getFetchAction<T, R = Record<string, any>>(
   init: RequestInit = {},
   transform?: (data: R) => T
 ) {
