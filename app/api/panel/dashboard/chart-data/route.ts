@@ -30,6 +30,9 @@ export async function GET(req: NextRequest) {
           gte: subDays(new Date(), params.dayIn),
         },
       },
+      orderBy: {
+        createAt: "asc",
+      },
     })
 
     return NextResponse.json(

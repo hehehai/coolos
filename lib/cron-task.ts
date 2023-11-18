@@ -1,19 +1,33 @@
 import prisma from "@/db"
 import { StatisticDto } from "@/db/dto/statistic.dto"
-import { subDays } from "date-fns"
+import { endOfDay, startOfDay, subDays } from "date-fns"
 import SuperJSON from "superjson"
 
 import { getStatisticDataByJSON } from "@/lib/utils"
 import { querySiteStatistic } from "@/app/_actions/statistic"
 
 export async function cronTask() {
-  "use server"
   try {
+    const yesterday = subDays(new Date().setHours(12, 0, 0, 0), 1)
+
+    const targetData = await prisma.statistic.findFirst({
+      where: {
+        dayDate: {
+          lte: endOfDay(yesterday),
+          gte: startOfDay(yesterday),
+        },
+      },
+    })
+    if (targetData) {
+      throw new Error("targetData is exists")
+    }
+
     const latestStatisticItem = await prisma.statistic.findFirst({
       orderBy: {
         createAt: "desc",
       },
     })
+
     const latestStatisticData = getStatisticDataByJSON<StatisticDto>(
       latestStatisticItem?.data
     )
@@ -33,7 +47,7 @@ export async function cronTask() {
     const saveData = await prisma.statistic.create({
       data: {
         // 前一天 (数据有误差,cron 运行时间为 0点 ～ 1点)
-        dayDate: subDays(new Date(), 1),
+        dayDate: yesterday,
         data: SuperJSON.stringify(statisticData),
       },
     })

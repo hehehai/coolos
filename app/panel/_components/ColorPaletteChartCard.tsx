@@ -33,11 +33,8 @@ const ColorPaletteChartCard = () => {
         return data.map((item) => {
           const statistic = getStatisticDataByJSON<StatisticDto>(item?.data)
           return {
-            dayDate: format(item.dayDate, "dd"),
-            colorCount: statistic?.colorCount,
-            colorInc: statistic?.colorInc,
-            paletteCount: statistic?.paletteCount,
-            paletteInc: statistic?.paletteInc,
+            ...statistic,
+            dayDate: format(item.dayDate, "yy/MM/dd"),
           }
         })
       }
@@ -78,7 +75,7 @@ const ColorPaletteChartCard = () => {
           data={data ?? []}
           index="dayDate"
           categories={["colorCount", "paletteCount"]}
-          colors={["blue"]}
+          colors={["indigo", "cyan"]}
           yAxisWidth={30}
           customTooltip={ChartTooltip}
         />

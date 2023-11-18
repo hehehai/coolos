@@ -4,7 +4,9 @@ import { currentUser } from "@clerk/nextjs"
 import { Card, Metric, Text } from "@tremor/react"
 
 import { isAdmin } from "@/lib/user"
+import { Button } from "@/components/ui/button"
 
+import { statisticCronTask } from "../_actions/cron"
 import { querySiteStatistic } from "../_actions/statistic"
 import ColorPaletteChartCard from "./_components/ColorPaletteChartCard"
 import UserChartCard from "./_components/UserChartCard"
@@ -40,6 +42,9 @@ const DashboardPage = async () => {
     <div className="h-full w-full bg-slate-50 p-4">
       <div className="flex items-center justify-between">
         <div className="text-xl font-bold">Dashboard</div>
+        <form action={statisticCronTask}>
+          <Button type="submit">Refresh Cron</Button>
+        </form>
       </div>
 
       <div className="mt-5">

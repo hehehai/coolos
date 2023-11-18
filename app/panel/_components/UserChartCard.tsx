@@ -33,9 +33,8 @@ const UserChartCard = () => {
         return data.map((item) => {
           const statistic = getStatisticDataByJSON<StatisticDto>(item?.data)
           return {
-            dayDate: format(item.dayDate, "dd"),
-            userCount: statistic?.userCount,
-            userInc: statistic?.userInc,
+            ...statistic,
+            dayDate: format(new Date(item.dayDate), "yy/MM/dd"),
           }
         })
       }
@@ -76,7 +75,7 @@ const UserChartCard = () => {
           data={data ?? []}
           index="dayDate"
           categories={["userCount"]}
-          colors={["purple"]}
+          colors={["indigo"]}
           yAxisWidth={30}
           customTooltip={ChartTooltip}
         />
