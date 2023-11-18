@@ -257,7 +257,7 @@ export function colorSquare(baseColor: HSV) {
 // 颜色对比度评分
 export function getContrastScore(contrast: number) {
   switch (true) {
-    case contrast <= 3:
+    case contrast < 3:
       return {
         contrast,
         level: "A",
@@ -265,7 +265,7 @@ export function getContrastScore(contrast: number) {
         color: "text-vilet-700",
         bg: "bg-red-200",
       }
-    case contrast <= 8:
+    case contrast <= 4.5:
       return {
         contrast,
         level: "AA",
@@ -273,7 +273,7 @@ export function getContrastScore(contrast: number) {
         color: "text-vilet-700",
         bg: "bg-red-200",
       }
-    case contrast <= 15:
+    case contrast <= 7:
       return {
         contrast,
         level: "AAA",
@@ -281,7 +281,7 @@ export function getContrastScore(contrast: number) {
         color: "text-orange-500",
         bg: "bg-orange-100",
       }
-    case contrast <= 17:
+    case contrast <= 12:
       return {
         contrast,
         level: "AAAA",
