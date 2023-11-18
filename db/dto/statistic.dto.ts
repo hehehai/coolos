@@ -11,7 +11,7 @@ export const statisticDtoSchema = z.object({
 export type StatisticDto = z.input<typeof statisticDtoSchema>
 
 export const queryChartData = z.object({
-  dayIn: z.number().min(7).max(30),
+  dayIn: z.coerce.number().min(7).max(30),
 })
 
 export type QueryChartData = z.infer<typeof queryChartData>

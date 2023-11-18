@@ -32,14 +32,21 @@ export async function handleRes(res: Response) {
   return data
 }
 
-export function getFetchAction<T>(init: RequestInit = {}) {
+export function getFetchAction<T, R>(
+  init: RequestInit = {},
+  transform?: (data: R) => T
+) {
   const fetchAction = async (url: string, { arg }: { arg?: T } = {}) => {
     const res = await fetch(url, {
       method: "POST",
       body: arg ? superjson.stringify(arg) : null,
       ...init,
     })
-    return handleRes(res)
+    const data = await handleRes(res)
+    if (transform && data) {
+      return transform(data)
+    }
+    return data
   }
 
   return fetchAction

@@ -1,10 +1,13 @@
 import { redirect } from "next/navigation"
 import { StatisticDto } from "@/db/dto/statistic.dto"
 import { currentUser } from "@clerk/nextjs"
+import { Card, Metric, Text } from "@tremor/react"
 
 import { isAdmin } from "@/lib/user"
 
 import { querySiteStatistic } from "../_actions/statistic"
+import ColorPaletteChartCard from "./_components/ColorPaletteChartCard"
+import UserChartCard from "./_components/UserChartCard"
 
 const statisticMap: {
   id: keyof Pick<StatisticDto, "userCount" | "colorCount" | "paletteCount">
@@ -39,19 +42,18 @@ const DashboardPage = async () => {
         <div className="text-xl font-bold">Dashboard</div>
       </div>
 
-      <div>
-        <div className="grid grid-cols-3 gap-4">
+      <div className="mt-5">
+        <div className="grid grid-cols-3 gap-5">
           {statisticMap.map((item) => (
-            <div
-              key={item.id}
-              className="mt-4 space-y-2 rounded-lg bg-white p-4"
-            >
-              <div className="text-lg text-gray-600">{item.name}</div>
-              <div className="lining-num font-semi-bold text-4xl text-slate-900">
-                {statistic?.[item.id] ?? "--"}
-              </div>
-            </div>
+            <Card key={item.id} decoration="bottom" decorationColor="purple">
+              <Text className="mb-2">{item.name}</Text>
+              <Metric>{statistic?.[item.id] ?? "--"}</Metric>
+            </Card>
           ))}
+        </div>
+        <div className="mt-5 space-y-4">
+          <UserChartCard></UserChartCard>
+          <ColorPaletteChartCard></ColorPaletteChartCard>
         </div>
       </div>
     </div>
