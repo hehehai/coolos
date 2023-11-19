@@ -42,12 +42,14 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [siteConfig.ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
     creator: "@riverhohai",
+    images: [siteConfig.ogImage],
   },
   icons: {
     icon: "/favicon.ico",
