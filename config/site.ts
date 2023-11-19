@@ -5,7 +5,7 @@ export const siteConfig = {
   description:
     "Coolos Color Picker Palette is your go-to solution for managing and picking from a wide array of color palettes. Elevate your design projects with our intuitive interface and features.",
   url: "https://coolos.hehehai.cn",
-  ogImage: "https://coolos.hehehai.cn/api/og",
+  ogImage: "https://coolos.hehehai.cn/site-og.webp",
   links: {
     twitter: "https://twitter.com/riverhohai",
     github: "https://github.com/hehehai/coolos",
